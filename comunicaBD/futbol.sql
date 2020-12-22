@@ -37,6 +37,8 @@ INSERT INTO `Equipo` (`id_Equipo`, `nombre_Equipo`, `foto_Equipo`, `puntos`,
 
 CREATE TABLE `Usuario` (
     `id_Usuario` int(3) NOT NULL,
+    `identificador`varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+    `contrasenna`varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
     `nombre_Usuario` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
     `apellidos_Usuario` varchar(80) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
     `equipoId` int(3) NOT NULL,
@@ -44,15 +46,15 @@ CREATE TABLE `Usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `Usuario` (`id_Usuario`, `nombre_Usuario`, `apellidos_Usuario`, `equipoId`, `estado`) VALUES
-(1, 'Pedro', 'Garcia Sanchez', 1, 'jugador'),
-(2, 'Luis', 'Fernandez Gutierrez', 2, 'jugador'),
-(3, 'Mario', 'Alonso Fernandez', 3, 'jugador'),
-(4, 'Pepe', 'Moreno Garcia', 4, 'jugador'),
-(5, 'Jesus', 'Gutierrez Prado', 5, 'jugador'),
-(6, 'Adrian', 'Sanchez Garcia', 6, 'jugador'),
-(7, 'David', 'Medina Hernandez', 7, 'jugador'),
-(8, 'Xavi', 'Lopez GOnzalez', 8, 'jugador');
+INSERT INTO `Usuario` (`id_Usuario`,`identificador`,`contrasenna`, `nombre_Usuario`, `apellidos_Usuario`, `equipoId`, `estado`) VALUES
+(1, 'pgarcia','1234','Pedro', 'Garcia Sanchez', 1, 'jugador'),
+(2, 'lfernandez','1234','Luis', 'Fernandez Gutierrez', 2, 'jugador'),
+(3, 'malonso','abc','Mario', 'Alonso Fernandez', 3, 'jugador'),
+(4, 'pmoreno','abcd','Pepe', 'Moreno Garcia', 4, 'jugador'),
+(5, 'jgutierrez','123a','Jesus', 'Gutierrez Prado', 5, 'jugador'),
+(6, 'asanchez','1234','Adrian', 'Sanchez Garcia', 6, 'jugador'),
+(7, 'dmedina','1234a','David', 'Medina Hernandez', 7, 'jugador'),
+(8, 'xlopez','abcd2','Xavi', 'Lopez GOnzalez', 8, 'jugador');
 
 
 CREATE TABLE `Partido` (
