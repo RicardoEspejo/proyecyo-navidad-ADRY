@@ -32,17 +32,6 @@ CREATE TABLE `Usuario` (
     `estado` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `Partido` (
-    `id_Partido` int(3) NOT NULL,
-    `id_Equipo_Local` int(3) NOT NULL,
-    `id_Equipo_Visitante` int(3) NOT NULL,
-    `fecha` timestamp NOT NULL,
-    `id_Arbitro` int(2) NOT NULL,
-    `gol_Local` int(2),
-    `gol_Visitante` int(2),
-    `ganador` varchar(45)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE `Arbitro` (
     `id_Arbitro` int(2) NOT NULL,
     `identificador` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
@@ -55,6 +44,17 @@ INSERT INTO `Arbitro` (`id_arbitro`, `identificador`, `contrasenna`, `nombre`, `
     (1, 'mggonzalez', 'abcd', 'Mario', 'Gil Gonzalez'),
     (1, 'emperez', '1234', 'Eric', 'Marquez Perez');
 
+CREATE TABLE `Partido` (
+    `id_Partido` int(3) NOT NULL,
+    `id_Equipo_Local` int(3) NOT NULL,
+    `id_Equipo_Visitante` int(3) NOT NULL,
+    `fecha` timestamp NOT NULL,
+    `id_Arbitro_Principal` int(2) NOT NULL,
+    `gol_Local` int(2),
+    `gol_Visitante` int(2),
+    `ganador` varchar(45)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 ALTER TABLE `Equipo`
     ADD PRIMARY KEY (`id_Equipo`);
 
@@ -63,7 +63,7 @@ ALTER TABLE `Usuario`
     ADD PRIMARY KEY (`id_Usuario`);
 
 ALTER TABLE `Equipo`
-    MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+    MODIFY `id_Equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 
 ALTER TABLE `Usuario`
@@ -72,7 +72,8 @@ ALTER TABLE `Usuario`
 
 ALTER TABLE `Partido`
     ADD CONSTRAINT `fk_equipo_localId` FOREIGN KEY (`id_Equipo_Local`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_equipoI_visitanted` FOREIGN KEY (`id_Equipo_Visitante`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_equipo_visitanteId` FOREIGN KEY (`id_Equipo_Visitante`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE,
+    ADD CONSTRAINT `fk_arbitro_principalId` FOREIGN KEY (`id_Arbitro_Principal`) REFERENCES `Arbitro` (`id_Arbitro`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
