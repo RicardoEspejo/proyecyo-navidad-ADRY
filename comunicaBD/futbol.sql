@@ -42,7 +42,7 @@ CREATE TABLE `Arbitro` (
 
 INSERT INTO `Arbitro` (`id_arbitro`, `identificador`, `contrasenna`, `nombre`, `apellidos`) VALUES
     (1, 'mggonzalez', 'abcd', 'Mario', 'Gil Gonzalez'),
-    (1, 'emperez', '1234', 'Eric', 'Marquez Perez');
+    (2, 'emperez', '1234', 'Eric', 'Marquez Perez');
 
 CREATE TABLE `Partido` (
     `id_Partido` int(3) NOT NULL,
@@ -58,17 +58,26 @@ CREATE TABLE `Partido` (
 ALTER TABLE `Equipo`
     ADD PRIMARY KEY (`id_Equipo`);
 
-
 ALTER TABLE `Usuario`
     ADD PRIMARY KEY (`id_Usuario`);
+
+ALTER TABLE `Partido`
+    ADD PRIMARY KEY (`id_Partido`);
+
+ALTER TABLE `Arbitro`
+    ADD PRIMARY KEY (`id_Arbitro`);
 
 ALTER TABLE `Equipo`
     MODIFY `id_Equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
-
 ALTER TABLE `Usuario`
     MODIFY `id_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
+ALTER TABLE `Partido`
+    MODIFY `id_Partido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+ALTER TABLE `Arbitro`
+    MODIFY `id_Arbitro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 ALTER TABLE `Partido`
     ADD CONSTRAINT `fk_equipo_localId` FOREIGN KEY (`id_Equipo_Local`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE,
