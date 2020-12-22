@@ -25,15 +25,7 @@ CREATE TABLE `Equipo` (
 
 INSERT INTO `Equipo` (`id_Equipo`, `nombre_Equipo`, `foto_Equipo`, `puntos`, 
                     `partidos_Jugados`, `victorias`, `empates`, `derrotas`, `goles_Favor`, `goles_Contra`, `diferencia_Goles`) VALUES
-(0, 'Arbitros', null, 0, 0, 0, 0, 0, 0, 0, 0),
-(1, 'Rayo Vayecano', 'rayoVallecano.jpg', 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 'Ateltico de Madrid', 'atm.jpg', 0, 0, 0, 0, 0, 0, 0, 0),
-(3, 'Illescas', 'illescas.jpg', 0, 0, 0, 0, 0, 0, 0, 0),
-(4, 'Getafe', 'getafe.jpg', 0, 0, 0, 0, 0, 0, 0, 0),
-(5, 'Alcobendas', 'alcobendas.jpg', 0, 0, 0, 0, 0, 0, 0, 0),
-(6, 'Brunete', 'brunete.jpg', 0, 0, 0, 0, 0, 0, 0, 0),
-(7, 'Carabanchel', 'carabanchel.png', 0, 0, 0, 0, 0, 0, 0, 0),
-(8, 'Moratalaz', 'moratalaz.png', 0, 0, 0, 0, 0, 0, 0, 0);
+(0, 'Arbitros', null, 0, 0, 0, 0, 0, 0, 0, 0);
 
 
 CREATE TABLE `Usuario` (
@@ -48,16 +40,8 @@ CREATE TABLE `Usuario` (
 
 
 INSERT INTO `Usuario` (`id_Usuario`,`identificador`,`contrasenna`, `nombre_Usuario`, `apellidos_Usuario`, `equipoId`, `estado`) VALUES
-(1, 'pgarcia','1234','Pedro', 'Garcia Sanchez', 1, 'jugador'),
-(2, 'lfernandez','1234','Luis', 'Fernandez Gutierrez', 2, 'jugador'),
-(3, 'malonso','abc','Mario', 'Alonso Fernandez', 3, 'jugador'),
-(4, 'pmoreno','abcd','Pepe', 'Moreno Garcia', 4, 'jugador'),
-(5, 'jgutierrez','123a','Jesus', 'Gutierrez Prado', 5, 'jugador'),
-(6, 'asanchez','1234','Adrian', 'Sanchez Garcia', 6, 'jugador'),
-(7, 'dmedina','1234a','David', 'Medina Hernandez', 7, 'jugador'),
-(8, 'xlopez','abcd2','Xavi', 'Lopez GOnzalez', 8, 'jugador'),
-(9, 'ggonzalez','abcd3','Mario', 'Gil Gonzalez', 0, 'arbirto'),
-(10, 'emarquez','abcd4','Eric', 'Marquez Perez', 0, 'arbitro');
+    (1, 'ggonzalez','abcd3','Mario', 'Gil Gonzalez', 0, 'arbirto'),
+    (2, 'emarquez','abcd4','Eric', 'Marquez Perez', 0, 'arbitro');
 
 
 CREATE TABLE `Partido` (
