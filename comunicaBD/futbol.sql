@@ -11,8 +11,8 @@ USE Futbol;
 
 CREATE TABLE `Equipo` (
     `id_Equipo` int(3) NOT NULL,
-    `nombre_Equipo` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `foto_Equipo` varchar(200),
+    `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+    `escudo` varchar(200),
     `puntos` int(3),
     `partidos_Jugados` int(2),
     `victorias` int(2),
@@ -32,24 +32,16 @@ CREATE TABLE `Usuario` (
     `estado` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `Arbitro` (
-    `id_Arbitro` int(2) NOT NULL,
-    `identificador` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `contrasenna` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `apellidos` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `Arbitro` (`id_arbitro`, `identificador`, `contrasenna`, `nombre`, `apellidos`) VALUES
-    (1, 'mggonzalez', 'abcd', 'Mario', 'Gil Gonzalez'),
-    (2, 'emperez', '1234', 'Eric', 'Marquez Perez');
+INSERT INTO `Usuario` (`id_Usuario`, `identificador`, `contrasenna`, `nombre`, `apellidos`, `estado`) VALUES
+    (1, 'mggonzalez', 'abcd', 'Mario', 'Gil Gonzalez', 'Arbitro'),
+    (2, 'emperez', '1234', 'Eric', 'Marquez Perez', 'Arbitro');
 
 CREATE TABLE `Partido` (
     `id_Partido` int(3) NOT NULL,
     `id_Equipo_Local` int(3) NOT NULL,
     `id_Equipo_Visitante` int(3) NOT NULL,
     `fecha` timestamp NOT NULL,
-    `id_Arbitro_Principal` int(2) NOT NULL,
+    `id_Arbitro` int(3) NOT NULL,
     `gol_Local` int(2),
     `gol_Visitante` int(2),
     `ganador` varchar(45)
@@ -64,9 +56,6 @@ ALTER TABLE `Usuario`
 ALTER TABLE `Partido`
     ADD PRIMARY KEY (`id_Partido`);
 
-ALTER TABLE `Arbitro`
-    ADD PRIMARY KEY (`id_Arbitro`);
-
 ALTER TABLE `Equipo`
     MODIFY `id_Equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
@@ -76,13 +65,10 @@ ALTER TABLE `Usuario`
 ALTER TABLE `Partido`
     MODIFY `id_Partido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
-ALTER TABLE `Arbitro`
-    MODIFY `id_Arbitro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 ALTER TABLE `Partido`
     ADD CONSTRAINT `fk_equipo_localId` FOREIGN KEY (`id_Equipo_Local`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_equipo_visitanteId` FOREIGN KEY (`id_Equipo_Visitante`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_arbitro_principalId` FOREIGN KEY (`id_Arbitro_Principal`) REFERENCES `Arbitro` (`id_Arbitro`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_arbitroId` FOREIGN KEY (`id_Arbitro`) REFERENCES `Usuario` (`id_Usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
