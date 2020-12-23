@@ -23,18 +23,28 @@ CREATE TABLE `Equipo` (
     `diferencia_Goles` int(3)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `Arbitro` (
+    `id_Arbitro` int(3) NOT NULL,
+    `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+    `apellidos` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `Arbitro` (`id_Arbitro`, `nombre`, `apellidos`) VALUES
+    (1, 'Mario', 'Gil Gonzalez'),
+    (2, 'Eric', 'Marquez Perez');
+
 CREATE TABLE `Usuario` (
     `id_Usuario` int(3) NOT NULL,
     `identificador` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
     `contrasenna` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `apellidos` varchar(80) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `estado` varchar(20) NOT NULL
+    `tipo` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Usuario` (`id_Usuario`, `identificador`, `contrasenna`, `nombre`, `apellidos`, `estado`) VALUES
-    (1, 'mggonzalez', 'abcd', 'Mario', 'Gil Gonzalez', 'Arbitro'),
-    (2, 'emperez', '1234', 'Eric', 'Marquez Perez', 'Arbitro');
+INSERT INTO `Usuario` (`id_Usuario`, `identificador`, `contrasenna`, `tipo`) VALUES
+    (1, 'mggonzalez', 'abcd1',  1),
+    (2, 'emperez', 'abcd2',  1),
+    (3, 'pmgarcia', 'abcd1',  0),
+    (4, 'mpgimenez', '1234a', 0);
 
 CREATE TABLE `Partido` (
     `id_Partido` int(3) NOT NULL,
