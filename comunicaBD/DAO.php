@@ -51,4 +51,59 @@ class DAO
         if (!$sqlConExito) return null;
         else return $actualizacion->rowCount();
     }
+
+    //EQUIPO
+    private static function equipoCrearDesdeRs(array $rs): Categoria
+    {
+        return new Equipo($rs["id"], $rs["nombre"], $rs["escudo"], $rs["puntos"], $rs["patidos_Jugados"], $rs["victorias"], $rs["empates"], $rs["derrotas"], $rs["goles_Favor"], $rs["goles_Contra"], $rs["diferencia_Goles"]);
+    }
+
+    private static function equipoCrear (String $nombre, String $escudo): bool
+    {
+        return self::ejecutarActualizacion(
+            "INSERT INTO Equipo (nombre, escudo, puntos, partidos_jugados, victorias, empates, derrotas, goles_Favor, goles_Contra, diferencia_Goles) VALUES(?,?,?,?,?,?,?,?,?,?)",
+            [$nombre, $escudo, 0, 0, 0, 0, 0, 0, 0, 0]
+        );
+    }
+
+    private static function equipoObtenerPorID (int $ id): ?Equipo
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Equipo WHERE id_Equipo=?",
+            [$id]
+        );
+        if ($rs) 
+            return self::equipoCrearDesdeRs($rs[0]);
+        else 
+            return null;
+    }
+
+    private static function equipoObtenerTodos(): array // Clasificación 
+    {
+        $datos = [];
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Equipo ORDER BY nombre",
+            []
+        );
+        foreach ($rs as $fila) {
+            $equipo = self::equipoCrearDesdeRs($fila);
+            array_push($datos, $equipo);
+        }
+        return $datos;
+    }
+    private static function equipoEliminarPorID (int $id): bool
+    {
+        return self::ejecutarActualizacion(
+            "DELETE FROM Equipo WHERE id_Equipo=?", 
+            [$id]
+        );
+    }
+    private static function equipoActualizarPorID (int $id, string $nombre, string $escudo): bool
+    {
+        return self::ejecutarActualizacion(
+            "UPDATE Equipo SET nombre=?, escudo=? WHERE id_Equipo=?",
+            [$nombre, $escudo, $id]
+        );
+    }
+
 }
