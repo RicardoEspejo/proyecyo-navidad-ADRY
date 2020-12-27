@@ -66,6 +66,9 @@ ALTER TABLE `Usuario`
 ALTER TABLE `Partido`
     ADD PRIMARY KEY (`id_Partido`);
 
+ALTER TABLE `Arbitro`
+    ADD PRIMARY KEY (`id_Arbitro`);
+
 ALTER TABLE `Equipo`
     MODIFY `id_Equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
@@ -75,10 +78,13 @@ ALTER TABLE `Usuario`
 ALTER TABLE `Partido`
     MODIFY `id_Partido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
+ALTER TABLE `Arbitro`
+    MODIFY `id_Arbitro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 ALTER TABLE `Partido`
     ADD CONSTRAINT `fk_equipo_localId` FOREIGN KEY (`id_Equipo_Local`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_equipo_visitanteId` FOREIGN KEY (`id_Equipo_Visitante`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE,
-    ADD CONSTRAINT `fk_arbitroId` FOREIGN KEY (`id_Arbitro`) REFERENCES `Usuario` (`id_Usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+    ADD CONSTRAINT `fk_arbitroId` FOREIGN KEY (`id_Arbitro`) REFERENCES `Arbitro` (`id_Arbitro`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
