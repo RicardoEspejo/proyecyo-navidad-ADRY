@@ -139,5 +139,30 @@ class DAO
         
         return [$nuevaEntrada, $equipoNombre, $puntos, $partidosJugados, $victoias, $empates, $derrotas, $golesFavor, $golesContra, $diferenciaGoles, $escudo];
     }
-
+                        ////////////// Arbitro//////////
+    private static function arbitroCrearDesdeRs(array $rs): Arbitro
+    {
+        return new Arbitro($rs["id_Arbitro"], $rs["nombre"], $rs["apellidos"]);
+    }
+   public static function arbitroCrear(string $nombre, string $apellidos):bool
+   {
+    return self::ejecutarActualizacion(
+        "INSERT INTO Arbitro (nombre,apellidos) VALUES(?,?)",
+        [$nombre, $apellidos]
+    );
+   }
+   
+   public static function arbitroObtenerTodos(): array // Clasificación 
+   {
+       $datos = [];
+       $rs = self::ejecutarConsulta(
+           "SELECT * FROM Arbitro",
+           []
+       );
+       foreach ($rs as $arbitro) {
+           $arbitros = self::arbitroCrearDesdeRs($arbitro);
+           array_push($datos, $arbitros);
+       }
+       return $datos;
+   }
 }

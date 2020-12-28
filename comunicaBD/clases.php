@@ -150,3 +150,39 @@ class Equipo extends Dato
     }
 
 }
+class Arbitro extends Dato
+{
+    use Identificable;
+
+    private string $nombre;
+    private string $apellidos;
+    
+
+    public function __construct(int $id, string $nombre, string $apellidos)
+    {
+        $this->setId($id);
+        $this->setNombre($nombre);
+        $this->setApellidos($apellidos);
+    }
+
+    public function getNombre(): string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(string $nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
+    public function getApellidos(): string
+    {
+        return $this->apellidos;
+    }
+
+    public function setApellidos(string $apellidos)
+    {
+        $this->apellidos = $apellidos;
+    }
+
+}
