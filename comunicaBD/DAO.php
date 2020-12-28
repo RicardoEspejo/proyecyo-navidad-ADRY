@@ -54,12 +54,12 @@ class DAO
     }
 
     //EQUIPO
-    private static function equipoCrearDesdeRs(array $rs): Equipo
+    public static function equipoCrearDesdeRs(array $rs): Equipo
     {
         return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"]);
     }
 
-    private static function equipoCrear (String $nombre, String $escudo): bool
+    public static function equipoCrear (String $nombre, String $escudo): bool
     {
         return self::ejecutarActualizacion(
             "INSERT INTO Equipo (nombre, escudo, puntos, partidos_jugados, victorias, empates, derrotas, goles_Favor, goles_Contra, diferencia_Goles) VALUES(?,?,?,?,?,?,?,?,?,?)",
@@ -67,7 +67,7 @@ class DAO
         );
     }
 
-    private static function equipoObtenerPorID (int $id): ?Equipo
+    public static function equipoObtenerPorID (int $id): ?Equipo
     {
         $rs = self::ejecutarConsulta(
             "SELECT * FROM Equipo WHERE id_Equipo=?",
@@ -92,14 +92,14 @@ class DAO
         }
         return $datos;
     }
-    private static function equipoEliminarPorID (int $id): bool
+    public static function equipoEliminarPorID (int $id): bool
     {
         return self::ejecutarActualizacion(
             "DELETE FROM Equipo WHERE id_Equipo=?", 
             [$id]
         );
     }
-    private static function equipoActualizarPorID (int $id, string $nombre, string $escudo): bool
+    public static function equipoActualizarPorID (int $id, string $nombre, string $escudo): bool
     {
         return self::ejecutarActualizacion(
             "UPDATE Equipo SET nombre=?, escudo=? WHERE id_Equipo=?",

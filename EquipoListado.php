@@ -2,7 +2,18 @@
     require_once "comunicaBD/varios.php";
 	require_once "comunicaBD/dao.php";
 
-	$equipos = DAO::equipoObtenerTodos();
+    $equipos = DAO::equipoObtenerTodos();
+    
+    if(isset($_REQUEST["creacionCorrecta"]))
+        echo "<p>Equipo creado correctamente</p>";
+    else if(isset($_REQUEST["creacionErronea"]))
+        echo "<p>Error al crear</p>";
+
+    if(isset($_REQUEST["eliminacionCorrecta"]))
+        echo "<p>Equipo eliminado correctamente</p>";
+    else if(isset($_REQUEST["eliminacionErronea"]))
+        echo "<p>Error al eliminar</p>";
+
 ?>
 
 <html>
@@ -34,11 +45,11 @@
                     <td>    <?=$equipo->getGolesFavor()?> </td>
                     <td>    <?=$equipo->getGolesContra()?> </td>
                     <td>    <?=$equipo->getDiferenciaGoles()?> </td>
-                    <td><a href='EquipoEliminar.php?id=<?=$equipo->getId()?>'> (X)  </a></td>
+                    <td><a href='EquipoEliminar.php?id_Equipo=<?=$equipo->getId()?>'> (X)  </a></td>
                 </tr>
             <?php } ?>
 
         </table><br>
-        <a href='EquipoFicha.php?id=-1'>Crear entrada</a>
+        <a href='EquipoFicha.php?id_Equipo=-1'>Crear entrada</a>
     </body>
 </html>
