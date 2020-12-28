@@ -12,7 +12,7 @@ USE Futbol;
 CREATE TABLE `Equipo` (
     `id_Equipo` int(3) NOT NULL,
     `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `escudo` varchar(200),
+    `escudo` varchar(200) NOT NULL,
     `puntos` int(3),
     `partidos_Jugados` int(2),
     `victorias` int(2),

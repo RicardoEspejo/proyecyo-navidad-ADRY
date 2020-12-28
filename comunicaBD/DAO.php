@@ -1,6 +1,7 @@
 <?php
 
 require_once "varios.php";
+require_once "clases.php";
 class DAO
 {
     private static $pdo = null;
@@ -53,9 +54,9 @@ class DAO
     }
 
     //EQUIPO
-    private static function equipoCrearDesdeRs(array $rs): Categoria
+    private static function equipoCrearDesdeRs(array $rs): Equipo
     {
-        return new Equipo($rs["id"], $rs["nombre"], $rs["escudo"], $rs["puntos"], $rs["patidos_Jugados"], $rs["victorias"], $rs["empates"], $rs["derrotas"], $rs["goles_Favor"], $rs["goles_Contra"], $rs["diferencia_Goles"]);
+        return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"]);
     }
 
     private static function equipoCrear (String $nombre, String $escudo): bool
@@ -66,7 +67,7 @@ class DAO
         );
     }
 
-    private static function equipoObtenerPorID (int $ id): ?Equipo
+    private static function equipoObtenerPorID (int $id): ?Equipo
     {
         $rs = self::ejecutarConsulta(
             "SELECT * FROM Equipo WHERE id_Equipo=?",
@@ -78,11 +79,11 @@ class DAO
             return null;
     }
 
-    private static function equipoObtenerTodos(): array // Clasificación 
+    public static function equipoObtenerTodos(): array // Clasificación 
     {
         $datos = [];
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM Equipo ORDER BY nombre",
+            "SELECT * FROM Equipo ORDER BY puntos",
             []
         );
         foreach ($rs as $fila) {
