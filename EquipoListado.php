@@ -25,16 +25,16 @@
             </tr>
             <?php foreach ($equipos as $equipo) { ?>
                 <tr>
-                    <td><a href='EquipoFicha.php?id=<?=$equipo->getId()?>'>    <?=$equipo->getNombre()?> </a></td>
-                    <td><a href='EquipoFicha.php?id=<?=$equipo->getId()?>'>    <?=$equipo->getPuntos()?> </a></td>
-                    <td><a href='EquipoFicha.php?id=<?=$equipo->getId()?>'>    <?=$equipo->getPartidosJugados()?> </a></td>
-                    <td><a href='EquipoFicha.php?id=<?=$equipo->getId()?>'>    <?=$equipo->getVictorias()?> </a></td>
-                    <td><a href='EquipoFicha.php?id=<?=$equipo->getId()?>'>    <?=$equipo->getEmpates()?> </a></td>
-                    <td><a href='EquipoFicha.php?id=<?=$equipo->getId()?>'>    <?=$equipo->getDerrotas()?> </a></td>
-                    <td><a href='EquipoFicha.php?id=<?=$equipo->getId()?>'>    <?=$equipo->getGolesFavor()?> </a></td>
-                    <td><a href='EquipoFicha.php?id=<?=$equipo->getId()?>'>    <?=$equipo->getGolesContra()?> </a></td>
-                    <td><a href='EquipoFicha.php?id=<?=$equipo->getId()?>'>    <?=$equipo->getDiferenciaGoles()?> </a></td>
-                    <td><a href='EquipoEliminar.php?id=<?=$equipo->getId()?>'> (X)                       </a></td>
+                    <td><a href='EquipoFicha.php?id_Equipo=<?=$equipo->getId()?>'>    <?=$equipo->getNombre()?> </a></td>
+                    <td>    <?=$equipo->getPuntos()?> </td>
+                    <td>    <?=$equipo->getPartidosJugados()?> </td>
+                    <td>    <?=$equipo->getVictorias()?> </td>
+                    <td>    <?=$equipo->getEmpates()?> </td>
+                    <td>    <?=$equipo->getDerrotas()?> </td>
+                    <td>    <?=$equipo->getGolesFavor()?> </td>
+                    <td>    <?=$equipo->getGolesContra()?> </td>
+                    <td>    <?=$equipo->getDiferenciaGoles()?> </td>
+                    <td><a href='EquipoEliminar.php?id=<?=$equipo->getId()?>'> (X)  </a></td>
                 </tr>
             <?php } ?>
 

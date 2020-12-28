@@ -106,5 +106,38 @@ class DAO
             [$nombre, $escudo, $id]
         );
     }
+    public static function equipoFicha($id): array
+    {
+        $nuevaEntrada = ($id == -1);
+	    if ($nuevaEntrada) {
+            $equipoNombre = "<introduzca nombre>";
+            $escudo= "";
+            $puntos = 0;
+            $partidosJugados = 0;
+            $victoias = 0;
+            $empates = 0;
+            $derrotas = 0;
+            $golesFavor = 0;
+            $golesContra = 0;
+            $diferenciaGoles = 0;
+	    } else {
+            $rs= self::ejecutarConsulta(
+                "SELECT * FROM Equipo WHERE id_Equipo=?",
+                [$id]
+            );
+            $equipoNombre = $rs[0]["nombre"];
+            $escudo = $rs[0]["escudo"];
+            $puntos = $rs[0]["puntos"];
+            $partidosJugados = $rs[0]["partidos_Jugados"];
+            $victoias = $rs[0]["victorias"];
+            $empates = $rs[0]["empates"];
+            $derrotas = $rs[0]["derrotas"];
+            $golesFavor = $rs[0]["goles_Favor"];
+            $golesContra = $rs[0]["goles_Contra"];
+            $diferenciaGoles = $rs[0]["diferencia_Goles"];
+	    }
+        
+        return [$nuevaEntrada, $equipoNombre, $puntos, $partidosJugados, $victoias, $empates, $derrotas, $golesFavor, $golesContra, $diferenciaGoles, $escudo];
+    }
 
 }
