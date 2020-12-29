@@ -177,7 +177,6 @@ class DAO
                 $arbitroElegido= $arbitros->getId();
             }
             for($i = 11; $i<($numEquipos +11); $i++){
-                echo $i;
                 if($idEquipo != $i){
                     DAO::ejecutarActualizacion(
                         "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro, gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
