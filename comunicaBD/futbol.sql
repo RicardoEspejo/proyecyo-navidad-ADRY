@@ -54,7 +54,7 @@ CREATE TABLE `Partido` (
     `id_Arbitro` int(3) NOT NULL,
     `gol_Local` int(2),
     `gol_Visitante` int(2),
-    `ganador` varchar(45)
+    `ganador` int(1)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `Equipo`
@@ -76,10 +76,10 @@ ALTER TABLE `Usuario`
     MODIFY `id_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 ALTER TABLE `Partido`
-    MODIFY `id_Partido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+    MODIFY `id_Partido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 ALTER TABLE `Arbitro`
-    MODIFY `id_Arbitro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+    MODIFY `id_Arbitro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 ALTER TABLE `Partido`
     ADD CONSTRAINT `fk_equipo_localId` FOREIGN KEY (`id_Equipo_Local`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE,

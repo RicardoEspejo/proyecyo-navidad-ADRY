@@ -186,3 +186,97 @@ class Arbitro extends Dato
     }
 
 }
+class Partido extends Dato
+{
+    use Identificable;
+    
+    private int $id_Equipo_Local;
+    private int $id_Equipo_Visitante;
+    private string $fecha;
+    private int $id_Arbitro;
+    private int $gol_Local;
+    private int $gol_Visitante;
+    private int $ganador;
+
+    public function __construct(int $id, int $id_Equipo_Local, int $id_Equipo_Visitante, string $fecha, int $id_Arbitro)
+    {
+        $this->setId($id);
+        $this->setEquipoLocal($id_Equipo_Local);
+        $this->setEquipoVisitante($id_Equipo_Visitante);
+        $this->setFecha($fecha);
+        $this->setArbitro($id_Arbitro);
+        $this->setGolLocal(0);
+        $this->setGolVisitante(0);
+        $this->setGanador(0);
+    }
+
+    public function getEquipoLocal(): int
+    {
+        return $this->id_Equipo_Local;
+    }
+
+    public function setEquipoLocal(int $id_Equipo_Local)
+    {
+        $this->id_Equipo_Local = $id_Equipo_Local;
+    }
+
+    public function getEquipoVisitante(): int
+    {
+        return $this->id_Equipo_Visitante;
+    }
+
+    public function setEquipoVisitante(int $id_Equipo_Visitante)
+    {
+        $this->id_Equipo_Visitante = $id_Equipo_Visitante;
+    }
+
+    public function getFecha(): string
+    {
+        return $this->fecha;
+    }
+
+    public function setFecha(string $fecha)
+    {
+        $this->fecha = $fecha;
+    }
+
+    public function getArbitro(): int
+    {
+        return $this->id_Arbitro;
+    }
+
+    public function setArbitro(int $id_Arbitro)
+    {
+        $this->id_Arbitro = $id_Arbitro;
+    }
+
+    public function getGolLocal(): int
+    {
+        return $this->$gol_Local;
+    }
+
+    public function setGolLocal(int $gol_Local)
+    {
+        $this->gol_Local = $gol_Local;
+    }
+    
+    public function getGolVisitante(): int
+    {
+        return $this->$gol_Visitante;
+    }
+
+    public function setGolVisitante(int $gol_Visitante)
+    {
+        $this->gol_Visitante = $gol_Visitante;
+    }
+
+    public function getGanador(): int
+    {
+        return $this->ganador;
+    }
+
+    public function setGanador(int $ganador)
+    {
+        $this->ganador = $ganador;
+    }
+}

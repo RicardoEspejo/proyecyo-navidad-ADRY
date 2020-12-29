@@ -53,7 +53,7 @@ class DAO
         else return $actualizacion->rowCount();
     }
 
-    //EQUIPO
+    /////////////////EQUIPO///////////////////////
     public static function equipoCrearDesdeRs(array $rs): Equipo
     {
         return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"]);
@@ -114,7 +114,7 @@ class DAO
             $escudo= "";
             $puntos = 0;
             $partidosJugados = 0;
-            $victoias = 0;
+            $victorias = 0;
             $empates = 0;
             $derrotas = 0;
             $golesFavor = 0;
@@ -129,7 +129,7 @@ class DAO
             $escudo = $rs[0]["escudo"];
             $puntos = $rs[0]["puntos"];
             $partidosJugados = $rs[0]["partidos_Jugados"];
-            $victoias = $rs[0]["victorias"];
+            $victorias = $rs[0]["victorias"];
             $empates = $rs[0]["empates"];
             $derrotas = $rs[0]["derrotas"];
             $golesFavor = $rs[0]["goles_Favor"];
@@ -137,9 +137,9 @@ class DAO
             $diferenciaGoles = $rs[0]["diferencia_Goles"];
 	    }
         
-        return [$nuevaEntrada, $equipoNombre, $puntos, $partidosJugados, $victoias, $empates, $derrotas, $golesFavor, $golesContra, $diferenciaGoles, $escudo];
+        return [$nuevaEntrada, $equipoNombre, $puntos, $partidosJugados, $victorias, $empates, $derrotas, $golesFavor, $golesContra, $diferenciaGoles, $escudo];
     }
-                        ////////////// Arbitro//////////
+    /////////////////ÁRBITRO///////////////////////
     private static function arbitroCrearDesdeRs(array $rs): Arbitro
     {
         return new Arbitro($rs["id_Arbitro"], $rs["nombre"], $rs["apellidos"]);
@@ -152,7 +152,7 @@ class DAO
     );
    }
    
-   public static function arbitroObtenerTodos(): array // Clasificación 
+   public static function arbitroObtenerTodos(): array
    {
        $datos = [];
        $rs = self::ejecutarConsulta(
@@ -165,4 +165,66 @@ class DAO
        }
        return $datos;
    }
+    /////////////////PARTIDO///////////////////////
+    public static function sorteo(){
+        $arbitro = self::arbitroObtenerTodos();
+        $equipo = self::equipoObtenerTodos();
+        $numEquipos = count($equipo);
+        $numero = 1;
+        foreach($equipo as $equipos){
+            $idEquipo= $equipos->getId();
+            foreach($arbitro as $arbitros){
+                $arbitroElegido= $arbitros->getId();
+            }
+            for($i = 11; $i<($numEquipos +11); $i++){
+                echo $i;
+                if($idEquipo != $i){
+                    DAO::ejecutarActualizacion(
+                        "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro, gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
+                        [$idEquipo, $i, "2000-01-01 00:00:00", rand($numero, $arbitroElegido), 0, 0, 0]
+                    );
+                }
+            }
+        }
+    }
+    private static function partidoCrearDesdeRs(array $rs): Partido
+    {
+        return new Partido($rs["id_Partido"], $rs["id_Equipo_Local"], $rs["id_Equipo_Visitante"],
+        $rs["fecha"], $rs["id_Arbitro"], $rs["gol_Local"], $rs["gol_Visitante"], $rs["ganador"]);
+    }
+    public static function partidoFicha($id): array
+    {
+        $nuevaEntrada = ($id == -1);
+        $rs= self::ejecutarConsulta(
+                "SELECT * FROM Partido WHERE id_Equipo=?",
+                [$id]
+        );
+        $id_Equipo_Local = $rs[0]["id_Equipo_Local"];
+        $id_Equipo_Visitante = $rs[0]["id_Equipo_Visitante"];
+        $fecha = $rs[0]["fecha"];
+        $id_Arbitro = $rs[0]["id_Arbitro"];
+	    if ($nuevaEntrada) {
+            $gol_Local = 0;
+            $gol_Visitante = 0;
+            $ganador = 0;
+	    } else {
+            $gol_Local = $rs[0]["gol_Local"];
+            $gol_Visitante = $rs[0]["gol_Visitante"];
+            $ganador = $rs[0]["ganador"];
+	    }
+        return [$nuevaEntrada, id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local, $gol_Visitante, $ganador];
+    }
+    public static function partidoObtenerTodos(): array
+    {
+       $datos = [];
+       $rs = self::ejecutarConsulta(
+           "SELECT * FROM Partido",
+           []
+       );
+       foreach ($rs as $partido) {
+           $partidos = self::partidoCrearDesdeRs($partido);
+           array_push($datos, $partidos);
+       }
+       return $datos;
+    }
 }
