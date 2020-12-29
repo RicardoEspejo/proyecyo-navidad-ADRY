@@ -227,4 +227,31 @@ class DAO
        }
        return $datos;
     }
+    //buscar arbitros
+    public static function buscarArbitros(string $palabra,int $numPalabras):array
+   {
+    $datos=[];   
+    if(!empty($palabra)){
+        if($numPalabras ==1){
+            $rs=self::ejecutarConsulta("SELECT * FROM Arbitro WHERE nombre LIKE '%$palabra%' OR apellidos LIKE '%$palabra%'",[]);
+            foreach ($rs as $arbitro) {
+                $arbitros = self::arbitroCrearDesdeRs($arbitro);
+                array_push($datos, $arbitros);
+            }
+        }else{
+            $rs=self::ejecutarConsulta("SELECT * , MATCH (nombre,apellidos) AGAINST ('$palabra') FROM Arbitro WHERE MATCH (nombre, apellidos) AGAINST ('$palabra')",[]);
+            foreach ($rs as $arbitro) {
+                $arbitros = self::arbitroCrearDesdeRs($arbitro);
+                array_push($datos, $arbitros);
+            }
+        }
+        
+    } else{
+        redireccionar("ArbitroListado.php");
+    }   
+   return $datos;
+   }
+
+
+
 }
