@@ -80,6 +80,9 @@ ALTER TABLE `Partido`
 
 ALTER TABLE `Arbitro`
     MODIFY `id_Arbitro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `Arbitro` ADD FULLTEXT(`nombre`, `apellidos`);
+ALTER TABLE `Equipo` ADD FULLTEXT(`nombre`);
+
 
 ALTER TABLE `Partido`
     ADD CONSTRAINT `fk_equipo_localId` FOREIGN KEY (`id_Equipo_Local`) REFERENCES `Equipo` (`id_Equipo`) ON DELETE CASCADE ON UPDATE CASCADE,
