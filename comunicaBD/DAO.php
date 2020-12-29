@@ -196,7 +196,7 @@ class DAO
     {
         $nuevaEntrada = ($id == -1);
         $rs= self::ejecutarConsulta(
-                "SELECT * FROM Partido WHERE id_Equipo=?",
+                "SELECT * FROM Partido WHERE id_Partido=?",
                 [$id]
         );
         $id_Equipo_Local = $rs[0]["id_Equipo_Local"];
@@ -212,7 +212,7 @@ class DAO
             $gol_Visitante = $rs[0]["gol_Visitante"];
             $ganador = $rs[0]["ganador"];
 	    }
-        return [$nuevaEntrada, id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local, $gol_Visitante, $ganador];
+        return [$nuevaEntrada, $id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local, $gol_Visitante, $ganador];
     }
     public static function partidoObtenerTodos(): array
     {

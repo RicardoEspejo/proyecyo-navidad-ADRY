@@ -46,9 +46,9 @@
 		</form>
 
 		<?php if (!$nuevaEntrada) { ?>
-			<a href='PartidoEliminar.php?id_Partido=<?=$id?>'>Eliminar partido</a>
+			<a href='partidoEliminar.php?id_Partido=<?=$id?>'>Eliminar partido</a>
 		<?php } ?>
 		<br/>
-		<a href='PartidoListado.php'>Volver al listado de partidos.</a>
+		<a href='partidoListado.php'>Volver al listado de partidos.</a>
 	</body>
 </html>

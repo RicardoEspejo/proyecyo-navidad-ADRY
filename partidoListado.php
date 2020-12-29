@@ -36,7 +36,7 @@
                     <td><a href='PartidoFicha.php?id_Partido=<?=$partido->getId()?>'><?=$partido->getId()?></a></td>
                     <td><?=$partido->getEquipoLocal()?></td>
                     <td><?=$partido->getEquipoVisitante()?> </td>
-                    <td></td><?=$partido->getfecha()?> </td>
+                    <td></td><?=$partido->getFecha()?> </td>
                     <td><?=$partido->getArbitro()?> </td>
                     <td><?=$partido->getGolLocal()?> </td>
                     <td><?=$partido->getGolVisitante()?> </td>

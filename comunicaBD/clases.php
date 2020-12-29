@@ -252,7 +252,7 @@ class Partido extends Dato
 
     public function getGolLocal(): int
     {
-        return $this->$gol_Local;
+        return $this->gol_Local;
     }
 
     public function setGolLocal(int $gol_Local)
@@ -262,7 +262,7 @@ class Partido extends Dato
     
     public function getGolVisitante(): int
     {
-        return $this->$gol_Visitante;
+        return $this->gol_Visitante;
     }
 
     public function setGolVisitante(int $gol_Visitante)
