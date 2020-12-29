@@ -13,14 +13,16 @@
 ?>
 <html>
 	<head>
-		<meta charset='UTF-8'>
-	</head>
-	<body>
-		<?php if ($nuevaEntrada == true) { ?>
-		<h1>Nueva ficha de Partido</h1>
-		<?php } else { ?>
-		<h1>Ficha de Partido</h1>
-		<?php } ?>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>ADRY-GOL</title>
+        <meta name="description" content="-">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="disenio/ADRY.css">
+    </head>
+    <body>
+        <h1>ADRY-GOL</h1>
+        <h2>Partidos > Ficha</h2>
 		<form method='post' action='PartidoGuardar.php' enctype="multipart/form-data">
 			<input type='hidden' name='id_Partido' value='<?=$id?>'>
 			<label>Equipo local: </label>

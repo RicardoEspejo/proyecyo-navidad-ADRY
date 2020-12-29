@@ -3,23 +3,19 @@
 	require_once "comunicaBD/dao.php";
 
     $partidos = DAO::partidoObtenerTodos();
-    
-    if(isset($_REQUEST["creacionCorrecta"]))
-        echo "<p>Partido creado correctamente</p>";
-    else if(isset($_REQUEST["creacionErronea"]))
-        echo "<p>Error al crear</p>";
-
-    if(isset($_REQUEST["eliminacionCorrecta"]))
-        echo "<p>Partido eliminado correctamente</p>";
-    else if(isset($_REQUEST["eliminacionErronea"]))
-        echo "<p>Error al eliminar</p>";
 ?>
 <html>
     <head>
-        <title>Partidos Listado</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>ADRY-GOL</title>
+        <meta name="description" content="-">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="disenio/ADRY.css">
     </head>
-    <body> 
-        <h1>Listado de Partidos</h1>
+    <body>
+        <h1>ADRY-GOL</h1>
+        <h2>Partidos > Listado</h2>
         <table border='1'>
             <tr>
                 <th>Número Partido</th>

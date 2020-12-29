@@ -186,6 +186,16 @@ class DAO
             }
         }
     }
+    public static function partidoCrear ($id_Equipo_Local, 
+    $id_Equipo_Visitante, $fecha, $id_Arbitro): bool
+    {
+        return self::ejecutarActualizacion(
+            "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro,
+            gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
+            [$id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local,
+            $gol_Visitante, $ganador]
+        );
+    }
     private static function partidoCrearDesdeRs(array $rs): Partido
     {
         return new Partido($rs["id_Partido"], $rs["id_Equipo_Local"], $rs["id_Equipo_Visitante"],
@@ -226,7 +236,27 @@ class DAO
        }
        return $datos;
     }
-    //buscar arbitros
+    public static function partidoEliminarPorID (int $id): bool
+    {
+        return self::ejecutarActualizacion(
+            "DELETE FROM Partido WHERE id_Partido=?", 
+            [$id]
+        );
+    }
+
+    public static function partidoActualizarPorID (int $id, int $id_Equipo_Local, 
+    int $id_Equipo_Visitante, string $fecha, int $id_Arbitro, int $gol_Local, 
+    int $gol_Visitante, int $ganador): bool
+    {
+        return self::ejecutarActualizacion(
+            "UPDATE Partido SET id_Equipo_Local=?, id_Equipo_Visitante=?, fecha=?,
+             id_Arbitro=?, gol_Local=?, gol_Visitante=?, ganador=? WHERE id_Partido=?",
+            [$id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local,
+            $gol_Visitante, $ganador, $id_Partido]
+        );
+    }
+
+    /////////////////BUSCAR ÁRBITROS///////////////////////
     public static function buscarArbitros(string $palabra,int $numPalabras):array
    {
     $datos=[];   
@@ -250,7 +280,4 @@ class DAO
     }   
    return $datos;
    }
-
-
-
 }
