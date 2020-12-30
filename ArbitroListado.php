@@ -44,7 +44,7 @@
                 <tr>
                     <td><a href='ArbitroFicha.php?id_Arbitro=<?=$arbitro->getId()?>'> <?=$arbitro->getNombre()?> </a></td>
                     <td><a href='ArbitroFicha.php?id_Arbitro=<?=$arbitro->getId()?>'> <?=$arbitro->getApellidos()?> </td>
-                    <td><a href='ArbitroEliminar.php?id=<?=$arbitro->getId()?>'> (X)  </a></td>
+                    <td><a href='ArbitroEliminar.php?id_arbitro=<?=$arbitro->getId()?>'> (X)  </a></td>
                 </tr>
             <?php } ?>
         <?php }else{ ?>
@@ -63,7 +63,7 @@
                 <tr>
                     <td><a href='ArbitroFicha.php?id_Arbitro=<?=$arbitro->getId()?>'> <?=$arbitro->getNombre()?> </a></td>
                     <td><a href='ArbitroFicha.php?id_Arbitro=<?=$arbitro->getId()?>'> <?=$arbitro->getApellidos()?> </td>
-                    <td><a href='ArbitroEliminar.php?id=<?=$arbitro->getId()?>'> (X)  </a></td>
+                    <td><a href='ArbitroEliminar.php?id_arbitro=<?=$arbitro->getId()?>'> (X)  </a></td>
                 </tr>
             <?php } ?>
         <?php } ?>

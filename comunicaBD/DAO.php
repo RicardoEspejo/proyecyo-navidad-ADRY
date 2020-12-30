@@ -165,6 +165,25 @@ class DAO
        }
        return $datos;
    }
+   public static function arbitroNuevaEntrada(int $id):bool
+   {
+       return $id == -1;
+   }
+
+   public static function arbitroFicha($id): array
+   {
+    $nuevaEntrada=self::arbitroNuevaEntrada($id);
+    if($nuevaEntrada){
+        $nombreArbitros = "<introduzca el nombre>";
+        $apellidosArbitro="<introduzca los apellidos>";
+
+    }else{
+        $rs=self::ejecutarConsulta("SELECT * FROM Arbitro WHERE id_Arbitro=?",[$id]);
+        $nombreArbitros=$rs[0]["nombre"];
+        $apellidosArbitro=$rs[0]["apellidos"];
+    }
+    return [$nombreArbitros,$apellidosArbitro];
+   }
     /////////////////PARTIDO///////////////////////
     public static function sorteo(){
         $arbitro = self::arbitroObtenerTodos();
