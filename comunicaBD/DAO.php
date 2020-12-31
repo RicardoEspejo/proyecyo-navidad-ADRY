@@ -176,20 +176,21 @@ class DAO
        return $id == -1;
    }
 
-   public static function arbitroFicha($id): array
+   public static function arbitroFicha($id): Arbitro
    {
     $nuevaEntrada=self::arbitroNuevaEntrada($id);
     if($nuevaEntrada){
         $nombreArbitros = "<introduzca el nombre>";
         $apellidosArbitro="<introduzca los apellidos>";
-
     }else{
         $rs=self::ejecutarConsulta("SELECT * FROM Arbitro WHERE id_Arbitro=?",[$id]);
         $nombreArbitros=$rs[0]["nombre"];
         $apellidosArbitro=$rs[0]["apellidos"];
+        
     }
-    return [$nombreArbitros,$apellidosArbitro];
+    return new Arbitro($id,$nombreArbitros,$apellidosArbitro);
    }
+   
     public static function arbitrosGuardar(int $id,string $nombre,string $apellidos):bool
     {
         $nuevaEntrada=self::arbitroNuevaEntrada($id);

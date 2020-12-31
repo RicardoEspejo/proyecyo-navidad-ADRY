@@ -51,22 +51,22 @@
 <input type='hidden' name='id' value='<?=$id?>' />
 <?php if ($nuevaEntrada) { ?>
     <label for='nombre'>Nombre</label>
-	<input type='text' name='nombre' placeholder='<?= $arbitros[0] ?>' />
+	<input type='text' name='nombre' placeholder='<?= $arbitros->getNombre() ?>' />
     <br/>
 
     <label for='apellidos'>Apellidos</label>
-	<input type='text' name='apellidos' placeholder='<?= $arbitros[1]?>' />
+	<input type='text' name='apellidos' placeholder='<?= $arbitros->getApellidos() ?>' />
     <br/>
 
     <br/>
     <input type='submit' name='crear' value='Crear arbitros' />
 <?php } else { ?>
     <label for='nombre'>Nombre</label>
-	<input type='text' name='nombre' value='<?= $arbitros[0] ?>' />
+	<input type='text' name='nombre' value='<?= $arbitros->getNombre() ?>' />
     <br/>
 
     <label for='apellidos'>Apellidos</label>
-	<input type='text' name='apellidos' value='<?= $arbitros[1] ?>' />
+	<input type='text' name='apellidos' value='<?= $arbitros->getApellidos() ?>' />
     <br/>
 
     <br/>
