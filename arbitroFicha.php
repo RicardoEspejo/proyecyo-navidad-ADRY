@@ -4,7 +4,7 @@
     $id = (int)$_REQUEST["id_Arbitro"];
     
 	$nuevaEntrada=DAO::arbitroNuevaEntrada($id);
-	$arbitros=DAO::arbitroFicha($id);
+    $arbitros=DAO::arbitroFicha($id);
 ?>
 <html>
 
@@ -17,10 +17,34 @@
 <body>
 
 <?php if ($nuevaEntrada) { ?>
-	<h1>Nueva ficha de categoría</h1>
+	<h1>Nueva ficha de arbitros</h1>
 <?php } else { ?>
-	<h1>Ficha de categoría</h1>
+	<h1>Ficha de arbitros</h1>
 <?php } ?>
+
+<?php if(isset($_REQUEST["creacionCorrecta"])){ ?>
+    <p>
+        <h6>Se ha creado correctamente el arbitro.</h6>
+    </p>
+<?php }else if(isset($_REQUEST["creacionIncorrecta"])){ ?>
+    <p>
+        <h6>No se ha podido crear el arbitro.</h6>
+    </p>
+
+<?php }else if(isset($_REQUEST["modificacionCorrecta"])){ ?>
+    <p>
+        <h6>Se ha modificado correctamente el arbitro.</h6>
+    </p>
+    
+<?php }else if(isset($_REQUEST["modificacionIncorrecta"])){ ?>
+    <p>
+        <h6>No se ha podido modificado el arbitro.</h6>
+    </p>
+
+<?php } ?>
+
+
+
 
 <form method='post' action='arbitroGuardar.php'>
 

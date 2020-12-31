@@ -22,11 +22,11 @@
         <form action='ArbitroListado.php' method='post'>
             <?php if($buscador == true){  ?>
                 <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>">
-                <a href="ArbitroListado.php">(X)</a>
+                <a href="ArbitroListado.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
             <?php }else{ ?>
                 <input type="search" placeholder="Buscar" name="buscar">
             <?php } ?>
-            <input type="submit" value="Buscar">
+                <input type="submit" value="Buscar">
         </form>
 
         <?php if($buscador == true) { ?>
@@ -68,6 +68,6 @@
             <?php } ?>
         <?php } ?>
         </table><br>
-        <a href='ArbitroFicha.php?id=-1'>Crear entrada</a>
+        <a href='ArbitroFicha.php?id_Arbitro=-1'>Crear entrada</a>
     </body>
 </html>

@@ -151,7 +151,13 @@ class DAO
         [$nombre, $apellidos]
     );
    }
-   
+   private static function arbitroActualizarPorID (int $id, string $nombre, string $apellidos): bool
+   {
+       return self::ejecutarActualizacion(
+           "UPDATE Arbitro SET nombre=?, apellidos=? WHERE id_Arbitro=?",
+           [$nombre, $apellidos, $id]
+       );
+   }
    public static function arbitroObtenerTodos(): array
    {
        $datos = [];
@@ -184,6 +190,27 @@ class DAO
     }
     return [$nombreArbitros,$apellidosArbitro];
    }
+    public static function arbitrosGuardar(int $id,string $nombre,string $apellidos):bool
+    {
+        $nuevaEntrada=self::arbitroNuevaEntrada($id);
+
+        if($nuevaEntrada){
+            $rs=self::arbitroCrear($nombre,$apellidos);
+                if($rs){
+                    redireccionar("arbitroFicha.php?creacionCorrecta&id_Arbitro=$id");
+                } else{
+                    redireccionar("arbitroFicha.php?creacionIncorrecta&id_Arbitro=$id");
+                }
+        }else{
+            $rs=self::arbitroActualizarPorID($id,$nombre,$apellidos);   
+            if($rs){
+                redireccionar("arbitroFicha.php?modificacionCorrecta&id_Arbitro=$id");
+            }else{
+                redireccionar("arbitroFicha.php?modificacionIncorrecta&id_Arbitro=$id");
+            }
+        }
+        return $rs;
+    }
     /////////////////PARTIDO///////////////////////
     public static function sorteo(){
         $arbitro = self::arbitroObtenerTodos();
