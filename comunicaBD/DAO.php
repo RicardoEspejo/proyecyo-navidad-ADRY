@@ -59,7 +59,7 @@ class DAO
         return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"]);
     }
 
-    public static function equipoCrear (String $nombre, String $escudo): bool
+    public static function equipoCrear(String $nombre, String $escudo): bool
     {
         return self::ejecutarActualizacion(
             "INSERT INTO Equipo (nombre, escudo, puntos, partidos_jugados, victorias, empates, derrotas, goles_Favor, goles_Contra, diferencia_Goles) VALUES(?,?,?,?,?,?,?,?,?,?)",
@@ -67,15 +67,15 @@ class DAO
         );
     }
 
-    public static function equipoObtenerPorID (int $id): ?Equipo
+    public static function equipoObtenerPorID(int $id): ?Equipo
     {
         $rs = self::ejecutarConsulta(
             "SELECT * FROM Equipo WHERE id_Equipo=?",
             [$id]
         );
-        if ($rs) 
+        if ($rs)
             return self::equipoCrearDesdeRs($rs[0]);
-        else 
+        else
             return null;
     }
 
@@ -92,14 +92,14 @@ class DAO
         }
         return $datos;
     }
-    public static function equipoEliminarPorID (int $id): bool
+    public static function equipoEliminarPorID(int $id): bool
     {
         return self::ejecutarActualizacion(
-            "DELETE FROM Equipo WHERE id_Equipo=?", 
+            "DELETE FROM Equipo WHERE id_Equipo=?",
             [$id]
         );
     }
-    public static function equipoActualizarPorID (int $id, string $nombre, string $escudo): bool
+    public static function equipoActualizarPorID(int $id, string $nombre, string $escudo): bool
     {
         return self::ejecutarActualizacion(
             "UPDATE Equipo SET nombre=?, escudo=? WHERE id_Equipo=?",
@@ -109,9 +109,9 @@ class DAO
     public static function equipoFicha($id): array
     {
         $nuevaEntrada = ($id == -1);
-	    if ($nuevaEntrada) {
+        if ($nuevaEntrada) {
             $equipoNombre = "<introduzca nombre>";
-            $escudo= "";
+            $escudo = "";
             $puntos = 0;
             $partidosJugados = 0;
             $victorias = 0;
@@ -120,8 +120,8 @@ class DAO
             $golesFavor = 0;
             $golesContra = 0;
             $diferenciaGoles = 0;
-	    } else {
-            $rs= self::ejecutarConsulta(
+        } else {
+            $rs = self::ejecutarConsulta(
                 "SELECT * FROM Equipo WHERE id_Equipo=?",
                 [$id]
             );
@@ -135,8 +135,8 @@ class DAO
             $golesFavor = $rs[0]["goles_Favor"];
             $golesContra = $rs[0]["goles_Contra"];
             $diferenciaGoles = $rs[0]["diferencia_Goles"];
-	    }
-        
+        }
+
         return [$nuevaEntrada, $equipoNombre, $puntos, $partidosJugados, $victorias, $empates, $derrotas, $golesFavor, $golesContra, $diferenciaGoles, $escudo];
     }
     /////////////////ÁRBITRO///////////////////////
@@ -144,87 +144,87 @@ class DAO
     {
         return new Arbitro($rs["id_Arbitro"], $rs["nombre"], $rs["apellidos"]);
     }
-   public static function arbitroCrear(string $nombre, string $apellidos):bool
-   {
-    return self::ejecutarActualizacion(
-        "INSERT INTO Arbitro (nombre,apellidos) VALUES(?,?)",
-        [$nombre, $apellidos]
-    );
-   }
-   private static function arbitroActualizarPorID (int $id, string $nombre, string $apellidos): bool
-   {
-       return self::ejecutarActualizacion(
-           "UPDATE Arbitro SET nombre=?, apellidos=? WHERE id_Arbitro=?",
-           [$nombre, $apellidos, $id]
-       );
-   }
-   public static function arbitroObtenerTodos(): array
-   {
-       $datos = [];
-       $rs = self::ejecutarConsulta(
-           "SELECT * FROM Arbitro",
-           []
-       );
-       foreach ($rs as $arbitro) {
-           $arbitros = self::arbitroCrearDesdeRs($arbitro);
-           array_push($datos, $arbitros);
-       }
-       return $datos;
-   }
-   public static function arbitroNuevaEntrada(int $id):bool
-   {
-       return $id == -1;
-   }
-
-   public static function arbitroFicha($id): Arbitro
-   {
-    $nuevaEntrada=self::arbitroNuevaEntrada($id);
-    if($nuevaEntrada){
-        $nombreArbitros = "<introduzca el nombre>";
-        $apellidosArbitro="<introduzca los apellidos>";
-    }else{
-        $rs=self::ejecutarConsulta("SELECT * FROM Arbitro WHERE id_Arbitro=?",[$id]);
-        $nombreArbitros=$rs[0]["nombre"];
-        $apellidosArbitro=$rs[0]["apellidos"];
-        
-    }
-    return new Arbitro($id,$nombreArbitros,$apellidosArbitro);
-   }
-   
-    public static function arbitrosGuardar(int $id,string $nombre,string $apellidos):bool
+    public static function arbitroCrear(string $nombre, string $apellidos): bool
     {
-        $nuevaEntrada=self::arbitroNuevaEntrada($id);
+        return self::ejecutarActualizacion(
+            "INSERT INTO Arbitro (nombre,apellidos) VALUES(?,?)",
+            [$nombre, $apellidos]
+        );
+    }
+    private static function arbitroActualizarPorID(int $id, string $nombre, string $apellidos): bool
+    {
+        return self::ejecutarActualizacion(
+            "UPDATE Arbitro SET nombre=?, apellidos=? WHERE id_Arbitro=?",
+            [$nombre, $apellidos, $id]
+        );
+    }
+    public static function arbitroObtenerTodos(): array
+    {
+        $datos = [];
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Arbitro",
+            []
+        );
+        foreach ($rs as $arbitro) {
+            $arbitros = self::arbitroCrearDesdeRs($arbitro);
+            array_push($datos, $arbitros);
+        }
+        return $datos;
+    }
+    public static function arbitroNuevaEntrada(int $id): bool
+    {
+        return $id == -1;
+    }
 
-        if($nuevaEntrada){
-            $rs=self::arbitroCrear($nombre,$apellidos);
-                if($rs){
-                    redireccionar("arbitroFicha.php?creacionCorrecta&id_Arbitro=$id");
-                } else{
-                    redireccionar("arbitroFicha.php?creacionIncorrecta&id_Arbitro=$id");
-                }
-        }else{
-            $rs=self::arbitroActualizarPorID($id,$nombre,$apellidos);   
-            if($rs){
+    public static function arbitroFicha($id): Arbitro
+    {
+        $nuevaEntrada = self::arbitroNuevaEntrada($id);
+        if ($nuevaEntrada) {
+            $nombreArbitros = "<introduzca el nombre>";
+            $apellidosArbitro = "<introduzca los apellidos>";
+        } else {
+            $rs = self::ejecutarConsulta("SELECT * FROM Arbitro WHERE id_Arbitro=?", [$id]);
+            $nombreArbitros = $rs[0]["nombre"];
+            $apellidosArbitro = $rs[0]["apellidos"];
+        }
+        return new Arbitro($id, $nombreArbitros, $apellidosArbitro);
+    }
+
+    public static function arbitrosGuardar(int $id, string $nombre, string $apellidos): bool
+    {
+        $nuevaEntrada = self::arbitroNuevaEntrada($id);
+
+        if ($nuevaEntrada) {
+            $rs = self::arbitroCrear($nombre, $apellidos);
+            if ($rs) {
+                redireccionar("arbitroFicha.php?creacionCorrecta&id_Arbitro=$id");
+            } else {
+                redireccionar("arbitroFicha.php?creacionIncorrecta&id_Arbitro=$id");
+            }
+        } else {
+            $rs = self::arbitroActualizarPorID($id, $nombre, $apellidos);
+            if ($rs) {
                 redireccionar("arbitroFicha.php?modificacionCorrecta&id_Arbitro=$id");
-            }else{
+            } else {
                 redireccionar("arbitroFicha.php?modificacionIncorrecta&id_Arbitro=$id");
             }
         }
         return $rs;
     }
     /////////////////PARTIDO///////////////////////
-    public static function sorteo(){
+    public static function sorteo()
+    {
         $arbitro = self::arbitroObtenerTodos();
         $equipo = self::equipoObtenerTodos();
         $numEquipos = count($equipo);
         $numero = 1;
-        foreach($equipo as $equipos){
-            $idEquipo= $equipos->getId();
-            foreach($arbitro as $arbitros){
-                $arbitroElegido= $arbitros->getId();
+        foreach ($equipo as $equipos) {
+            $idEquipo = $equipos->getId();
+            foreach ($arbitro as $arbitros) {
+                $arbitroElegido = $arbitros->getId();
             }
-            for($i = 11; $i<($numEquipos +11); $i++){
-                if($idEquipo != $i){
+            for ($i = 11; $i < ($numEquipos + 11); $i++) {
+                if ($idEquipo != $i) {
                     DAO::ejecutarActualizacion(
                         "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro, gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
                         [$idEquipo, $i, "2000-01-01 00:00:00", rand($numero, $arbitroElegido), 0, 0, 0]
@@ -233,98 +233,194 @@ class DAO
             }
         }
     }
-    public static function partidoCrear ($id_Equipo_Local, 
-    $id_Equipo_Visitante, $fecha, $id_Arbitro): bool
-    {
+    public static function partidoCrear(
+        $id_Equipo_Local,
+        $id_Equipo_Visitante,
+        $fecha,
+        $id_Arbitro
+    ): bool {
         return self::ejecutarActualizacion(
             "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro,
             gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
-            [$id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local,
-            $gol_Visitante, $ganador]
+            [
+                $id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local,
+                $gol_Visitante, $ganador
+            ]
         );
     }
     private static function partidoCrearDesdeRs(array $rs): Partido
     {
-        return new Partido($rs["id_Partido"], $rs["id_Equipo_Local"], $rs["id_Equipo_Visitante"],
-        $rs["fecha"], $rs["id_Arbitro"], $rs["gol_Local"], $rs["gol_Visitante"], $rs["ganador"]);
+        return new Partido(
+            $rs["id_Partido"],
+            $rs["id_Equipo_Local"],
+            $rs["id_Equipo_Visitante"],
+            $rs["fecha"],
+            $rs["id_Arbitro"],
+            $rs["gol_Local"],
+            $rs["gol_Visitante"],
+            $rs["ganador"]
+        );
     }
     public static function partidoFicha($id): array
     {
         $nuevaEntrada = ($id == -1);
-        $rs= self::ejecutarConsulta(
-                "SELECT * FROM Partido WHERE id_Partido=?",
-                [$id]
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Partido WHERE id_Partido=?",
+            [$id]
         );
         $id_Equipo_Local = $rs[0]["id_Equipo_Local"];
         $id_Equipo_Visitante = $rs[0]["id_Equipo_Visitante"];
         $fecha = $rs[0]["fecha"];
         $id_Arbitro = $rs[0]["id_Arbitro"];
-	    if ($nuevaEntrada) {
+        if ($nuevaEntrada) {
             $gol_Local = 0;
             $gol_Visitante = 0;
             $ganador = 0;
-	    } else {
+        } else {
             $gol_Local = $rs[0]["gol_Local"];
             $gol_Visitante = $rs[0]["gol_Visitante"];
             $ganador = $rs[0]["ganador"];
-	    }
+        }
         return [$nuevaEntrada, $id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local, $gol_Visitante, $ganador];
     }
     public static function partidoObtenerTodos(): array
     {
-       $datos = [];
-       $rs = self::ejecutarConsulta(
-           "SELECT * FROM Partido",
-           []
-       );
-       foreach ($rs as $partido) {
-           $partidos = self::partidoCrearDesdeRs($partido);
-           array_push($datos, $partidos);
-       }
-       return $datos;
+        $datos = [];
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Partido",
+            []
+        );
+        foreach ($rs as $partido) {
+            $partidos = self::partidoCrearDesdeRs($partido);
+            array_push($datos, $partidos);
+        }
+        return $datos;
     }
-    public static function partidoEliminarPorID (int $id): bool
+    public static function partidoEliminarPorID(int $id): bool
     {
         return self::ejecutarActualizacion(
-            "DELETE FROM Partido WHERE id_Partido=?", 
+            "DELETE FROM Partido WHERE id_Partido=?",
             [$id]
         );
     }
 
-    public static function partidoActualizarPorID (int $id, int $id_Equipo_Local, 
-    int $id_Equipo_Visitante, string $fecha, int $id_Arbitro, int $gol_Local, 
-    int $gol_Visitante, int $ganador): bool
-    {
+    public static function partidoActualizarPorID(
+        int $id,
+        int $id_Equipo_Local,
+        int $id_Equipo_Visitante,
+        string $fecha,
+        int $id_Arbitro,
+        int $gol_Local,
+        int $gol_Visitante,
+        int $ganador
+    ): bool {
         return self::ejecutarActualizacion(
             "UPDATE Partido SET id_Equipo_Local=?, id_Equipo_Visitante=?, fecha=?,
              id_Arbitro=?, gol_Local=?, gol_Visitante=?, ganador=? WHERE id_Partido=?",
-            [$id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local,
-            $gol_Visitante, $ganador, $id_Partido]
+            [
+                $id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local,
+                $gol_Visitante, $ganador, $id_Partido
+            ]
         );
     }
 
     /////////////////BUSCAR ÁRBITROS///////////////////////
-    public static function buscarArbitros(string $palabra,int $numPalabras):array
-   {
-    $datos=[];   
-    if(!empty($palabra)){
-        if($numPalabras ==1){
-            $rs=self::ejecutarConsulta("SELECT * FROM Arbitro WHERE nombre LIKE '%$palabra%' OR apellidos LIKE '%$palabra%'",[]);
-            foreach ($rs as $arbitro) {
-                $arbitros = self::arbitroCrearDesdeRs($arbitro);
-                array_push($datos, $arbitros);
+    public static function buscarArbitros(string $palabra, int $numPalabras): array
+    {
+        $datos = [];
+        if (!empty($palabra)) {
+            if ($numPalabras == 1) {
+                $rs = self::ejecutarConsulta("SELECT * FROM Arbitro WHERE nombre LIKE '%$palabra%' OR apellidos LIKE '%$palabra%'", []);
+                foreach ($rs as $arbitro) {
+                    $arbitros = self::arbitroCrearDesdeRs($arbitro);
+                    array_push($datos, $arbitros);
+                }
+            } else {
+                $rs = self::ejecutarConsulta("SELECT * , MATCH (nombre,apellidos) AGAINST ('$palabra') FROM Arbitro WHERE MATCH (nombre, apellidos) AGAINST ('$palabra')", []);
+                foreach ($rs as $arbitro) {
+                    $arbitros = self::arbitroCrearDesdeRs($arbitro);
+                    array_push($datos, $arbitros);
+                }
             }
-        }else{
-            $rs=self::ejecutarConsulta("SELECT * , MATCH (nombre,apellidos) AGAINST ('$palabra') FROM Arbitro WHERE MATCH (nombre, apellidos) AGAINST ('$palabra')",[]);
-            foreach ($rs as $arbitro) {
-                $arbitros = self::arbitroCrearDesdeRs($arbitro);
-                array_push($datos, $arbitros);
-            }
+        } else {
+            redireccionar("ArbitroListado.php");
         }
-        
-    } else{
-        redireccionar("ArbitroListado.php");
-    }   
-   return $datos;
-   }
+        return $datos;
+    }
+
+
+    /////////////USUARIO///////////////////////////////////////////
+
+    public static function usuarioCrearDesdeRs(array $rs): Usuario
+    {
+        return new Usuario($rs["id_Usuario"], $rs["identificador"], $rs["contrasenna"], $rs["tipo"]);
+    }
+
+    public static function usuarioCrear(String $identificador, String $contrasenna, bool $tipo): bool
+    {
+        return self::ejecutarActualizacion(
+            "INSERT INTO usuario (identificador, contrasenna, tipo) VALUES(?,?,?)",
+            [$identificador, $contrasenna, $tipo]
+        );
+    }
+
+    public static function usuarioObtenerPorID(int $id): ?Usuario
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM usuario WHERE id_Usuario=?",
+            [$id]
+        );
+        if ($rs)
+            return self::UsuarioCrearDesdeRs($rs[0]);
+        else
+            return null;
+    }
+
+    public static function usuarioObtenerTodos(): array
+    {
+        $datos = [];
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Usuario ORDER BY identificador",
+            []
+        );
+        foreach ($rs as $fila) {
+            $usuario = self::usuarioCrearDesdeRs($fila);
+            array_push($datos, $usuario);
+        }
+        return $datos;
+    }
+
+    public static function usuarioEliminarPorID(int $id): bool
+    {
+        return self::ejecutarActualizacion(
+            "DELETE FROM usuario WHERE id_Usuario=?",
+            [$id]
+        );
+    }
+    public static function usuarioActualizarPorID(int $id, string $identificador, string $contrasenna, bool $tipo): bool
+    {
+        return self::ejecutarActualizacion(
+            "UPDATE Usuario SET identificador=?, contrasenna=?, tipo=? WHERE id_Equipo=?",
+            [$identificador, $contrasenna, $tipo, $id]
+        );
+    }
+    public static function usuarioFicha($id): array
+    {
+        $nuevaEntrada = ($id == -1);
+        if ($nuevaEntrada) {
+            $identificador = "<introduzca nombre de usuario>";
+            $contrasenna = "";
+            $tipo = 0;
+        } else {
+            $rs = self::ejecutarConsulta(
+                "SELECT * FROM usuario WHERE id_Usuario=?",
+                [$id]
+            );
+            $identificador = $rs[0]["identificador"];
+            $contrasenna = $rs[0]["contrasenna"];
+            $tipo = $rs[0]["tipo"];
+        }
+
+        return [$nuevaEntrada, $identificador, $contrasenna, $tipo];
+    }
 }

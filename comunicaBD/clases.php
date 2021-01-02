@@ -280,3 +280,53 @@ class Partido extends Dato
         $this->ganador = $ganador;
     }
 }
+
+class Usuario extends Dato
+{
+    use Identificable;
+
+    private string $identificador;
+    private string $contrasenna;
+    private bool $tipo;
+    
+
+    public function __construct(int $id, string $identificador, string $contrasenna, bool $tipo)
+    {
+        $this->setId($id);
+        $this->setIdentificador($identificador); //nombreUsuario
+        $this->setContrasenna($contrasenna);
+        $this->setTipo($tipo);
+    }
+
+    public function getIdentificador(): string
+    {
+        return $this->identificador;
+    }
+
+    public function setIdentificador(string $identificador)
+    {
+        $this->identificador = $identificador;
+    }
+
+    public function getContrasenna(): string
+    {
+        return $this->contrasenna;
+    }
+
+    public function setContrasenna(string $contrasenna)
+    {
+        $this->contrasenna = $contrasenna;
+    }
+
+    public function getTipo(): bool
+    {
+        return $this->tipo;
+    }
+
+    public function setTipo(bool $tipo)
+    {
+        $this->tipo = $tipo;
+    }
+    
+
+}
