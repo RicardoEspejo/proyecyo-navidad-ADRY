@@ -7,7 +7,7 @@
     if(isset($_REQUEST["buscar"])){
         $buscar=strtolower($_REQUEST["buscar"]);
         $buscador=true;
-        $buscarEquipo=DAO::buscarEquipos($buscar,str_word_count($buscar,0));
+        $buscarEquipo=DAO::buscarEquipos($buscar);
     }else{
         $buscador=false;
     }  

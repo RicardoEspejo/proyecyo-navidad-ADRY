@@ -413,7 +413,39 @@ class DAO
         }
         return $datos;
     }
+    public static function buscarPartidos(string $palabra,int $numPalabras):array
+   {
+    $datos=[];   
+    if(!empty($palabra)){
+        if($numPalabras ==1){
+            $rs=self::ejecutarConsulta("SELECT q.id_Equipo,q.nombre,a.id_Arbitro ,a.nombre ,a.apellidos ,p.id_Equipo_Local ,p.id_Equipo_Visitante ,p.id_Arbitro ,p.fecha ,p.ganador,p.id_Partido,p.gol_Local,p.gol_Visitante,q2.id_Equipo,q2.nombre
+            FROM Partido AS p 
+                INNER JOIN Equipo AS q ON p.id_Equipo_Local = q.id_Equipo
+                INNER JOIN Equipo AS q2 ON p.id_Equipo_Visitante = q2.id_Equipo
+                INNER JOIN Arbitro AS a ON p.id_Arbitro = a.id_Arbitro
+            WHERE q.nombre LIKE '%$palabra%' OR a.nombre LIKE '%$palabra%' OR a.apellidos LIKE '%$palabra%' OR p.fecha LIKE '%$palabra%' OR p.ganador LIKE '%$palabra%' OR q2.nombre LIKE '%$palabra%'",[]);
+            foreach ($rs as $partido) {
+                $partidos = self::partidoCrearDesdeRs($partido);
+                array_push($datos, $partidos);
+            }
+        }else{
+            $rs=self::ejecutarConsulta("SELECT q.id_Equipo,q.nombre,a.id_Arbitro ,a.nombre ,a.apellidos ,p.id_Equipo_Local ,p.id_Equipo_Visitante ,p.id_Arbitro ,p.fecha ,p.ganador,p.id_Partido,p.gol_Local,p.gol_Visitante,q2.id_Equipo,q2.nombre , FROM Partido AS p 
+            INNER JOIN Equipo AS q ON p.id_Equipo_Local = q.id_Equipo
+            INNER JOIN Equipo AS q2 ON p.id_Equipo_Visitante = q2.id_Equipo
+            INNER JOIN Arbitro AS a ON p.id_Arbitro = a.id_Arbitro
+            WHERE MATCH (q.nombre,a.nombre,a.apellidos,q2.nombre) AGAINST ('$palabra')",[]);
 
+            foreach ($rs as $arbitro) {
+                $arbitros = self::arbitroCrearDesdeRs($arbitro);
+                array_push($datos, $arbitros);
+            }
+        }
+        
+    } else{
+        redireccionar("ArbitroListado.php");
+    }   
+   return $datos;
+   }
 
     /////////////USUARIO///////////////////////////////////////////
 
