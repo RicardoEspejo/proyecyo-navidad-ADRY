@@ -79,11 +79,11 @@ class DAO
             return null;
     }
 
-    public static function equipoObtenerTodos(): array // Clasificación 
+    public static function equipoObtenerTodos(): array 
     {
         $datos = [];
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM Equipo ORDER BY puntos",
+            "SELECT * FROM Equipo",
             []
         );
         foreach ($rs as $fila) {
@@ -91,6 +91,19 @@ class DAO
             array_push($datos, $equipo);
         }
         return $datos;
+    }
+    public static function ClasificacionObtener(): array 
+    {
+        $clasificacion = [];
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Equipo ORDER BY puntos, diferencia_Goles",
+            []
+        );
+        foreach ($rs as $fila) {
+            $equipo = self::equipoCrearDesdeRs($fila);
+            array_push($clasificacion, $equipo);
+        }
+        return $clasificacion;
     }
     public static function equipoEliminarPorID(int $id): bool
     {
