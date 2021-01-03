@@ -5,11 +5,8 @@
 	$id = (int)$_REQUEST["id_Partido"];
     $partido= DAO::partidoFicha($id);
 	$nuevaEntrada= $partido[0];
-	
-	if(isset($_REQUEST["modificacionCorrecta"]))
-        echo "<p>Partido actualizado correctamente</p>";
-    else if(isset($_REQUEST["modificacionErronea"]))
-        echo "<p>Error al actualizar</p>";
+	$rsEquipos= DAO::partidoSelectEquipos();
+	$localId = $partido[1]["id_Equipo_Local"];
 ?>
 <html>
 	<head>
@@ -26,7 +23,15 @@
 		<form method='post' action='PartidoGuardar.php' enctype="multipart/form-data">
 			<input type='hidden' name='id_Partido' value='<?=$id?>'>
 			<label>Equipo local: </label>
-			<input type='text' name='id_Equipo_Local' value='<?=$partido[1]?>'><br/>
+			<select name='equipoLocalId'>
+				<?php foreach ($rsEquipos as $filaEquipo) {
+					$id_Equipo = (int) $filaEquipo["id_Equipo"];
+					$nombre = $filaEquipo["nombre"];
+					if ($id_Equipo == $localId) $seleccion = "selected='true'";
+					else $seleccion = "";
+					echo "<option value='$id_Equipo' $seleccion>$nombre</option>";
+				}?>
+			</select><br/>
 			<label>Equipo visitante: </label>
 			<input type='text' name='id_Equipo_Visitante' value='<?=$partido[2]?>''><br/>
 			<label>Fecha: </label>

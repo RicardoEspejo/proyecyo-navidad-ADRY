@@ -358,6 +358,15 @@ class DAO
         $arbitroNombre = $nombre ." " .$apellidos;
         return $arbitroNombre;
     }
+
+    public static function partidoSelectEquipos()
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT id_Equipo, nombre FROM Equipo order by nombre",[]
+        );
+        return $rs;
+    }
+
     /////////////////BUSCAR ÁRBITROS///////////////////////
     public static function buscarArbitros(string $palabra, int $numPalabras): array
     {
