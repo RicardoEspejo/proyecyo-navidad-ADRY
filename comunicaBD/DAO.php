@@ -281,7 +281,10 @@ class DAO
             $gol_Visitante = $rs[0]["gol_Visitante"];
             $ganador = $rs[0]["ganador"];
         }
-        return [$nuevaEntrada, $id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local, $gol_Visitante, $ganador];
+        $nombreLocal = self::equipoObtenerNombre($id_Equipo_Local);
+        $nombreVisitante = self::equipoObtenerNombre($id_Equipo_Visitante);
+        $nombreArbitro = self::arbitroObtenerNombre($id_Arbitro);
+        return [$nuevaEntrada, $nombreLocal, $nombreVisitante, $fecha, $nombreArbitro, $gol_Local, $gol_Visitante, $ganador];
     }
     public static function partidoObtenerTodos(): array
     {
@@ -323,7 +326,26 @@ class DAO
             ]
         );
     }
+    
+    public static function equipoObtenerNombre(int $id)
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Equipo WHERE id_Equipo=?",
+            [$id]
+        );
+        $equipoNombre = $rs[0]["nombre"];
+        return $equipoNombre;
+    }
 
+    public static function arbitroObtenerNombre(int $id)
+    {
+        $rs = self::ejecutarConsulta(
+            "SELECT * FROM Arbitro WHERE id_Arbitro=?",
+            [$id]
+        );
+        $arbitroNombre = $rs[0]["nombre"];
+        return $arbitroNombre;
+    }
     /////////////////BUSCAR ÁRBITROS///////////////////////
     public static function buscarArbitros(string $palabra, int $numPalabras): array
     {

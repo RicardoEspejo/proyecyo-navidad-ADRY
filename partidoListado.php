@@ -30,10 +30,10 @@
             <?php foreach ($partidos as $partido) { ?>
                 <tr>
                     <td><a href='PartidoFicha.php?id_Partido=<?=$partido->getId()?>'><?=$partido->getId()?></a></td>
-                    <td><?=$partido->getEquipoLocal()?></td>
-                    <td><?=$partido->getEquipoVisitante()?> </td>
+                    <td><?=$partido->getNombreLocal()?></td>
+                    <td><?=$partido->getNombreVisitante()?> </td>
                     <td></td><?=$partido->getFecha()?> </td>
-                    <td><?=$partido->getArbitro()?> </td>
+                    <td><?=$partido->getNombreArbitro()?> </td>
                     <td><?=$partido->getGolLocal()?> </td>
                     <td><?=$partido->getGolVisitante()?> </td>
                     <td><?=$partido->getGanador()?> </td>

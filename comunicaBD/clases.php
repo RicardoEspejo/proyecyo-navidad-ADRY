@@ -197,8 +197,11 @@ class Partido extends Dato
     private int $gol_Local;
     private int $gol_Visitante;
     private int $ganador;
+    private string $nombreLocal;
+    private string $nombreVisitante;
+    private string $nombreArbitro;
 
-    public function __construct(int $id, int $id_Equipo_Local, int $id_Equipo_Visitante, string $fecha, int $id_Arbitro)
+    public function __construct(int $id, int $id_Equipo_Local, int $id_Equipo_Visitante, string $fecha, int $id_Arbitro, string $nombreLocal, string $nombreVisitante, string $nombreArbitro)
     {
         $this->setId($id);
         $this->setEquipoLocal($id_Equipo_Local);
@@ -208,6 +211,9 @@ class Partido extends Dato
         $this->setGolLocal(0);
         $this->setGolVisitante(0);
         $this->setGanador(0);
+        $this->setNombreLocal($nombreLocal);
+        $this->setNombreVisitante($nombreVisitante);
+        $this->setNombreArbitro($nombreArbitro);
     }
 
     public function getEquipoLocal(): int
@@ -278,6 +284,36 @@ class Partido extends Dato
     public function setGanador(int $ganador)
     {
         $this->ganador = $ganador;
+    }
+
+    public function getNombreLocal(): string
+    {
+        return $this->nombreLocal;
+    }
+
+    public function setNombreLocal(string $nombreLocal)
+    {
+        $this->nombreLocal = $nombreLocal;
+    }
+
+    public function getNombreVisitante(): string
+    {
+        return $this->nombreVisitante;
+    }
+
+    public function setNombreVisitante(string $nombreVisitante)
+    {
+        $this->nombreVisitante = $nombreVisitante;
+    }
+
+    public function getNombreArbitro(): string
+    {
+        return $this->nombreArbitro;
+    }
+
+    public function setNombreArbitro(string $nombreArbitro)
+    {
+        $this->nombreArbitro = $nombreArbitro;
     }
 }
 

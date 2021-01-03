@@ -26,13 +26,13 @@
 		<form method='post' action='PartidoGuardar.php' enctype="multipart/form-data">
 			<input type='hidden' name='id_Partido' value='<?=$id?>'>
 			<label>Equipo local: </label>
-			<input type='text' name='id_Equipo_Local' value='<?=$partido[1]?>' readonly><br/>
+			<input type='text' name='id_Equipo_Local' value='<?=$partido[1]?>'><br/>
 			<label>Equipo visitante: </label>
-			<input type='text' name='id_Equipo_Visitante' value='<?=$partido[2]?>' readonly><br/>
+			<input type='text' name='id_Equipo_Visitante' value='<?=$partido[2]?>''><br/>
 			<label>Fecha: </label>
 			<input type='text' name='fecha' value='<?=$partido[3]?>'><br/>
 			<label>Árbitro:</label>
-			<input type='text' name='id_Arbitro' value='<?=$partido[4]?>' readonly><br/>
+			<input type='text' name='id_Arbitro' value='<?=$partido[4]?>'><br/>
 			<label>Goles Local</label>
 			<input type='number' name='gol_Local' value='<?=$partido[5]?>'><br/>
 			<label>Goles Visitante</label>
