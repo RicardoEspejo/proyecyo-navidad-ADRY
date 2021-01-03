@@ -211,6 +211,13 @@ class DAO
         }
         return $rs;
     }
+    public static function arbitrosEliminarPorID(int $id):bool
+    {
+        return self::ejecutarActualizacion(
+            "DELETE FROM Arbitro WHERE id_Arbitro=?", 
+            [$id]
+        );
+    }
     /////////////////PARTIDO///////////////////////
     public static function sorteo()
     {
