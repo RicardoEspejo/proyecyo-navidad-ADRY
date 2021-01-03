@@ -3,6 +3,7 @@
 	require_once "comunicaBD/dao.php";
 
     $partidos = DAO::partidoObtenerTodos();
+    
 ?>
 <html>
     <head>
@@ -30,10 +31,10 @@
             <?php foreach ($partidos as $partido) { ?>
                 <tr>
                     <td><a href='PartidoFicha.php?id_Partido=<?=$partido->getId()?>'><?=$partido->getId()?></a></td>
-                    <td><?=$partido->getNombreLocal()?></td>
-                    <td><?=$partido->getNombreVisitante()?> </td>
-                    <td></td><?=$partido->getFecha()?> </td>
-                    <td><?=$partido->getNombreArbitro()?> </td>
+                    <td><?=$nombreLocal = DAO::equipoObtenerNombre($partido->getEquipoLocal());?></td>
+                    <td><?=$nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante());?></td>
+                    <td><?=$partido->getFecha()?></td>
+                    <td><?=$nombreArbitro = DAO::arbitroObtenerNombre($partido->getArbitro());?></td>
                     <td><?=$partido->getGolLocal()?> </td>
                     <td><?=$partido->getGolVisitante()?> </td>
                     <td><?=$partido->getGanador()?> </td>

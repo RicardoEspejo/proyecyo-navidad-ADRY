@@ -211,13 +211,6 @@ class DAO
         }
         return $rs;
     }
-    public static function arbitrosEliminarPorID(int $id):bool
-    {
-        return self::ejecutarActualizacion(
-            "DELETE FROM Arbitro WHERE id_Arbitro=?", 
-            [$id]
-        );
-    }
     /////////////////PARTIDO///////////////////////
     public static function sorteo()
     {
@@ -271,19 +264,23 @@ class DAO
     public static function partidoFicha($id): array
     {
         $nuevaEntrada = ($id == -1);
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM Partido WHERE id_Partido=?",
-            [$id]
-        );
-        $id_Equipo_Local = $rs[0]["id_Equipo_Local"];
-        $id_Equipo_Visitante = $rs[0]["id_Equipo_Visitante"];
-        $fecha = $rs[0]["fecha"];
-        $id_Arbitro = $rs[0]["id_Arbitro"];
         if ($nuevaEntrada) {
+            $id_Equipo_Local = "Introduce el equipo local";
+            $id_Equipo_Visitante = "Introduce el equipo visitante";
+            $fecha = "2000-01-01 00:00:00";
+            $id_Arbitro = "Introduce el árbitro";
             $gol_Local = 0;
             $gol_Visitante = 0;
             $ganador = 0;
         } else {
+            $rs = self::ejecutarConsulta(
+                "SELECT * FROM Partido WHERE id_Partido=?",
+                [$id]
+            );
+            $id_Equipo_Local = $rs[0]["id_Equipo_Local"];
+            $id_Equipo_Visitante = $rs[0]["id_Equipo_Visitante"];
+            $fecha = $rs[0]["fecha"];
+            $id_Arbitro = $rs[0]["id_Arbitro"];
             $gol_Local = $rs[0]["gol_Local"];
             $gol_Visitante = $rs[0]["gol_Visitante"];
             $ganador = $rs[0]["ganador"];
@@ -306,6 +303,7 @@ class DAO
         }
         return $datos;
     }
+
     public static function partidoEliminarPorID(int $id): bool
     {
         return self::ejecutarActualizacion(
@@ -350,7 +348,9 @@ class DAO
             "SELECT * FROM Arbitro WHERE id_Arbitro=?",
             [$id]
         );
-        $arbitroNombre = $rs[0]["nombre"];
+        $nombre = $rs[0]["nombre"];
+        $apellidos = $rs[0]["apellidos"];
+        $arbitroNombre = $nombre ." " .$apellidos;
         return $arbitroNombre;
     }
     /////////////////BUSCAR ÁRBITROS///////////////////////

@@ -1,8 +1,13 @@
 <?php
-	require_once "comunicaBD/varios.php";
 	require_once "comunicaBD/dao.php";
 
-	$id = (int)$_REQUEST["id_Partido"];
+    $id_Partido = $_REQUEST["id_Partido"];
+    $id_Equipo_Local = $_REQUEST["id_Equipo_Local"];
+    $id_Equipo_Visitante = $_REQUEST["id_Equipo_Visitante"];
+    $fecha = $_REQUEST["fecha"];
+    $id_Arbitro = $_REQUEST["id_Arbitro"];
+    $gol_Local = $_REQUEST["gol_Local"];
+    $ganador = $_REQUEST["ganador"];
 
     $partido= DAO::partidoFicha($id);
 ?>
