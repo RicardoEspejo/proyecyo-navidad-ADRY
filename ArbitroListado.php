@@ -19,7 +19,7 @@
     </head>
     <body> 
         <h1>Listado de Arbitros</h1>
-        <form action='ArbitroListado.php' method='post'>
+        <form action='' method='post'>
             <?php if($buscador == true){  ?>
                 <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>">
                 <a href="ArbitroListado.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
@@ -50,6 +50,7 @@
         <?php }else{ ?>
             <p>
                 <h3>No se ha encontrado resultados de la busqueda <?= $buscar ?> </h3>
+                <?php header("refresh:5;url=ArbitroListado.php") ?>
             </p>
         <?php } ?>
         <?php }else{ ?>

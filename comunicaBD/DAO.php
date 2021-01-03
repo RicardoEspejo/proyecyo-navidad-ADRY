@@ -376,6 +376,21 @@ class DAO
         }
         return $datos;
     }
+    public static function buscarEquipos(string $palabra): array
+    {
+        $datos = [];
+        if (!empty($palabra)) {
+                $rs = self::ejecutarConsulta("SELECT * FROM Equipo WHERE nombre LIKE '%$palabra%' OR escudo LIKE '%$palabra%' OR puntos LIKE '%$palabra%' OR partidos_Jugados LIKE '%$palabra%' OR victorias LIKE '%$palabra%' OR empates LIKE '%$palabra%' OR derrotas LIKE '%$palabra%' OR goles_Favor LIKE '%$palabra%' OR goles_Contra LIKE '%$palabra%' OR diferencia_Goles LIKE '%$palabra%'", []);
+                foreach ($rs as $equipo) {
+                    $equipos = self::EquipoCrearDesdeRs($equipo);
+                    array_push($datos, $equipos);
+                }
+            } 
+        else {
+            redireccionar("EquipoListado.php");
+        }
+        return $datos;
+    }
 
 
     /////////////USUARIO///////////////////////////////////////////
