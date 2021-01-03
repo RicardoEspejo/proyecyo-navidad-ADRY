@@ -233,12 +233,9 @@ class DAO
             }
         }
     }
-    public static function partidoCrear(
-        $id_Equipo_Local,
-        $id_Equipo_Visitante,
-        $fecha,
-        $id_Arbitro
-    ): bool {
+    public static function partidoCrear($id_Equipo_Local, $id_Equipo_Visitante, $fecha,
+        $id_Arbitro, $gol_Local, $gol_Visitante, $ganador): bool 
+    {
         return self::ejecutarActualizacion(
             "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro,
             gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
@@ -250,16 +247,9 @@ class DAO
     }
     private static function partidoCrearDesdeRs(array $rs): Partido
     {
-        return new Partido(
-            $rs["id_Partido"],
-            $rs["id_Equipo_Local"],
-            $rs["id_Equipo_Visitante"],
-            $rs["fecha"],
-            $rs["id_Arbitro"],
-            $rs["gol_Local"],
-            $rs["gol_Visitante"],
-            $rs["ganador"]
-        );
+        return new Partido($rs["id_Partido"], $rs["id_Equipo_Local"], 
+            $rs["id_Equipo_Visitante"], $rs["fecha"], $rs["id_Arbitro"], 
+            $rs["gol_Local"], $rs["gol_Visitante"], $rs["ganador"]);
     }
     public static function partidoFicha($id): array
     {
@@ -272,6 +262,8 @@ class DAO
             $gol_Local = 0;
             $gol_Visitante = 0;
             $ganador = 0;
+            return [$nuevaEntrada, $id_Equipo_Local, $id_Equipo_Visitante, $fecha, 
+            $id_Arbitro, $gol_Local, $gol_Visitante, $ganador];
         } else {
             $rs = self::ejecutarConsulta(
                 "SELECT * FROM Partido WHERE id_Partido=?",
@@ -284,11 +276,11 @@ class DAO
             $gol_Local = $rs[0]["gol_Local"];
             $gol_Visitante = $rs[0]["gol_Visitante"];
             $ganador = $rs[0]["ganador"];
+            $nombreLocal = self::equipoObtenerNombre($id_Equipo_Local);
+            $nombreVisitante = self::equipoObtenerNombre($id_Equipo_Visitante);
+            $nombreArbitro = self::arbitroObtenerNombre($id_Arbitro);
+            return [$nuevaEntrada, $nombreLocal, $nombreVisitante, $fecha, $nombreArbitro, $gol_Local, $gol_Visitante, $ganador];
         }
-        $nombreLocal = self::equipoObtenerNombre($id_Equipo_Local);
-        $nombreVisitante = self::equipoObtenerNombre($id_Equipo_Visitante);
-        $nombreArbitro = self::arbitroObtenerNombre($id_Arbitro);
-        return [$nuevaEntrada, $nombreLocal, $nombreVisitante, $fecha, $nombreArbitro, $gol_Local, $gol_Visitante, $ganador];
     }
     public static function partidoObtenerTodos(): array
     {
@@ -313,7 +305,7 @@ class DAO
     }
 
     public static function partidoActualizarPorID(
-        int $id,
+        int $id_Partido,
         int $id_Equipo_Local,
         int $id_Equipo_Visitante,
         string $fecha,

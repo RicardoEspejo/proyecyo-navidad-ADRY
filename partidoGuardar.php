@@ -7,9 +7,10 @@
     $fecha = $_REQUEST["fecha"];
     $id_Arbitro = $_REQUEST["id_Arbitro"];
     $gol_Local = $_REQUEST["gol_Local"];
+    $gol_Visitante = $_REQUEST["gol_Visitante"];
     $ganador = $_REQUEST["ganador"];
 
-    $partido= DAO::partidoFicha($id);
+    $partido= DAO::partidoFicha($id_Partido);
 ?>
 <html>
     <head>
@@ -24,7 +25,7 @@
         <h1>ADRY-GOL</h1>
         <h2>Partidos > Guardar</h2>
         <?php
-        if($id != -1) {
+        if($id_Partido != -1) {
             $modificacionCorrecta= DAO::partidoActualizarPorID($id_Partido, $id_Equipo_Local, 
             $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local, $gol_Visitante, $ganador);
             if($modificacionCorrecta) { ?>
@@ -32,8 +33,8 @@
             <?php } else ?>
             <h3>Error en la modificación.</h3>
         <?php }else {
-            $creacionCorrecta= DAO::partidoCrear($id_Equipo_Local, 
-            $id_Equipo_Visitante, $fecha, $id_Arbitro);
+            $creacionCorrecta= DAO::partidoCrear($id_Equipo_Local, $id_Equipo_Visitante, 
+            $fecha, $id_Arbitro, $gol_Local, $gol_Visitante, $ganador);
             if($creacionCorrecta) {?>
                 <h3>Se ha creado correctamente el partido.</h3>
             <?php } else ?>
