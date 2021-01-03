@@ -6,7 +6,10 @@
     $partido= DAO::partidoFicha($id);
 	$nuevaEntrada= $partido[0];
 	$rsEquipos= DAO::partidoSelectEquipos();
-	$localId = $partido[1]["id_Equipo_Local"];
+	$rsArbitros= DAO::partidoSelectArbitros();
+	$localId = $partido[1];
+	$VisitanteId = $partido[2];
+	$arbitroId = $partido[4];
 ?>
 <html>
 	<head>
@@ -33,11 +36,27 @@
 				}?>
 			</select><br/>
 			<label>Equipo visitante: </label>
-			<input type='text' name='id_Equipo_Visitante' value='<?=$partido[2]?>''><br/>
+			<select name='equipoVisitanteId'>
+				<?php foreach ($rsEquipos as $filaEquipo) {
+					$id_Equipo = (int) $filaEquipo["id_Equipo"];
+					$nombre = $filaEquipo["nombre"];
+					if ($id_Equipo == $localId) $seleccion = "selected='true'";
+					else $seleccion = "";
+					echo "<option value='$id_Equipo' $seleccion>$nombre</option>";
+				}?>
+			</select><br/>
 			<label>Fecha: </label>
 			<input type='text' name='fecha' value='<?=$partido[3]?>'><br/>
 			<label>Árbitro:</label>
-			<input type='text' name='id_Arbitro' value='<?=$partido[4]?>'><br/>
+			<select name='arbitroId'>
+				<?php foreach ($rsArbitros as $filaArbitro) {
+					$id_Arbitro = (int) $filaArbitro["id_Arbitro"];
+					$nombre = $filaArbitro["nombre"]." ". $filaArbitro["apellidos"];
+					if ($id_Arbitro == $ArbitroId) $seleccion = "selected='true'";
+					else $seleccion = "";
+					echo "<option value='$id_Arbitro' $seleccion>$nombre</option>";
+				}?>
+			</select><br/>
 			<label>Goles Local</label>
 			<input type='number' name='gol_Local' value='<?=$partido[5]?>'><br/>
 			<label>Goles Visitante</label>
