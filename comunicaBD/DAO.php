@@ -380,6 +380,19 @@ class DAO
 
     /////////////USUARIO///////////////////////////////////////////
 
+    //Esta consulta es especialmente para el inicio de sesion
+    private static function ejecutarConsultaUsuario(string $sql, array $parametros): array
+    {
+        if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
+
+        $select = self::$pdo->prepare($sql);
+        $select->execute($parametros);
+        $rs = $select->fetch(PDO::FETCH_ASSOC); //Aqui esta la diferencia a las demás
+
+        return $rs;
+    }
+
+
     public static function usuarioCrearDesdeRs(array $rs): Usuario
     {
         return new Usuario($rs["id_Usuario"], $rs["identificador"], $rs["contrasenna"], $rs["tipo"]);
@@ -393,63 +406,49 @@ class DAO
         );
     }
 
-    public static function usuarioObtenerPorID(int $id): ?Usuario
-    {
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM usuario WHERE id_Usuario=?",
-            [$id]
-        );
-        if ($rs)
-            return self::UsuarioCrearDesdeRs($rs[0]);
-        else
-            return null;
-    }
-
-    public static function usuarioObtenerTodos(): array
+    public static function iniciarSesionUsuario(String $identificador): array
     {
         $datos = [];
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM Usuario ORDER BY identificador",
-            []
+        $rs = self::ejecutarConsultaUsuario(
+            "SELECT * FROM usuario WHERE identificador=?",
+            [$identificador]
         );
-        foreach ($rs as $fila) {
-            $usuario = self::usuarioCrearDesdeRs($fila);
-            array_push($datos, $usuario);
-        }
+        $datos = array($rs["id_Usuario"], $rs["identificador"], $rs["contrasenna"], $rs["tipo"]);
         return $datos;
     }
 
-    public static function usuarioEliminarPorID(int $id): bool
-    {
-        return self::ejecutarActualizacion(
-            "DELETE FROM usuario WHERE id_Usuario=?",
-            [$id]
-        );
-    }
-    public static function usuarioActualizarPorID(int $id, string $identificador, string $contrasenna, bool $tipo): bool
-    {
-        return self::ejecutarActualizacion(
-            "UPDATE Usuario SET identificador=?, contrasenna=?, tipo=? WHERE id_Equipo=?",
-            [$identificador, $contrasenna, $tipo, $id]
-        );
-    }
-    public static function usuarioFicha($id): array
-    {
-        $nuevaEntrada = ($id == -1);
-        if ($nuevaEntrada) {
-            $identificador = "<introduzca nombre de usuario>";
-            $contrasenna = "";
-            $tipo = 0;
-        } else {
-            $rs = self::ejecutarConsulta(
-                "SELECT * FROM usuario WHERE id_Usuario=?",
-                [$id]
-            );
-            $identificador = $rs[0]["identificador"];
-            $contrasenna = $rs[0]["contrasenna"];
-            $tipo = $rs[0]["tipo"];
-        }
+    // public static function usuarioGuardarCodigoCookie(string $identificador, string $codigoCookie = null)
+    // {
+    //     if ($codigoCookie != null) {
+    //         self::ejecutarActualizacion("UPDATE usuario SET codigoCookie=? WHERE identificador=?", [$codigoCookie, $identificador]);
+    //     } else {
+    //         self::ejecutarActualizacion("UPDATE usuario SET codigoCookie=NULL WHERE identificador=?", [$identificador]);
+    //     }
+    // }
 
-        return [$nuevaEntrada, $identificador, $contrasenna, $tipo];
-    }
+    // public static function usuarioObtenerPorIdentificadorYCodigoCookie($identificador, $codigoCookie): ?Usuario
+    // {
+    //     $rs = self::ejecutarConsulta(
+    //         "SELECT * FROM usuario WHERE identificador=? AND BINARY codigoCookie=?",
+    //         [$identificador, $codigoCookie]
+    //     );
+    //     if ($rs) {
+    //         return self::usuarioCrearDesdeRs($rs);
+    //     } else {
+    //         return null;
+    //     }
+    // }
+
+    // public static function usuarioObtenerPorIdentificadorYcontrasenna($identificador, $contrasenna): ?Usuario
+    // {
+    //     $rs = Self::ejecutarConsulta(
+    //         "SELECT * FROM usuario WHERE identificador=? AND BINARY contrasenna=?",
+    //         [$identificador, $contrasenna]
+    //     );
+    //     if ($rs) {
+    //         return self::usuarioCrearDesdeRs($rs);
+    //     } else {
+    //         return null;
+    //     }
+    // }
 }

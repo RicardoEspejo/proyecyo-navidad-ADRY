@@ -324,7 +324,8 @@ class Usuario extends Dato
     private string $identificador;
     private string $contrasenna;
     private bool $tipo;
-    
+    // private  $codigoCookie;
+
 
     public function __construct(int $id, string $identificador, string $contrasenna, bool $tipo)
     {
@@ -332,6 +333,7 @@ class Usuario extends Dato
         $this->setIdentificador($identificador); //nombreUsuario
         $this->setContrasenna($contrasenna);
         $this->setTipo($tipo);
+        // $this->setCodigoCookie($codigoCookie);
     }
 
     public function getIdentificador(): string
@@ -363,6 +365,15 @@ class Usuario extends Dato
     {
         $this->tipo = $tipo;
     }
-    
+
+    // public function getCodigoCookie()
+    // {
+    //     return $this->codigoCookie;
+    // }
+
+    // public function setCodigoCookie($codigoCookie)
+    // {
+    //     $this->codigoCookie = $codigoCookie;
+    // }
 
 }

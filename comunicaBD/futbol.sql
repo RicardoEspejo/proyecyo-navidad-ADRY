@@ -36,15 +36,16 @@ INSERT INTO `Arbitro` (`id_Arbitro`, `nombre`, `apellidos`) VALUES
 CREATE TABLE `Usuario` (
     `id_Usuario` int(3) NOT NULL,
     `identificador` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `contrasenna` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-    `tipo` tinyint(1) NOT NULL DEFAULT 0
+    `contrasenna` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+    `tipo` tinyint(1) NOT NULL DEFAULT 0,
+    `codigoCookie` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `Usuario` (`id_Usuario`, `identificador`, `contrasenna`, `tipo`) VALUES
-    (1, 'mggonzalez', 'abcd1',  1),
-    (2, 'emperez', 'abcd2',  1),
-    (3, 'pmgarcia', 'abcd1',  0),
-    (4, 'mpgimenez', '1234a', 0);
+INSERT INTO `Usuario` (`id_Usuario`, `identificador`, `contrasenna`, `tipo`, `codigoCookie`) VALUES
+    (1, 'mggonzalez', 'abcd1',  1, NULL),
+    (2, 'emperez', 'abcd2',  1, NULL),
+    (3, 'pmgarcia', 'abcd1',  0, NULL),
+    (4, 'mpgimenez', '1234a', 0, NULL);
 
 CREATE TABLE `Partido` (
     `id_Partido` int(3) NOT NULL,
