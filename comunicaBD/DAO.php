@@ -56,7 +56,10 @@ class DAO
     /////////////////EQUIPO///////////////////////
     public static function equipoCrearDesdeRs(array $rs): Equipo
     {
-        return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"], $rs["puntos"], $rs["partidos_Jugados"], $rs["victorias"], $rs["empates"], $rs["derrotas"], $rs["goles_Favor"], $rs["goles_Contra"], $rs["diferencia_Goles"]);
+        $diferenciaGoles= $rs["goles_Favor"] - $rs["goles_Contra"];
+        self::equipoActualizarPorId($rs["id_Equipo"], $rs["nombre"], $rs["escudo"], $rs["puntos"], $rs["partidos_Jugados"], $rs["victorias"], $rs["empates"], $rs["derrotas"], $rs["goles_Favor"], $rs["goles_Contra"], $diferenciaGoles);
+        return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"], $rs["puntos"], $rs["partidos_Jugados"], $rs["victorias"], $rs["empates"], $rs["derrotas"], $rs["goles_Favor"], $rs["goles_Contra"], $diferenciaGoles);
+        
     }
 
     public static function equipoCrear(String $nombre, String $escudo): bool
@@ -119,7 +122,7 @@ class DAO
         return self::ejecutarActualizacion(
             "UPDATE Equipo SET nombre=?, escudo=?, puntos=?, partidos_Jugados=?, victorias=?, empates=?, derrotas=?, 
             goles_Favor=?, goles_Contra=?, diferencia_Goles=? WHERE id_Equipo=?",
-            [$nombre, $escudo, $puntos, $partidos_Jugados, $victorias, $empates, $datos, $goles_Favor, $goles_Contra, 
+            [$nombre, $escudo, $puntos, $partidos_Jugados, $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, 
             $diferencia_Goles, $id]
         );
     }
@@ -156,6 +159,7 @@ class DAO
 
         return [$nuevaEntrada, $equipoNombre, $puntos, $partidosJugados, $victorias, $empates, $derrotas, $golesFavor, $golesContra, $diferenciaGoles, $escudo];
     }
+   
     /////////////////ÁRBITRO///////////////////////
     private static function arbitroCrearDesdeRs(array $rs): Arbitro
     {
