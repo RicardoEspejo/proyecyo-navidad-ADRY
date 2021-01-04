@@ -56,7 +56,7 @@ class DAO
     /////////////////EQUIPO///////////////////////
     public static function equipoCrearDesdeRs(array $rs): Equipo
     {
-        return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"], $rs["puntos"], $rs["partidos_Jugados"], $rs["victorias"], $rs["empates"], $rs["derrotas"], $rs["goles_Favor"], $rs["goles_Contra"], $rs["diferencia_Goles"]);
+        return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"]);
     }
 
     public static function equipoCrear(String $nombre, String $escudo): bool
@@ -79,11 +79,11 @@ class DAO
             return null;
     }
 
-    public static function equipoObtenerTodos(): array 
+    public static function equipoObtenerTodos(): array // Clasificación 
     {
         $datos = [];
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM Equipo",
+            "SELECT * FROM Equipo ORDER BY puntos",
             []
         );
         foreach ($rs as $fila) {
@@ -92,19 +92,6 @@ class DAO
         }
         return $datos;
     }
-    public static function ClasificacionObtener(): array 
-    {
-        $clasificacion = [];
-        $rs = self::ejecutarConsulta(
-            "SELECT * FROM Equipo ORDER BY puntos DESC, diferencia_Goles DESC",
-            []
-        );
-        foreach ($rs as $fila) {
-            $equipo = self::equipoCrearDesdeRs($fila);
-            array_push($clasificacion, $equipo);
-        }
-        return $clasificacion;
-    }
     public static function equipoEliminarPorID(int $id): bool
     {
         return self::ejecutarActualizacion(
@@ -112,15 +99,11 @@ class DAO
             [$id]
         );
     }
-    public static function equipoActualizarPorId(int $id, string $nombre, string $escudo, int $puntos, 
-    int $partidos_Jugados, int $victorias, int $empates, int $derrotas, int $goles_Favor, int $goles_Contra, 
-    int $diferencia_Goles): bool
+    public static function equipoActualizarPorID(int $id, string $nombre, string $escudo): bool
     {
         return self::ejecutarActualizacion(
-            "UPDATE Equipo SET nombre=?, escudo=?, puntos=?, partidos_Jugados=?, victorias=?, empates=?, derrotas=?, 
-            goles_Favor=?, goles_Contra=?, diferencia_Goles=? WHERE id_Equipo=?",
-            [$nombre, $escudo, $puntos, $partidos_Jugados, $victorias, $empates, $datos, $goles_Favor, $goles_Contra, 
-            $diferencia_Goles, $id]
+            "UPDATE Equipo SET nombre=?, escudo=? WHERE id_Equipo=?",
+            [$nombre, $escudo, $id]
         );
     }
     public static function equipoFicha($id): array
@@ -250,9 +233,12 @@ class DAO
             }
         }
     }
-    public static function partidoCrear($id_Equipo_Local, $id_Equipo_Visitante, $fecha,
-        $id_Arbitro, $gol_Local, $gol_Visitante, $ganador): bool 
-    {
+    public static function partidoCrear(
+        $id_Equipo_Local,
+        $id_Equipo_Visitante,
+        $fecha,
+        $id_Arbitro
+    ): bool {
         return self::ejecutarActualizacion(
             "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro,
             gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
@@ -264,9 +250,16 @@ class DAO
     }
     private static function partidoCrearDesdeRs(array $rs): Partido
     {
-        return new Partido($rs["id_Partido"], $rs["id_Equipo_Local"], 
-            $rs["id_Equipo_Visitante"], $rs["fecha"], $rs["id_Arbitro"], 
-            $rs["gol_Local"], $rs["gol_Visitante"], $rs["ganador"]);
+        return new Partido(
+            $rs["id_Partido"],
+            $rs["id_Equipo_Local"],
+            $rs["id_Equipo_Visitante"],
+            $rs["fecha"],
+            $rs["id_Arbitro"],
+            $rs["gol_Local"],
+            $rs["gol_Visitante"],
+            $rs["ganador"]
+        );
     }
     public static function partidoFicha($id): array
     {
@@ -279,8 +272,6 @@ class DAO
             $gol_Local = 0;
             $gol_Visitante = 0;
             $ganador = 0;
-            return [$nuevaEntrada, $id_Equipo_Local, $id_Equipo_Visitante, $fecha, 
-            $id_Arbitro, $gol_Local, $gol_Visitante, $ganador];
         } else {
             $rs = self::ejecutarConsulta(
                 "SELECT * FROM Partido WHERE id_Partido=?",
@@ -293,12 +284,11 @@ class DAO
             $gol_Local = $rs[0]["gol_Local"];
             $gol_Visitante = $rs[0]["gol_Visitante"];
             $ganador = $rs[0]["ganador"];
-            $nombreLocal = self::equipoObtenerNombre($id_Equipo_Local);
-            $nombreVisitante = self::equipoObtenerNombre($id_Equipo_Visitante);
-            $nombreArbitro = self::arbitroObtenerNombre($id_Arbitro);
-            return [$nuevaEntrada, $id_Equipo_Local, $id_Equipo_Visitante, $fecha, 
-            $id_Arbitro, $gol_Local, $gol_Visitante, $ganador];
         }
+        $nombreLocal = self::equipoObtenerNombre($id_Equipo_Local);
+        $nombreVisitante = self::equipoObtenerNombre($id_Equipo_Visitante);
+        $nombreArbitro = self::arbitroObtenerNombre($id_Arbitro);
+        return [$nuevaEntrada, $nombreLocal, $nombreVisitante, $fecha, $nombreArbitro, $gol_Local, $gol_Visitante, $ganador];
     }
     public static function partidoObtenerTodos(): array
     {
@@ -323,7 +313,7 @@ class DAO
     }
 
     public static function partidoActualizarPorID(
-        int $id_Partido,
+        int $id,
         int $id_Equipo_Local,
         int $id_Equipo_Visitante,
         string $fecha,
@@ -341,7 +331,7 @@ class DAO
             ]
         );
     }
-    
+
     public static function equipoObtenerNombre(int $id)
     {
         $rs = self::ejecutarConsulta(
@@ -360,152 +350,9 @@ class DAO
         );
         $nombre = $rs[0]["nombre"];
         $apellidos = $rs[0]["apellidos"];
-        $arbitroNombre = $nombre ." " .$apellidos;
+        $arbitroNombre = $nombre . " " . $apellidos;
         return $arbitroNombre;
     }
-
-    public static function partidoSelectEquipos(): array
-    {
-        $rs = self::ejecutarConsulta(
-            "SELECT id_Equipo, nombre FROM Equipo order by nombre",[]
-        );
-        return $rs;
-    }
-
-    public static function partidoSelectArbitros(): array
-    {
-        $rs = self::ejecutarConsulta(
-            "SELECT id_Arbitro, nombre, apellidos FROM Arbitro order by nombre",[]
-        );
-        return $rs;
-    }
-    
-    public static function establecerVictoriaLocal(int $id, int $gol_Local, int $gol_Visitante)
-    {
-        $equipo = self::equipoObtenerPorID($id);
-
-        $equipo[0] = $id;
-        $equipo[1] = $nombre;
-        $equipo[2] = $escudo;
-        $puntos = (int) $equipo[3] + 3;
-        $partidos_Jugados= (int) $equipo[4] + 1;
-        $victorias= (int) $equipo[5] + 1;
-        $equipo[6] = $empates;
-        $equipo[7] = $derrotas;
-        $goles_Favor = (int) $equipo[8] + $gol_Local;
-        $goles_Contra = (int) $equipo[9] + $gol_Vistante;
-        $equipo[10] = $diferencia_Goles;
-        
-        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
-        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
-
-    }
-
-    public static function establecerVictoriaVisitante(int $id, int $gol_Local, int $gol_Visitante)
-    {
-        $equipo = self::equipoObtenerPorID($id);
-
-        $equipo[0] = $id;
-        $equipo[1] = $nombre;
-        $equipo[2] = $escudo;
-        $puntos = (int) $equipo[3] + 3;
-        $partidos_Jugados= (int) $equipo[4] + 1;
-        $victorias= (int) $equipo[5] + 1;
-        $equipo[6] = $empates;
-        $equipo[7] = $derrotas;
-        $goles_Favor = (int) $equipo[8] + $gol_Visitante;
-        $goles_Contra = (int) $equipo[9] + $gol_Local;
-        $equipo[10] = $diferencia_Goles;
-        
-        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
-        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
-
-    }
-
-    public static function establecerEmpateLocal(int $id, int $gol_Local, int $gol_Visitante)
-    {
-        $equipo = self::equipoObtenerPorID($id);
-
-        $equipo[0] = $id;
-        $equipo[1] = $nombre;
-        $equipo[2] = $escudo;
-        $puntos = (int) $equipo[3] + 1;
-        $partidos_Jugados= (int) $equipo[4] + 1;
-        $equipo[5] = $victorias;
-        $equipo[6] = (int) $equipo[6] + 1;
-        $equipo[7] = $derrotas;
-        $goles_Favor = (int) $equipo[8] + $gol_Local;
-        $goles_Contra = (int) $equipo[9] + $gol_Vistante;
-        $equipo[10] = $diferencia_Goles;
-        
-        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
-        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
-
-    }
-
-    public static function establecerEmpateVisitante(int $id, int $gol_Local, int $gol_Visitante)
-    {
-        $equipo = self::equipoObtenerPorID($id);
-
-        $equipo[0] = $id;
-        $equipo[1] = $nombre;
-        $equipo[2] = $escudo;
-        $puntos = (int) $equipo[3] + 1;
-        $partidos_Jugados= (int) $equipo[4] + 1;
-        $equipo[5] = $victorias;
-        $equipo[6] = (int) $equipo[6] + 1;
-        $equipo[7] = $derrotas;
-        $goles_Favor = (int) $equipo[8] + $gol_Visitante;
-        $goles_Contra = (int) $equipo[9] + $gol_Local;
-        $equipo[10] = $diferencia_Goles;
-        
-        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
-        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
-
-    }
-
-    public static function establecerDerrotaLocal(int $id, int $gol_Local, int $gol_Visitante)
-    {
-        $equipo = self::equipoObtenerPorID($id);
-
-        $equipo[0] = $id;
-        $equipo[1] = $nombre;
-        $equipo[2] = $escudo;
-        $equipo[3] = $puntos;
-        $partidos_Jugados= (int) $equipo[4] + 1;
-        $equipo[5] = $victorias;
-        $equipo[6] = $empates;
-        $derrotas = (int) $equipo[7] + 1;
-        $goles_Favor = (int) $equipo[8] + $gol_Local;
-        $goles_Contra = (int) $equipo[9] + $gol_Vistante;
-        $equipo[10] = $diferencia_Goles;
-        
-        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
-        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
-
-    }
-
-    public static function establecerDerrotaVisitante(int $id, int $gol_Local, int $gol_Visitante)
-    {
-        $equipo = self::equipoObtenerPorID($id);
-
-        $equipo[0] = $id;
-        $equipo[1] = $nombre;
-        $equipo[2] = $escudo;
-        $equipo[3] = $puntos;
-        $partidos_Jugados= (int) $equipo[4] + 1;
-        $equipo[5] = $victorias;
-        $equipo[6] = $empates;
-        $derrotas = (int) $equipo[7] + 1;
-        $goles_Favor = (int) $equipo[8] + $gol_Visitante;
-        $goles_Contra = (int) $equipo[9] + $gol_Local;
-        $equipo[10] = $diferencia_Goles;
-        
-        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
-        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
-
-    }
-
     /////////////////BUSCAR ÁRBITROS///////////////////////
     public static function buscarArbitros(string $palabra, int $numPalabras): array
     {
@@ -530,55 +377,6 @@ class DAO
         return $datos;
     }
 
-    public static function buscarEquipos(string $palabra): array
-    {
-        $datos = [];
-        if (!empty($palabra)) {
-                $rs = self::ejecutarConsulta("SELECT * FROM Equipo WHERE nombre LIKE '%$palabra%' OR escudo LIKE '%$palabra%' OR puntos LIKE '%$palabra%' OR partidos_Jugados LIKE '%$palabra%' OR victorias LIKE '%$palabra%' OR empates LIKE '%$palabra%' OR derrotas LIKE '%$palabra%' OR goles_Favor LIKE '%$palabra%' OR goles_Contra LIKE '%$palabra%' OR diferencia_Goles LIKE '%$palabra%'", []);
-                foreach ($rs as $equipo) {
-                    $equipos = self::EquipoCrearDesdeRs($equipo);
-                    array_push($datos, $equipos);
-                }
-            } 
-        else {
-            redireccionar("EquipoListado.php");
-        }
-        return $datos;
-    }
-
-    public static function buscarPartidos(string $palabra,int $numPalabras):array
-   {
-    $datos=[];   
-    if(!empty($palabra)){
-        if($numPalabras ==1){
-            $rs=self::ejecutarConsulta("SELECT q.id_Equipo,q.nombre,a.id_Arbitro ,a.nombre ,a.apellidos ,p.id_Equipo_Local ,p.id_Equipo_Visitante ,p.id_Arbitro ,p.fecha ,p.ganador,p.id_Partido,p.gol_Local,p.gol_Visitante,q2.id_Equipo,q2.nombre
-            FROM Partido AS p 
-                INNER JOIN Equipo AS q ON p.id_Equipo_Local = q.id_Equipo
-                INNER JOIN Equipo AS q2 ON p.id_Equipo_Visitante = q2.id_Equipo
-                INNER JOIN Arbitro AS a ON p.id_Arbitro = a.id_Arbitro
-            WHERE q.nombre LIKE '%$palabra%' OR a.nombre LIKE '%$palabra%' OR a.apellidos LIKE '%$palabra%' OR p.fecha LIKE '%$palabra%' OR p.ganador LIKE '%$palabra%' OR q2.nombre LIKE '%$palabra%'",[]);
-            foreach ($rs as $partido) {
-                $partidos = self::partidoCrearDesdeRs($partido);
-                array_push($datos, $partidos);
-            }
-        }else{
-            $rs=self::ejecutarConsulta("SELECT q.id_Equipo,q.nombre,a.id_Arbitro ,a.nombre ,a.apellidos ,p.id_Equipo_Local ,p.id_Equipo_Visitante ,p.id_Arbitro ,p.fecha ,p.ganador,p.id_Partido,p.gol_Local,p.gol_Visitante,q2.id_Equipo,q2.nombre , FROM Partido AS p 
-            INNER JOIN Equipo AS q ON p.id_Equipo_Local = q.id_Equipo
-            INNER JOIN Equipo AS q2 ON p.id_Equipo_Visitante = q2.id_Equipo
-            INNER JOIN Arbitro AS a ON p.id_Arbitro = a.id_Arbitro
-            WHERE MATCH (q.nombre,a.nombre,a.apellidos,q2.nombre) AGAINST ('$palabra')",[]);
-
-            foreach ($rs as $arbitro) {
-                $arbitros = self::arbitroCrearDesdeRs($arbitro);
-                array_push($datos, $arbitros);
-            }
-        }
-        
-    } else{
-        redireccionar("ArbitroListado.php");
-    }   
-   return $datos;
-   }
 
     /////////////USUARIO///////////////////////////////////////////
 
