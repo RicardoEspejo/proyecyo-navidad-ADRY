@@ -322,9 +322,9 @@ class DAO
             $gol_Local = $rs[0]["gol_Local"];
             $gol_Visitante = $rs[0]["gol_Visitante"];
             $ganador = $rs[0]["ganador"];
-            $nombreLocal = self::equipoObtenerNombre($id_Equipo_Local);
-            $nombreVisitante = self::equipoObtenerNombre($id_Equipo_Visitante);
-            $nombreArbitro = self::arbitroObtenerNombre($id_Arbitro);
+            // $nombreLocal = self::equipoObtenerNombre($id_Equipo_Local);
+            // $nombreVisitante = self::equipoObtenerNombre($id_Equipo_Visitante);
+            // $nombreArbitro = self::arbitroObtenerNombre($id_Arbitro);
             return [
                 $nuevaEntrada, $id_Equipo_Local, $id_Equipo_Visitante, $fecha,
                 $id_Arbitro, $gol_Local, $gol_Visitante, $ganador
@@ -353,6 +353,11 @@ class DAO
         );
     }
 
+    public static function partidoActualizarGanador($id_Partido, $ganador)
+    {
+        self::ejecutarActualizacion("UPDATE Partido SET ganador = ? WHERE id_Partido = ? ", [$ganador, $id_Partido]);
+    }
+
     public static function partidoActualizarPorID(
         int $id_Partido,
         int $id_Equipo_Local,
@@ -363,7 +368,7 @@ class DAO
         int $gol_Visitante,
         int $ganador
     ): bool {
-        return self::ejecutarActualizacion(
+        $rs = self::ejecutarActualizacion(
             "UPDATE Partido SET id_Equipo_Local=?, id_Equipo_Visitante=?, fecha=?,
              id_Arbitro=?, gol_Local=?, gol_Visitante=?, ganador=? WHERE id_Partido=?",
             [
@@ -371,6 +376,11 @@ class DAO
                 $gol_Visitante, $ganador, $id_Partido
             ]
         );
+        if ($rs > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function equipoObtenerNombre(int $id)

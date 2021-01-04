@@ -12,6 +12,7 @@
 	$arbitroId = $partido[4];
 	$localNombre = DAO::equipoObtenerNombre((int) $partido[1]);
 	$visitanteNombre = DAO::equipoObtenerNombre((int) $partido[2]);
+	$partido[7] = 0;
 ?>
 <html>
 	<head>
@@ -42,7 +43,7 @@
 				<?php foreach ($rsEquipos as $filaEquipo) {
 					$id_Equipo = (int) $filaEquipo["id_Equipo"];
 					$nombre = $filaEquipo["nombre"];
-					if ($id_Equipo == $localId) $seleccion = "selected='true'";
+					if ($id_Equipo == $VisitanteId) $seleccion = "selected='true'";
 					else $seleccion = "";
 					echo "<option value='$id_Equipo' $seleccion>$nombre</option>";
 				}?>
@@ -63,6 +64,7 @@
 			<input type='number' name='gol_Local' value='<?=$partido[5]?>'><br/>
 			<label>Goles Visitante</label>
 			<input type='number' name='gol_Visitante' value='<?=$partido[6]?>'><br/>
+			<input type='hidden' name='ganador' value='<?= $partido[7] ?>'>
 			<?php
 			if($partido[3] != "2000-01-01 00:00:00"){
 				echo "<label>Ganador: </label>";
