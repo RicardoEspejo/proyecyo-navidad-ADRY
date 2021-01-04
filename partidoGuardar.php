@@ -8,7 +8,7 @@ $fecha = $_REQUEST["fecha"];
 $id_Arbitro = $_REQUEST["arbitroId"];
 $gol_Local = $_REQUEST["gol_Local"];
 $gol_Visitante = $_REQUEST["gol_Visitante"];
-$ganador = $_REQUEST["ganador"];
+$ganador = 0;
 
 $partido = DAO::partidoFicha($id_Partido);
 ?>
@@ -40,34 +40,30 @@ $partido = DAO::partidoFicha($id_Partido);
         );
 
 
-        if (true) {
-
-            echo $gol_Local;
-            echo $gol_Visitante;
-
+        if ($modificacionCorrecta) {
 
             if ($gol_Local > $gol_Visitante) {
-                $ganador == 1;
+                $ganador = 1;
                 DAO::establecerVictoriaLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
                 DAO::establecerDerrotaVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
-                DAO::partidoActualizarGanador($id_Partido, $ganador);
+                DAO::partidoActualizarGanador($ganador, $id_Partido);
             }
             if ($gol_Local == $gol_Visitante) {
-                $ganador == 0;
+                $ganador = 0;
                 DAO::establecerEmpateLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
                 DAO::establecerEmpateVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
-                DAO::partidoActualizarGanador($id_Partido, $ganador);
+                DAO::partidoActualizarGanador($ganador, $id_Partido);
             }
-            if ($gol_Local > $gol_Visitante) {
-                $ganador == 2;
+            if ($gol_Local < $gol_Visitante) {
+                $ganador = 2;
                 DAO::establecerVictoriaVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
                 DAO::establecerDerrotaLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
-                DAO::partidoActualizarGanador($id_Partido, $ganador);
+                DAO::partidoActualizarGanador($ganador, $id_Partido);
             } ?>
             <h3>Se ha modificado correctamente el partido.</h3>
-        <?php } else ?>
+        <?php } else {?>
         <h3>Error en la modificación.</h3>
-        <?php } else {
+        <?php } } else {
         $creacionCorrecta = DAO::partidoCrear(
             $id_Equipo_Local,
             $id_Equipo_Visitante,
