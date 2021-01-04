@@ -34,7 +34,8 @@ class Equipo extends Dato
     private int $goles_Contra;
     private int $diferencia_Goles;
 
-    public function __construct(int $id2, string $nombre2, string $escudo2, int $puntos2, int $partidosJugados2, int $victorias2, int $empates2, int $derrotas2, int $golesFavor2, int $golesContra2, int $diferenciaGoles2)
+    public function __construct(int $id2, string $nombre2, string $escudo2, int $puntos2, int $partidosJugados2, 
+    int $victorias2, int $empates2, int $derrotas2, int $golesFavor2, int $golesContra2, int $diferenciaGoles2)
     {
         $this->setId($id2);
         $this->setNombre($nombre2);
