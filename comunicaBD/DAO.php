@@ -112,11 +112,15 @@ class DAO
             [$id]
         );
     }
-    public static function equipoActualizarPorID(int $id, string $nombre, string $escudo): bool
+    public static function equipoActualizarPorId(int $id, string $nombre, string $escudo, int $puntos, 
+    int $partidos_Jugados, int $victorias, int $empates, int $derrotas, int $goles_Favor, int $goles_Contra, 
+    int $diferencia_Goles): bool
     {
         return self::ejecutarActualizacion(
-            "UPDATE Equipo SET nombre=?, escudo=? WHERE id_Equipo=?",
-            [$nombre, $escudo, $id]
+            "UPDATE Equipo SET nombre=?, escudo=?, puntos=?, partidos_Jugados=?, victorias=?, empates=?, derrotas=?, 
+            goles_Favor=?, goles_Contra=?, diferencia_Goles=? WHERE id_Equipo=?",
+            [$nombre, $escudo, $puntos, $partidos_Jugados, $victorias, $empates, $datos, $goles_Favor, $goles_Contra, 
+            $diferencia_Goles, $id]
         );
     }
     public static function equipoFicha($id): array

@@ -15,8 +15,18 @@
         $escudo= $equipo[10];
     }
 
+    $puntos= $_REQUEST["puntos"];
+    $partidosJugados= $_REQUEST["partidosJugados"];
+    $victorias= $_REQUEST["victorias"];
+    $empates= $_REQUEST["empates"];
+    $derrotas= $_REQUEST["derrotas"];
+    $golesFavor= $_REQUEST["golesFavor"];
+    $golesContra= $_REQUEST["golesContra"];
+    $diferenciaGoles= $_REQUEST["diferenciaGoles"];
+
     if($id != -1) {
-        $modificacionCorrecta= DAO::equipoActualizarPorID($id, $nombre, $escudo);
+        $modificacionCorrecta= DAO::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidosJugados, $victorias, 
+        $empates, $derrotas, $golesFavor, $golesContra, $diferenciaGoles);
         if($modificacionCorrecta)
             redireccionar("EquipoFicha.php?modificacionCorrecta&id_Equipo=".$id);
         else

@@ -13,14 +13,14 @@ CREATE TABLE `Equipo` (
     `id_Equipo` int(3) NOT NULL,
     `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
     `escudo` varchar(200) NOT NULL,
-    `puntos` int(3),
-    `partidos_Jugados` int(2),
-    `victorias` int(2),
-    `empates` int(2),
-    `derrotas` int(2),
-    `goles_Favor` int(3),
-    `goles_Contra` int(3),
-    `diferencia_Goles` int(3)
+    `puntos` int(3) NOT NULL,
+    `partidos_Jugados` int(2) NOT NULL,
+    `victorias` int(2) NOT NULL,
+    `empates` int(2) NOT NULL,
+    `derrotas` int(2) NOT NULL,
+    `goles_Favor` int(3) NOT NULL,
+    `goles_Contra` int(3) NOT NULL,
+    `diferencia_Goles` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `Arbitro` (
