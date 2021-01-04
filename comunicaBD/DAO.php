@@ -296,7 +296,8 @@ class DAO
             $nombreLocal = self::equipoObtenerNombre($id_Equipo_Local);
             $nombreVisitante = self::equipoObtenerNombre($id_Equipo_Visitante);
             $nombreArbitro = self::arbitroObtenerNombre($id_Arbitro);
-            return [$nuevaEntrada, $nombreLocal, $nombreVisitante, $fecha, $nombreArbitro, $gol_Local, $gol_Visitante, $ganador];
+            return [$nuevaEntrada, $id_Equipo_Local, $id_Equipo_Visitante, $fecha, 
+            $id_Arbitro, $gol_Local, $gol_Visitante, $ganador];
         }
     }
     public static function partidoObtenerTodos(): array
@@ -379,6 +380,132 @@ class DAO
         return $rs;
     }
     
+    public static function establecerVictoriaLocal(int $id, int $gol_Local, int $gol_Visitante)
+    {
+        $equipo = self::equipoObtenerPorID($id);
+
+        $equipo[0] = $id;
+        $equipo[1] = $nombre;
+        $equipo[2] = $escudo;
+        $puntos = (int) $equipo[3] + 3;
+        $partidos_Jugados= (int) $equipo[4] + 1;
+        $victorias= (int) $equipo[5] + 1;
+        $equipo[6] = $empates;
+        $equipo[7] = $derrotas;
+        $goles_Favor = (int) $equipo[8] + $gol_Local;
+        $goles_Contra = (int) $equipo[9] + $gol_Vistante;
+        $equipo[10] = $diferencia_Goles;
+        
+        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
+        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
+
+    }
+
+    public static function establecerVictoriaVisitante(int $id, int $gol_Local, int $gol_Visitante)
+    {
+        $equipo = self::equipoObtenerPorID($id);
+
+        $equipo[0] = $id;
+        $equipo[1] = $nombre;
+        $equipo[2] = $escudo;
+        $puntos = (int) $equipo[3] + 3;
+        $partidos_Jugados= (int) $equipo[4] + 1;
+        $victorias= (int) $equipo[5] + 1;
+        $equipo[6] = $empates;
+        $equipo[7] = $derrotas;
+        $goles_Favor = (int) $equipo[8] + $gol_Visitante;
+        $goles_Contra = (int) $equipo[9] + $gol_Local;
+        $equipo[10] = $diferencia_Goles;
+        
+        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
+        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
+
+    }
+
+    public static function establecerEmpateLocal(int $id, int $gol_Local, int $gol_Visitante)
+    {
+        $equipo = self::equipoObtenerPorID($id);
+
+        $equipo[0] = $id;
+        $equipo[1] = $nombre;
+        $equipo[2] = $escudo;
+        $puntos = (int) $equipo[3] + 1;
+        $partidos_Jugados= (int) $equipo[4] + 1;
+        $equipo[5] = $victorias;
+        $equipo[6] = (int) $equipo[6] + 1;
+        $equipo[7] = $derrotas;
+        $goles_Favor = (int) $equipo[8] + $gol_Local;
+        $goles_Contra = (int) $equipo[9] + $gol_Vistante;
+        $equipo[10] = $diferencia_Goles;
+        
+        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
+        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
+
+    }
+
+    public static function establecerEmpateVisitante(int $id, int $gol_Local, int $gol_Visitante)
+    {
+        $equipo = self::equipoObtenerPorID($id);
+
+        $equipo[0] = $id;
+        $equipo[1] = $nombre;
+        $equipo[2] = $escudo;
+        $puntos = (int) $equipo[3] + 1;
+        $partidos_Jugados= (int) $equipo[4] + 1;
+        $equipo[5] = $victorias;
+        $equipo[6] = (int) $equipo[6] + 1;
+        $equipo[7] = $derrotas;
+        $goles_Favor = (int) $equipo[8] + $gol_Visitante;
+        $goles_Contra = (int) $equipo[9] + $gol_Local;
+        $equipo[10] = $diferencia_Goles;
+        
+        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
+        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
+
+    }
+
+    public static function establecerDerrotaLocal(int $id, int $gol_Local, int $gol_Visitante)
+    {
+        $equipo = self::equipoObtenerPorID($id);
+
+        $equipo[0] = $id;
+        $equipo[1] = $nombre;
+        $equipo[2] = $escudo;
+        $equipo[3] = $puntos;
+        $partidos_Jugados= (int) $equipo[4] + 1;
+        $equipo[5] = $victorias;
+        $equipo[6] = $empates;
+        $derrotas = (int) $equipo[7] + 1;
+        $goles_Favor = (int) $equipo[8] + $gol_Local;
+        $goles_Contra = (int) $equipo[9] + $gol_Vistante;
+        $equipo[10] = $diferencia_Goles;
+        
+        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
+        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
+
+    }
+
+    public static function establecerDerrotaVisitante(int $id, int $gol_Local, int $gol_Visitante)
+    {
+        $equipo = self::equipoObtenerPorID($id);
+
+        $equipo[0] = $id;
+        $equipo[1] = $nombre;
+        $equipo[2] = $escudo;
+        $equipo[3] = $puntos;
+        $partidos_Jugados= (int) $equipo[4] + 1;
+        $equipo[5] = $victorias;
+        $equipo[6] = $empates;
+        $derrotas = (int) $equipo[7] + 1;
+        $goles_Favor = (int) $equipo[8] + $gol_Visitante;
+        $goles_Contra = (int) $equipo[9] + $gol_Local;
+        $equipo[10] = $diferencia_Goles;
+        
+        self::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidos_Jugados, 
+        $victorias, $empates, $derrotas, $goles_Favor, $goles_Contra, $diferencia_Goles);
+
+    }
+
     /////////////////BUSCAR ÁRBITROS///////////////////////
     public static function buscarArbitros(string $palabra, int $numPalabras): array
     {
@@ -402,6 +529,7 @@ class DAO
         }
         return $datos;
     }
+
     public static function buscarEquipos(string $palabra): array
     {
         $datos = [];
@@ -417,6 +545,7 @@ class DAO
         }
         return $datos;
     }
+
     public static function buscarPartidos(string $palabra,int $numPalabras):array
    {
     $datos=[];   

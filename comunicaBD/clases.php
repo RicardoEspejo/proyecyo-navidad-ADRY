@@ -205,9 +205,9 @@ class Partido extends Dato
         $this->setEquipoVisitante($id_Equipo_Visitante);
         $this->setFecha($fecha);
         $this->setArbitro($id_Arbitro);
-        $this->setGolLocal(0);
-        $this->setGolVisitante(0);
-        $this->setGanador(0);
+        $this->setGolLocal($gol_Local);
+        $this->setGolVisitante($gol_Visitante);
+        $this->setGanador($ganador);
     }
 
     public function getEquipoLocal(): int

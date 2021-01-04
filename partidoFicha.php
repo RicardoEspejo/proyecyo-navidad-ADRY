@@ -10,6 +10,8 @@
 	$localId = $partido[1];
 	$VisitanteId = $partido[2];
 	$arbitroId = $partido[4];
+	$localNombre = DAO::equipoObtenerNombre((int) $partido[1]);
+	$visitanteNombre = DAO::equipoObtenerNombre((int) $partido[2]);
 ?>
 <html>
 	<head>
@@ -61,10 +63,23 @@
 			<input type='number' name='gol_Local' value='<?=$partido[5]?>'><br/>
 			<label>Goles Visitante</label>
 			<input type='number' name='gol_Visitante' value='<?=$partido[6]?>'><br/>
-			<label>Ganador</label>
-			<input type='number' name='ganador' value='<?=$partido[7]?>'><br/>
-			
-			<?php if ($nuevaEntrada) { ?>
+			<?php
+			if($partido[3] != "2000-01-01 00:00:00"){
+				echo "<label>Ganador: </label>";
+				if($partido[7] == 1){
+					echo $localNombre;
+					echo "</br>";
+				}
+				if($partido[7] == 0){
+					echo "Empate";
+					echo "</br>";
+				}
+				if($partido[7] == 2){
+					echo $visitanteNombre;
+					echo "</br>";
+				}
+			}
+			 if ($nuevaEntrada) { ?>
 				<input type='submit' name='crear' value='Crear partido' />
 			<?php } else { ?>
 				<input type='submit' name='guardar' value='Guardar cambios' />

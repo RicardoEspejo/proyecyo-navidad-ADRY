@@ -28,7 +28,22 @@
         if($id_Partido != -1) {
             $modificacionCorrecta= DAO::partidoActualizarPorID($id_Partido, $id_Equipo_Local, 
             $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local, $gol_Visitante, $ganador);
-            if($modificacionCorrecta) { ?>
+            if($modificacionCorrecta) { 
+                if($gol_Local > $gol_Visitante){
+                    $ganador == 1;
+                    DAO::establecerVictoriaLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
+                    DAO::establecerDerrotaVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
+                }
+                if($gol_Local == $gol_Visitante){
+                    $ganador == 0;
+                    DAO::establecerEmpateLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
+                    DAO::establecerEmpateVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
+                    }
+                if($gol_Local > $gol_Visitante){
+                    $ganador == 2;
+                    DAO::establecerVictoriaVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
+                    DAO::establecerDerrotaLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
+                }?>
                 <h3>Se ha modificado correctamente el partido.</h3>
             <?php } else ?>
             <h3>Error en la modificación.</h3>
