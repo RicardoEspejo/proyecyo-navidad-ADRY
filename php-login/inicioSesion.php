@@ -2,6 +2,14 @@
 require_once "../comunicaBD/DAO.php";
 require_once "../comunicaBD/varios.php";
 
+session_start();
+
+if (isset($_SESSION["id_Usuario"])) {
+    redireccionar("../php-login");
+}
+
+$mnsj = "";
+
 if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
     $identificador = $_POST['identificador'];
     $password = $_POST['contrasenna'];
@@ -11,8 +19,8 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
         $_SESSION['id_Usuario'] = $resultado[0];
         header('Location: ../ArbitroListado.php');
     } else {
-        echo $resultado[2] . " " . $password;
-        // echo "Error en el inicio de Sesion";
+        // echo $resultado[2] . " " . $password;
+        $mnsj = "Error en el inicio de Sesion, estás credenciales no coinciden";
     }
 }
 
@@ -47,6 +55,10 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
         <input type="checkbox" name="recuerdame"><br />
         <input type="submit" value="Iniciar Sesión">
     </form>
+
+    <?php if (!empty($mnsj)) : ?>
+        <p style="color:red"><?= $mnsj ?></p>
+    <?php endif; ?>
 </body>
 
 </html>
