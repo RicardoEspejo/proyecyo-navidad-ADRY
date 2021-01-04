@@ -56,7 +56,7 @@ class DAO
     /////////////////EQUIPO///////////////////////
     public static function equipoCrearDesdeRs(array $rs): Equipo
     {
-        return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"]);
+        return new Equipo($rs["id_Equipo"], $rs["nombre"], $rs["escudo"], $rs["puntos"], $rs["partidos_Jugados"], $rs["victorias"], $rs["empates"], $rs["derrotas"], $rs["goles_Favor"], $rs["goles_Contra"], $rs["diferencia_Goles"]);
     }
 
     public static function equipoCrear(String $nombre, String $escudo): bool
@@ -96,7 +96,7 @@ class DAO
     {
         $clasificacion = [];
         $rs = self::ejecutarConsulta(
-            "SELECT * FROM Equipo ORDER BY puntos, diferencia_Goles",
+            "SELECT * FROM Equipo ORDER BY puntos DESC, diferencia_Goles DESC",
             []
         );
         foreach ($rs as $fila) {

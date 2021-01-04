@@ -34,19 +34,19 @@ class Equipo extends Dato
     private int $goles_Contra;
     private int $diferencia_Goles;
 
-    public function __construct(int $id, string $nombre, string $escudo)
+    public function __construct(int $id2, string $nombre2, string $escudo2, int $puntos2, int $partidosJugados2, int $victorias2, int $empates2, int $derrotas2, int $golesFavor2, int $golesContra2, int $diferenciaGoles2)
     {
-        $this->setId($id);
-        $this->setNombre($nombre);
-        $this->setEscudo($escudo);
-        $this->setPuntos(0);
-        $this->setPartidosJugados(0);
-        $this->setVictorias(0);
-        $this->setEmpates(0);
-        $this->setDerrotas(0);
-        $this->setGolesFavor(0);
-        $this->setGolesContra(0);
-        $this->setDiferenciaGoles(0);
+        $this->setId($id2);
+        $this->setNombre($nombre2);
+        $this->setEscudo($escudo2);
+        $this->setPuntos($puntos2);
+        $this->setPartidosJugados($partidosJugados2);
+        $this->setVictorias($victorias2);
+        $this->setEmpates($empates2);
+        $this->setDerrotas($derrotas2);
+        $this->setGolesFavor($golesFavor2);
+        $this->setGolesContra($golesContra2);
+        $this->setDiferenciaGoles($diferenciaGoles2);
     }
 
     public function getNombre(): string
