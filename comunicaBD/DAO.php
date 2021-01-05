@@ -722,4 +722,15 @@ class DAO
     //     setcookie("usuario", $usuario, time() + 24 * 60 * 60);
     //     setcookie("codigoCookie", $codigoCookie, time() + 24 * 60 * 60); 
     // }
+
+    ///Modo Claro o Oscuro
+    public static function modoClaroOscuro(string $modo)
+   {
+        $_SESSION["tema"]=$modo;
+            if($_SESSION["tema"] == "oscuro"){
+                echo "<link rel='stylesheet' href='disenio/modoOscuro.css'>";
+            }else{
+                echo "<link rel='stylesheet' href='disenio/ADRY.css'>";
+            }
+    } 
 }

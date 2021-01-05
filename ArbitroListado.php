@@ -10,6 +10,11 @@ if (isset($_REQUEST["buscar"])) {
 } else {
     $buscador = false;
 }
+
+if(isset($_REQUEST["modo"])){
+    $modo=$_REQUEST["modo"];
+    DAO::modoClaroOscuro($modo);
+}
 ?>
 <html>
 
@@ -24,6 +29,20 @@ if (isset($_REQUEST["buscar"])) {
         <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php'>ADRYGOL</a>
     </header>
     <h1>Listado de Arbitros</h1>
+    <form action='<?php $_SERVER['PHP_SELF']; ?>' method="post" name="formulario">
+        <select name="modo" onChange="formulario.submit();">
+                <option value="claro">Modo Claro</option>
+                  <option value="oscuro" 
+                  <?php 
+                  if(isset($_SESSION["tema"])){
+                      if($_SESSION["tema"] == "oscuro"){
+                        echo "selected";
+                      }
+                  }?>>Modo Oscuro</option>
+                  
+            </select>
+   
+    </form>    
     <form action='' method='post'>
         <?php if ($buscador == true) {  ?>
             <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>">
