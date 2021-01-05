@@ -5,7 +5,7 @@ require_once "../comunicaBD/varios.php";
 session_start();
 
 if (isset($_SESSION["id_Usuario"])) {
-    redireccionar("../php-login");
+    redireccionar("inicio.php");
 }
 
 $mnsj = "";
@@ -17,7 +17,7 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
 
     if (count($resultado) > 0 && password_verify($password, $resultado[2])) {
         $_SESSION['id_Usuario'] = $resultado[0];
-        header('Location: ../ArbitroListado.php');
+        header('Location: inicio.php');
     } else {
         $mnsj = "Error en el inicio de Sesion, estás credenciales no coinciden";
     }
@@ -46,8 +46,8 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
         <label for="contrasenna">Contraseña: </label>
         <input type="password" name="contrasenna" placeholder="Contraseña">
         <p></p>
-        <label><b>Recuérdame</b></label>
-        <input type="checkbox" name="recuerdame"><br />
+        <!-- <label><b>Recuérdame</b></label> -->
+        <!-- <input type="checkbox" name="recuerdame"><br /> -->
         <input type="submit" value="Iniciar Sesión">
     </form>
 

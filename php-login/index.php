@@ -31,6 +31,7 @@ if (isset($_SESSION["id_Usuario"])) {
         <h1>Liga de fútbol de Barrio</h1>
         <h3>Bienvenido: <strong><?= $usuario[1] ?></strong></h3>
         <h3>Tienes una sesión iniciada.</h3>
+        <h3>¿Desea continuar? <a href="inicio.php">Continuar</a> </h3>
         <h3>¿Desea cerrar sesión? <a href="cerrarSesion.php">Cerrar Sesion</a> </h3>
 
     <?php else : ?>

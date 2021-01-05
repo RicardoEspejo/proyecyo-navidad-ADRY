@@ -19,6 +19,9 @@
         <title>Clasificacion</title>
     </head>
     <body> 
+    <header>
+        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php'>Fútbol de Barrio</a>
+    </header>
     <h1>CLASIFICACIÓN</h1>
     <form action='' method='post'>
             <?php if($buscador == true){  ?>
