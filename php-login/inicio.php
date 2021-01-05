@@ -30,6 +30,9 @@ if (isset($_SESSION["id_Usuario"])) {
     <header>
         <a href="../php-login">ADRYGOL</a>
     </header>
+
+    <h1>Liga ADRYGOL</h1>
+    <h3>Bienvenido: <strong><?= $usuario[1] ?></strong></h3>
     <div id="menu">
         <ul>
             <li><a href="../php-login">Inicio</a></li>
@@ -40,10 +43,6 @@ if (isset($_SESSION["id_Usuario"])) {
             <li><a href="cerrarSesion.php">Cerrar Sesión</a></li>
         </ul>
     </div>
-
-    <h1>Liga ADRYGOL</h1>
-    <h3>Bienvenido: <strong><?= $usuario[1] ?></strong></h3>
-    <h3>Elija una opción del Menú</h3>
 
     <img src="../documentos/brazil.jfif">
 </body>
