@@ -47,10 +47,10 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
         <label for="confirmar_contrasenna">Repetir Contraseña: </label>
         <input type="password" name="confirmar_contrasenna" placeholder="Repite la contraseña" required>
         <p></p>
-        <label for="arbitro">¿Eres un árbitro?</label>
-        <input type="checkbox" name="tipo" value="¿Eres un árbitro?">
+        <label for="arbitro">¿Eres un Administrador?</label>
+        <input type="checkbox" name="tipo" value="administrador">
         <p></p>
-        <input type="submit" value="Iniciar Sesión">
+        <input type="submit" value="Registrarse">
     </form>
     <?php if (!empty($mnsj)) : ?>
         <p style="color:red"><?= $mnsj ?></p>

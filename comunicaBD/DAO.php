@@ -419,17 +419,17 @@ class DAO
     {
         $equipo = self::equipoObtenerPorID($id);
 
-        $id= $equipo->getId();
-        $nombre= $equipo->getNombre();
-        $escudo= $equipo->getEscudo();
+        $id = $equipo->getId();
+        $nombre = $equipo->getNombre();
+        $escudo = $equipo->getEscudo();
         $puntos = (int) $equipo->getPuntos() + 3;
         $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
         $victorias = (int) $equipo->getVictorias() + 1;
-        $empates= $equipo->getEmpates();
-        $derrotas= $equipo->getDerrotas();
+        $empates = $equipo->getEmpates();
+        $derrotas = $equipo->getDerrotas();
         $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
         $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
-        $diferencia_Goles= $equipo->getDiferenciaGoles();
+        $diferencia_Goles = $equipo->getDiferenciaGoles();
 
         self::equipoActualizarPorId(
             $id,
@@ -450,17 +450,17 @@ class DAO
     {
         $equipo = self::equipoObtenerPorId($id);
 
-        $id= $equipo->getId();
-        $nombre= $equipo->getNombre();
-        $escudo= $equipo->getEscudo();
+        $id = $equipo->getId();
+        $nombre = $equipo->getNombre();
+        $escudo = $equipo->getEscudo();
         $puntos = (int) $equipo->getPuntos() + 3;
         $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
         $victorias = (int) $equipo->getVictorias() + 1;
-        $empates= $equipo->getEmpates();
-        $derrotas= $equipo->getDerrotas();
+        $empates = $equipo->getEmpates();
+        $derrotas = $equipo->getDerrotas();
         $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
         $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
-        $diferencia_Goles= $equipo->getDiferenciaGoles();
+        $diferencia_Goles = $equipo->getDiferenciaGoles();
 
         self::equipoActualizarPorId(
             $id,
@@ -481,17 +481,17 @@ class DAO
     {
         $equipo = self::equipoObtenerPorID($id);
 
-        $id= $equipo->getId();
-        $nombre= $equipo->getNombre();
-        $escudo= $equipo->getEscudo();
+        $id = $equipo->getId();
+        $nombre = $equipo->getNombre();
+        $escudo = $equipo->getEscudo();
         $puntos = (int) $equipo->getPuntos() + 1;
         $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
         $victorias = (int) $equipo->getVictorias();
-        $empates= $equipo->getEmpates() + 1;
-        $derrotas= $equipo->getDerrotas();
+        $empates = $equipo->getEmpates() + 1;
+        $derrotas = $equipo->getDerrotas();
         $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
         $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
-        $diferencia_Goles= $equipo->getDiferenciaGoles();
+        $diferencia_Goles = $equipo->getDiferenciaGoles();
 
         self::equipoActualizarPorId(
             $id,
@@ -512,17 +512,17 @@ class DAO
     {
         $equipo = self::equipoObtenerPorID($id);
 
-        $id= $equipo->getId();
-        $nombre= $equipo->getNombre();
-        $escudo= $equipo->getEscudo();
+        $id = $equipo->getId();
+        $nombre = $equipo->getNombre();
+        $escudo = $equipo->getEscudo();
         $puntos = (int) $equipo->getPuntos() + 1;
         $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
         $victorias = (int) $equipo->getVictorias();
-        $empates= $equipo->getEmpates() + 1;
-        $derrotas= $equipo->getDerrotas();
+        $empates = $equipo->getEmpates() + 1;
+        $derrotas = $equipo->getDerrotas();
         $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
         $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
-        $diferencia_Goles= $equipo->getDiferenciaGoles();
+        $diferencia_Goles = $equipo->getDiferenciaGoles();
 
         self::equipoActualizarPorId(
             $id,
@@ -543,17 +543,17 @@ class DAO
     {
         $equipo = self::equipoObtenerPorID($id);
 
-        $id= $equipo->getId();
-        $nombre= $equipo->getNombre();
-        $escudo= $equipo->getEscudo();
+        $id = $equipo->getId();
+        $nombre = $equipo->getNombre();
+        $escudo = $equipo->getEscudo();
         $puntos = (int) $equipo->getPuntos();
         $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
         $victorias = (int) $equipo->getVictorias();
-        $empates= $equipo->getEmpates();
-        $derrotas= $equipo->getDerrotas();
+        $empates = $equipo->getEmpates();
+        $derrotas = $equipo->getDerrotas();
         $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
         $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
-        $diferencia_Goles= $equipo->getDiferenciaGoles();
+        $diferencia_Goles = $equipo->getDiferenciaGoles();
 
         self::equipoActualizarPorId(
             $id,
@@ -574,17 +574,17 @@ class DAO
     {
         $equipo = self::equipoObtenerPorID($id);
 
-        $id= $equipo->getId();
-        $nombre= $equipo->getNombre();
-        $escudo= $equipo->getEscudo();
+        $id = $equipo->getId();
+        $nombre = $equipo->getNombre();
+        $escudo = $equipo->getEscudo();
         $puntos = (int) $equipo->getPuntos();
         $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
         $victorias = (int) $equipo->getVictorias();
-        $empates= $equipo->getEmpates();
-        $derrotas= $equipo->getDerrotas()+1;
+        $empates = $equipo->getEmpates();
+        $derrotas = $equipo->getDerrotas() + 1;
         $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
         $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
-        $diferencia_Goles= $equipo->getDiferenciaGoles();
+        $diferencia_Goles = $equipo->getDiferenciaGoles();
 
         self::equipoActualizarPorId(
             $id,

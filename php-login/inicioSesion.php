@@ -19,15 +19,10 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
         $_SESSION['id_Usuario'] = $resultado[0];
         header('Location: ../ArbitroListado.php');
     } else {
-        // echo $resultado[2] . " " . $password;
         $mnsj = "Error en el inicio de Sesion, estás credenciales no coinciden";
     }
 }
-
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 

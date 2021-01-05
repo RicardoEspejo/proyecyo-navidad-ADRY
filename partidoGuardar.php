@@ -38,8 +38,6 @@ $partido = DAO::partidoFicha($id_Partido);
             $gol_Visitante,
             $ganador
         );
-
-
         if ($modificacionCorrecta) {
 
             if ($gol_Local > $gol_Visitante) {
@@ -61,9 +59,10 @@ $partido = DAO::partidoFicha($id_Partido);
                 DAO::partidoActualizarGanador($ganador, $id_Partido);
             } ?>
             <h3>Se ha modificado correctamente el partido.</h3>
-        <?php } else {?>
-        <h3>Error en la modificación.</h3>
-        <?php } } else {
+        <?php } else { ?>
+            <h3>Error en la modificación.</h3>
+        <?php }
+    } else {
         $creacionCorrecta = DAO::partidoCrear(
             $id_Equipo_Local,
             $id_Equipo_Visitante,
