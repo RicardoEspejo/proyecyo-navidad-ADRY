@@ -28,7 +28,7 @@ if (isset($_SESSION["id_Usuario"])) {
 
 <body>
     <header>
-        <a href="../php-login">Fútbol de Barrio</a>
+        <a href="../php-login">ADRYGOL</a>
     </header>
     <div id="menu">
         <ul>
@@ -41,7 +41,7 @@ if (isset($_SESSION["id_Usuario"])) {
         </ul>
     </div>
 
-    <h1>Liga de fútbol de Barrio</h1>
+    <h1>Liga ADRYGOL</h1>
     <h3>Bienvenido: <strong><?= $usuario[1] ?></strong></h3>
     <h3>Elija una opción del Menú</h3>
 

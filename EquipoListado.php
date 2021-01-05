@@ -33,7 +33,7 @@ if (isset($_REQUEST["buscar"])) {
 
 <body>
     <header>
-        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php'>Fútbol de Barrio</a>
+        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php'>ADRYGOL</a>
     </header>
     <h1>Listado de Equipos</h1>
     <form action='' method='post'>
@@ -114,6 +114,7 @@ if (isset($_REQUEST["buscar"])) {
             <?php } ?>
             </table><br>
             <a href='EquipoFicha.php?id_Equipo=-1'>Crear entrada</a>
+            <li><a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php">Cerrar Sesión</a></li>
 </body>
 
 </html>

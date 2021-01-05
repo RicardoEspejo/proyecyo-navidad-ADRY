@@ -33,9 +33,9 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
 
 <body>
     <header>
-        <a href="../php-login">Fútbol de Barrio</a>
+        <a href="../php-login">ADRYGOL</a>
     </header>
-    <h1>Liga de fútbol de Barrio</h1>
+    <h1>Liga ADRYGOL</h1>
     <h3>Inicia Sesión</h3>
     <span>o<a href="registro.php"> Registrarse </a></span>
     <p></p>

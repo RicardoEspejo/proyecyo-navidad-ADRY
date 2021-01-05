@@ -25,7 +25,7 @@ if (isset($_SESSION["id_Usuario"])) {
 
 <body>
     <header>
-        <a href="../php-login">Fútbol de Barrio</a>
+        <a href="../php-login">ADRYGOL</a>
     </header>
     <?php if (!empty($usuario)) : ?>
         <h1>Liga de fútbol de Barrio</h1>
@@ -35,7 +35,7 @@ if (isset($_SESSION["id_Usuario"])) {
         <h3>¿Desea cerrar sesión? <a href="cerrarSesion.php">Cerrar Sesion</a> </h3>
 
     <?php else : ?>
-        <h1>Bienvenido a Liga de fútbol de Barrio</h1>
+        <h1>Bienvenido a la Liga ADRYGOL</h1>
         <h3>
             Elija una opción para acceder
             <a href="inicioSesion.php">Iniciar Sesión</a>
