@@ -7,7 +7,7 @@ $partidos = DAO::partidoObtenerTodos();
 if (isset($_REQUEST["buscar"])) {
     $buscar = strtolower($_REQUEST["buscar"]);
     $buscador = true;
-    $buscarPartidos = DAO::buscarPartidos($buscar, str_word_count($buscar, 0));
+    $buscarPartidos = DAO::buscarPartidos($buscar);
 } else {
     $buscador = false;
 }
