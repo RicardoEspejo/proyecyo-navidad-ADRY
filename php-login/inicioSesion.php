@@ -8,6 +8,12 @@ if (isset($_SESSION["id_Usuario"])) {
     redireccionar("inicio.php");
 }
 
+//cookies   
+
+
+
+
+
 $mnsj = "";
 
 if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
@@ -46,8 +52,8 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
         <label for="contrasenna">Contraseña: </label>
         <input type="password" name="contrasenna" placeholder="Contraseña">
         <p></p>
-        <!-- <label><b>Recuérdame</b></label> -->
-        <!-- <input type="checkbox" name="recuerdame"><br /> -->
+        <label><b>Recuérdame</b></label>
+        <input type="checkbox" name="recuerdame"><br />
         <input type="submit" value="Iniciar Sesión">
     </form>
 

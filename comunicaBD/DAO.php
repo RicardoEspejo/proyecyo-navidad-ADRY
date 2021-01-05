@@ -644,16 +644,16 @@ class DAO
     {
         $datos = [];
         if (!empty($palabra)) {
-                $rs = self::ejecutarConsulta("SELECT q.id_Equipo,q.nombre,a.id_Arbitro ,a.nombre ,a.apellidos ,p.id_Equipo_Local ,p.id_Equipo_Visitante ,p.id_Arbitro ,p.fecha ,p.ganador,p.id_Partido,p.gol_Local,p.gol_Visitante,q2.id_Equipo,q2.nombre
+            $rs = self::ejecutarConsulta("SELECT q.id_Equipo,q.nombre,a.id_Arbitro ,a.nombre ,a.apellidos ,p.id_Equipo_Local ,p.id_Equipo_Visitante ,p.id_Arbitro ,p.fecha ,p.ganador,p.id_Partido,p.gol_Local,p.gol_Visitante,q2.id_Equipo,q2.nombre
             FROM Partido AS p 
                 INNER JOIN Equipo AS q ON p.id_Equipo_Local = q.id_Equipo
                 INNER JOIN Equipo AS q2 ON p.id_Equipo_Visitante = q2.id_Equipo
                 INNER JOIN Arbitro AS a ON p.id_Arbitro = a.id_Arbitro
             WHERE q.nombre LIKE '%$palabra%' OR a.nombre LIKE '%$palabra%' OR a.apellidos LIKE '%$palabra%' OR p.fecha LIKE '%$palabra%' OR p.ganador LIKE '%$palabra%' OR q2.nombre LIKE '%$palabra%'", []);
-                foreach ($rs as $partido) {
-                    $partidos = self::partidoCrearDesdeRs($partido);
-                    array_push($datos, $partidos);
-                }
+            foreach ($rs as $partido) {
+                $partidos = self::partidoCrearDesdeRs($partido);
+                array_push($datos, $partidos);
+            }
         } else {
             redireccionar("ArbitroListado.php");
         }
@@ -717,38 +717,9 @@ class DAO
         session_destroy();
     }
 
-    // public static function usuarioGuardarCodigoCookie(string $identificador, string $codigoCookie = null)
+    // function establecerCookieRecuerdame($usuario, $codigoCookie)
     // {
-    //     if ($codigoCookie != null) {
-    //         self::ejecutarActualizacion("UPDATE usuario SET codigoCookie=? WHERE identificador=?", [$codigoCookie, $identificador]);
-    //     } else {
-    //         self::ejecutarActualizacion("UPDATE usuario SET codigoCookie=NULL WHERE identificador=?", [$identificador]);
-    //     }
-    // }
-
-    // public static function usuarioObtenerPorIdentificadorYCodigoCookie($identificador, $codigoCookie): ?Usuario
-    // {
-    //     $rs = self::ejecutarConsulta(
-    //         "SELECT * FROM usuario WHERE identificador=? AND BINARY codigoCookie=?",
-    //         [$identificador, $codigoCookie]
-    //     );
-    //     if ($rs) {
-    //         return self::usuarioCrearDesdeRs($rs);
-    //     } else {
-    //         return null;
-    //     }
-    // }
-
-    // public static function usuarioObtenerPorIdentificadorYcontrasenna($identificador, $contrasenna): ?Usuario
-    // {
-    //     $rs = Self::ejecutarConsulta(
-    //         "SELECT * FROM usuario WHERE identificador=? AND BINARY contrasenna=?",
-    //         [$identificador, $contrasenna]
-    //     );
-    //     if ($rs) {
-    //         return self::usuarioCrearDesdeRs($rs);
-    //     } else {
-    //         return null;
-    //     }
+    //     setcookie("usuario", $usuario, time() + 24 * 60 * 60);
+    //     setcookie("codigoCookie", $codigoCookie, time() + 24 * 60 * 60); 
     // }
 }
