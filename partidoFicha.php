@@ -10,8 +10,11 @@
 	$localId = $partido[1];
 	$VisitanteId = $partido[2];
 	$arbitroId = $partido[4];
-	$localNombre = DAO::equipoObtenerNombre((int) $partido[1]);
-	$visitanteNombre = DAO::equipoObtenerNombre((int) $partido[2]);
+	if($id != -1) {
+		$localNombre = DAO::equipoObtenerNombre((int) $partido[1]);
+		$visitanteNombre = DAO::equipoObtenerNombre((int) $partido[2]);
+	}
+	
 ?>
 <html>
 	<head>
