@@ -23,6 +23,20 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
 
     if (count($resultado) > 0 && password_verify($password, $resultado[2])) {
         $_SESSION['id_Usuario'] = $resultado[0];
+        if ($_POST["recuerdame"] == "1") {
+            $numero_aleatorio = generarCadenaAleatoria(50);
+            $year = time() + 31536000;
+
+            DAO::usuarioActualizarPorIdLasCookies($resultado[0], $numero_aleatorio);
+            if ($_POST["recuerdame"]) {
+                setcookie("recuerdame", $identificador, $year);
+            } elseif (!$_POST["recuerdame"]) {
+                if (isset($_COOKIE["recuerdame"])) {
+                    $past = time() - 100;
+                    setcookie("recuerdame", $identificador, $past);
+                }
+            }
+        }
         header('Location: inicio.php');
     } else {
         $mnsj = "Error en el inicio de Sesion, estás credenciales no coinciden";
@@ -47,13 +61,13 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
     <p></p>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <label for="usuario">Nombre de Usuario: </label>
-        <input type="text" name="identificador" placeholder="Usuario">
+        <input type="text" name="identificador" placeholder="Usuario" >
         <p></p>
         <label for="contrasenna">Contraseña: </label>
         <input type="password" name="contrasenna" placeholder="Contraseña">
         <p></p>
         <label><b>Recuérdame</b></label>
-        <input type="checkbox" name="recuerdame"><br />
+        <input type="checkbox" name="recuerdame" <?php $condicion = isset($_COOKIE["recuerdame"]) ? "checked='checked'" :  ""; ?>><br />
         <input type="submit" value="Iniciar Sesión">
     </form>
 

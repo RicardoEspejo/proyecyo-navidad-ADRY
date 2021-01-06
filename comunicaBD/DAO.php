@@ -717,20 +717,38 @@ class DAO
         session_destroy();
     }
 
+    public static function usuarioActualizarPorIdLasCookies($id, $codigoCookie): bool
+    {
+        return self::ejecutarActualizacion(
+            "UPDATE usuario SET codigoCookie=? WHERE id_Usuario=?",
+            [
+                $codigoCookie, $id
+            ]
+        );
+    }
+
+    // function borrarCookieRecuerdame($identificador)
+    // {
+    //     // Eliminamos el código cookie de nuestra BD.
+    //     DAO::usuarioActualizarPorIdLasCookies($identificador, null);
+
+    //     setcookie("identificador", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.
+    //     setcookie("codigoCookie", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.
+    // }
     // function establecerCookieRecuerdame($usuario, $codigoCookie)
     // {
     //     setcookie("usuario", $usuario, time() + 24 * 60 * 60);
-    //     setcookie("codigoCookie", $codigoCookie, time() + 24 * 60 * 60); 
+    //     setcookie("codigoCookie", $codigoCookie, time() + 24 * 60 * 60);
     // }
 
     ///Modo Claro o Oscuro
     public static function modoClaroOscuro(string $modo)
-   {
-        $_SESSION["tema"]=$modo;
-            if($_SESSION["tema"] == "oscuro"){
-                echo "<link rel='stylesheet' href='disenio/modoOscuro.css'>";
-            }else{
-                echo "<link rel='stylesheet' href='disenio/ADRY.css'>";
-            }
-    } 
+    {
+        $_SESSION["tema"] = $modo;
+        if ($_SESSION["tema"] == "oscuro") {
+            echo "<link rel='stylesheet' href='disenio/modoOscuro.css'>";
+        } else {
+            echo "<link rel='stylesheet' href='disenio/ADRY.css'>";
+        }
+    }
 }
