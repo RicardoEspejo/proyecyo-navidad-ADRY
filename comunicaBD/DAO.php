@@ -232,6 +232,7 @@ class DAO
             } else {
                 redireccionar("arbitroFicha.php?creacionIncorrecta&id_Arbitro=$id");
             }
+            return $rs;
         } else {
             $rs = self::arbitroActualizarPorID($id, $nombre, $apellidos);
             if ($rs) {
@@ -239,8 +240,9 @@ class DAO
             } else {
                 redireccionar("arbitroFicha.php?modificacionIncorrecta&id_Arbitro=$id");
             }
+            return $rs;
         }
-        return $rs;
+        
     }
     /////////////////PARTIDO///////////////////////
     public static function sorteo()
