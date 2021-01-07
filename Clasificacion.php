@@ -11,46 +11,50 @@ if (isset($_REQUEST["buscar"])) {
 } else {
     $buscador = false;
 }
-if(isset($_REQUEST["modo"])){
-    $modo=$_REQUEST["modo"];
-    DAO::modoClaroOscuro($modo);
-}
+$numero=1;
 ?>
 
 <html>
 
 <head>
     <title>Clasificacion</title>
+    <?php if(isset($_SESSION["tema"])){?>
+    <?php if($_SESSION["tema"] == "claro"){ ?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php }else{ ?>
+        <link rel='stylesheet' href='disenio/modoOscuro.css'>
+    <?php } }else{?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php } ?>
 </head>
 
 <body>
     <header>
-        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php'>ADRYGOL</a>
-    </header>
-    <h1>CLASIFICACIÓN</h1>
-    <form action='<?php $_SERVER['PHP_SELF']; ?>' method="post" name="formulario">
+        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
+    <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
+        <input type="hidden" name="nombre" value="clasificacion.php">
         <select name="modo" onChange="formulario.submit();">
-                <option value="claro">Modo Claro</option>
-                  <option value="oscuro" 
-                  <?php 
-                  if(isset($_SESSION["tema"])){
-                      if($_SESSION["tema"] == "oscuro"){
-                        echo "selected";
-                      }
-                  }?>>Modo Oscuro</option>
-                  
-            </select>
-   
-    </form> 
-    <form action='' method='post'>
+            <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
+            <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
+         </select>
+         </form>  
+      <a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
+    </header>
+    <div class="contenedor">   
+        <h1>ADRY-GOL</h1>
+        <div class="contenedor2">
+
+        <h2>Equipos > Clasificacion</h2>
+    <form action='' method='post' class="buscador2">
         <?php if ($buscador == true) {  ?>
-            <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>">
-            <a href="EquipoListado.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
+            <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>" class="buscador">
+            <a href="clasificacion.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
         <?php } else { ?>
-            <input type="search" placeholder="Buscar" name="buscar">
+            <input type="search" placeholder="Buscar" name="buscar" class="buscador">
         <?php } ?>
         <input type="submit" value="Buscar">
     </form>
+        </div>
     <?php if ($buscador == true) { ?>
         <?php if (count($buscarEquipo) >= 1) { ?>
             <p>
@@ -58,6 +62,7 @@ if(isset($_REQUEST["modo"])){
             </p>
             <table border='1'>
                 <tr>
+                    <th>Posicion</th> 
                     <th>Nombre</th>
                     <th>Puntos</th>
                     <th>Partidos Jugados</th>
@@ -69,7 +74,16 @@ if(isset($_REQUEST["modo"])){
                     <th>Diferencia De Goles</th>
                 </tr>
                 <?php foreach ($buscarEquipo as $equipo) { ?>
+                    <?php 
+                        foreach($equipos as $equipo2){
+                            $idEquipo=$equipo2->getId();
+                            if($idEquipo == $equipo->getId()){
+                                $numeros=$numero;
+                            }
+                            $numero++;
+                        }?>
                     <tr>
+                        <td><?php echo $numeros ?></td>
                         <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
                         <td> <?= $equipo->getPuntos() ?> </td>
                         <td> <?= $equipo->getPartidosJugados() ?> </td>
@@ -79,7 +93,7 @@ if(isset($_REQUEST["modo"])){
                         <td> <?= $equipo->getGolesFavor() ?> </td>
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
-                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> (X) </a></td>
+                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
                     </tr>
                 <?php } ?>
 
@@ -87,12 +101,13 @@ if(isset($_REQUEST["modo"])){
             <?php } else { ?>
                 <p>
                 <h3>No se ha encontrado resultados de la busqueda <?= $buscar ?> </h3>
-                <?php header("refresh:5;url=EquipoListado.php") ?>
+                <?php header("refresh:5;url=clasificacion.php") ?>
                 </p>
             <?php } ?>
         <?php } else { ?>
             <table border='1'>
                 <tr>
+                    <th>Posicion</th>
                     <th>Nombre</th>
                     <th>Puntos</th>
                     <th>Partidos Jugados</th>
@@ -105,6 +120,7 @@ if(isset($_REQUEST["modo"])){
                 </tr>
                 <?php foreach ($equipos as $equipo) { ?>
                     <tr>
+                        <td><?php echo $numero ?></td>
                         <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
                         <td> <?= $equipo->getPuntos() ?> </td>
                         <td> <?= $equipo->getPartidosJugados() ?> </td>
@@ -114,13 +130,14 @@ if(isset($_REQUEST["modo"])){
                         <td> <?= $equipo->getGolesFavor() ?> </td>
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
-                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> (X) </a></td>
+                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
                     </tr>
+                    <?php $numero++; ?>
                 <?php } ?>
             <?php } ?>
             </table><br>
-            <a href='EquipoFicha.php?id_Equipo=-1'>Crear entrada</a>
-            <li><a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php">Cerrar Sesión</a></li>
+                </div>
+            <a href='EquipoFicha.php?id_Equipo=-1'>Crear Equipo</a>
 </body>
 
 </html>

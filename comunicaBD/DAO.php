@@ -229,9 +229,9 @@ class DAO
         if ($nuevaEntrada) {
             $rs = self::arbitroCrear($nombre, $apellidos);
             if ($rs) {
-                redireccionar("arbitroFicha.php?creacionCorrecta&id_Arbitro=$id");
+                redireccionar("arbitroListado.php?creacionCorrecta");
             } else {
-                redireccionar("arbitroFicha.php?creacionIncorrecta&id_Arbitro=$id");
+                redireccionar("arbitroListado.php?creacionIncorrecta");
             }
             return $rs;
         } else {

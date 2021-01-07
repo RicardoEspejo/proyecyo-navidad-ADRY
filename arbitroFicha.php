@@ -11,27 +11,36 @@
 <head>
         <meta charset="utf-8">
         <title>ADRY-GOL</title>
-        <link rel="stylesheet" href="disenio/ADRY.css">
+        <?php if(isset($_SESSION["tema"])){?>
+    <?php if($_SESSION["tema"] == "claro"){ ?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php }else{ ?>
+        <link rel='stylesheet' href='disenio/modoOscuro.css'>
+    <?php } }else{?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php } ?>
 </head>
 
 <body>
-
+<header>
+        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
+    <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
+        <input type="hidden" name="nombre" value="arbitroFicha.php?id_Arbitro=<?= $id ?>">
+        <select name="modo" onChange="formulario.submit();">
+            <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
+            <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
+         </select>
+         </form>  
+      <a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
+    </header>
+    <h1>ADRY-GOL</h1>
 <?php if ($nuevaEntrada) { ?>
-	<h1>Nueva ficha de arbitros</h1>
+	<h2>Arbitros > Nueva ficha de arbitros</h2>
 <?php } else { ?>
-	<h1>Ficha de arbitros</h1>
+	<h2>Arbitros > Ficha de arbitros</h2>
 <?php } ?>
 
-<?php if(isset($_REQUEST["creacionCorrecta"])){ ?>
-    <p>
-        <h6>Se ha creado correctamente el arbitro.</h6>
-    </p>
-<?php }else if(isset($_REQUEST["creacionIncorrecta"])){ ?>
-    <p>
-        <h6>No se ha podido crear el arbitro.</h6>
-    </p>
-
-<?php }else if(isset($_REQUEST["modificacionCorrecta"])){ ?>
+<?php if(isset($_REQUEST["modificacionCorrecta"])){ ?>
     <p>
         <h6>Se ha modificado correctamente el arbitro.</h6>
     </p>
@@ -42,10 +51,6 @@
     </p>
 
 <?php } ?>
-
-
-
-
 <form method='post' action='arbitroGuardar.php'>
 
 <input type='hidden' name='id' value='<?=$id?>' />
@@ -75,7 +80,7 @@
 
 </form>
 
-<a href='ArbitroListado.php'>Volver al listado de arbitros.</a>
+<a href='arbitroListado.php'>Volver al listado de arbitros.</a>
 
 </body>
 

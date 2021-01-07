@@ -27,6 +27,26 @@ if (isset($_REQUEST["buscar"])) {
 </head>
 
 <body>
+<?php if(isset($_REQUEST["creacionCorrecta"])){ ?>
+    <p>
+        <h6>Se ha creado correctamente el arbitro.</h6>
+    </p>
+<?php }else if(isset($_REQUEST["creacionIncorrecta"])){ ?>
+    <p>
+        <h6>No se ha podido crear el arbitro.</h6>
+    </p>
+
+<?php }else if(isset($_REQUEST["eliminacionCorrecta"])){ ?>
+    <p>
+        <h6>Se ha eliminado correctamente el arbitro.</h6>
+    </p>
+<?php }else if(isset($_REQUEST["eliminacionIncorrecta"])){ ?>
+    <p>
+        <h6>No se ha podido eliminar el arbitro.</h6>
+    </p>
+<?php } ?>
+
+
     <header>
         <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
     <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
@@ -66,15 +86,15 @@ if (isset($_REQUEST["buscar"])) {
                 </tr>
                 <?php foreach ($buscarArbitro as $arbitro) { ?>
                     <tr>
-                        <td><a href='ArbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getNombre() ?> </a></td>
-                        <td><a href='ArbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getApellidos() ?> </td>
+                        <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getNombre() ?> </a></td>
+                        <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getApellidos() ?> </td>
                         <td><a href='arbitroEliminar.php?id_arbitro=<?= $arbitro->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
                     </tr>
                 <?php } ?>
             <?php } else { ?>
                 <p>
                 <h3>No se ha encontrado resultados de la busqueda <?= $buscar ?> </h3>
-                <?php header("refresh:5;url=ArbitroListado.php") ?>
+                <?php header("refresh:5;url=arbitroListado.php") ?>
                 </p>
             <?php } ?>
             </table><br>
@@ -87,15 +107,15 @@ if (isset($_REQUEST["buscar"])) {
                 </tr>
                 <?php foreach ($arbitros as $arbitro) { ?>
                     <tr>
-                        <td><a href='ArbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getNombre() ?> </a></td>
-                        <td><a href='ArbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getApellidos() ?> </td>
-                        <td><a href='ArbitroEliminar.php?id_arbitro=<?= $arbitro->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                        <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getNombre() ?> </a></td>
+                        <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getApellidos() ?> </td>
+                        <td><a href='arbitroEliminar.php?id_arbitro=<?= $arbitro->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
                     </tr>
                 <?php } ?>
             <?php } ?>
             </table><br>
             </div>
-            <a href='ArbitroFicha.php?id_Arbitro=-1'>Crear entrada</a>
+            <a href='arbitroFicha.php?id_Arbitro=-1'>Crear entrada</a>
                 
 </body>
 
