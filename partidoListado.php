@@ -88,7 +88,7 @@ if (isset($_REQUEST["buscar"])) {
             <?php } else { ?>
                 <p>
                 <h3>No se ha encontrado resultados de la busqueda <?= $buscar ?> </h3>
-                <?php header("refresh:5;url=EquipoListado.php") ?>
+                <?php header("refresh:5;url=partidoListado.php") ?>
                 </p>
             <?php } ?>
         <?php } else { ?>
