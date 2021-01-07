@@ -23,10 +23,28 @@
         <title>ADRY-GOL</title>
         <meta name="description" content="-">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="disenio/ADRY.css">
+        <?php if(isset($_SESSION["tema"])){?>
+    <?php if($_SESSION["tema"] == "claro"){ ?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php }else{ ?>
+        <link rel='stylesheet' href='disenio/modoOscuro.css'>
+    <?php } }else{?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php } ?>
     </head>
     <body>
-        <h1>ADRY-GOL</h1>
+	<header>
+        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
+    <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
+        <input type="hidden" name="nombre" value="partidoFicha.php?id_Partido=<?= $id ?>">
+        <select name="modo" onChange="formulario.submit();">
+            <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
+            <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
+         </select>
+         </form>  
+      <a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
+	</header>
+		<h1>ADRY-GOL</h1>
         <h2>Partidos > Ficha</h2>
 		<form method='post' action='PartidoGuardar.php' enctype="multipart/form-data">
 			<input type='hidden' name='id_Partido' value='<?=$id?>'>

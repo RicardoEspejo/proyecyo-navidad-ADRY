@@ -23,10 +23,6 @@ if (isset($_REQUEST["buscar"])) {
     $buscador = false;
 }
 
-if(isset($_REQUEST["modo"])){
-    $modo=$_REQUEST["modo"];
-    DAO::modoClaroOscuro($modo);
-}
 
 ?>
 
@@ -34,36 +30,43 @@ if(isset($_REQUEST["modo"])){
 
 <head>
     <title>Equipos Listado</title>
+    <?php if(isset($_SESSION["tema"])){?>
+    <?php if($_SESSION["tema"] == "claro"){ ?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php }else{ ?>
+        <link rel='stylesheet' href='disenio/modoOscuro.css'>
+    <?php } }else{?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php } ?>
 </head>
 
 <body>
-    <header>
-        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php'>ADRYGOL</a>
-    </header>
-    <h1>Listado de Equipos</h1>
-    <form action='<?php $_SERVER['PHP_SELF']; ?>' method="post" name="formulario">
+<header>
+        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
+    <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
+        <input type="hidden" name="nombre" value="EquipoListado.php">
         <select name="modo" onChange="formulario.submit();">
-                <option value="claro">Modo Claro</option>
-                  <option value="oscuro" 
-                  <?php 
-                  if(isset($_SESSION["tema"])){
-                      if($_SESSION["tema"] == "oscuro"){
-                        echo "selected";
-                      }
-                  }?>>Modo Oscuro</option>
-                  
-            </select>
-   
-    </form> 
-    <form action='' method='post'>
+            <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
+            <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
+         </select>
+         </form>  
+      <a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
+    </header>
+    <div class="contenedor">   
+        <h1>ADRY-GOL</h1>
+
+    <div class="contenedor2">
+        <h2>Equipos > Listado</h2>
+    <form action='' method='post' class="buscador2">
         <?php if ($buscador == true) {  ?>
-            <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>">
+            <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>" class="buscador">
             <a href="EquipoListado.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
         <?php } else { ?>
-            <input type="search" placeholder="Buscar" name="buscar">
+            <input type="search" placeholder="Buscar" name="buscar" class="buscador">
         <?php } ?>
         <input type="submit" value="Buscar">
     </form>
+        </div>
     <?php if ($buscador == true) { ?>
         <?php if (count($buscarEquipo) >= 1) { ?>
             <p>
@@ -92,7 +95,7 @@ if(isset($_REQUEST["modo"])){
                         <td> <?= $equipo->getGolesFavor() ?> </td>
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
-                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> (X) </a></td>
+                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
                     </tr>
                 <?php } ?>
 
@@ -127,13 +130,13 @@ if(isset($_REQUEST["modo"])){
                         <td> <?= $equipo->getGolesFavor() ?> </td>
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
-                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> (X) </a></td>
+                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
                     </tr>
                 <?php } ?>
             <?php } ?>
             </table><br>
+                </div>
             <a href='EquipoFicha.php?id_Equipo=-1'>Crear entrada</a>
-            <li><a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php">Cerrar Sesión</a></li>
 </body>
 
 </html>

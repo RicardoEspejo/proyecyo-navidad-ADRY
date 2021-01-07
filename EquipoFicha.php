@@ -11,31 +11,49 @@
     else if(isset($_REQUEST["modificacionErronea"]))
         echo "<p>Error al actualizar</p>";
 
-    if($equipo[10] != "") {
-        echo "<img src='disenio/".$equipo[10]."' width='100' heigth='100'>";
-    } else {
-        echo "<img src='disenio/fotoEscudo.JPEG' width='100' heigth='100'>";
-    }
-
 ?>
-
-
 
 <html>
 
 <head>
-	<meta charset='UTF-8'>
+    <meta charset='UTF-8'>
+    <?php if(isset($_SESSION["tema"])){?>
+    <?php if($_SESSION["tema"] == "claro"){ ?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php }else{ ?>
+        <link rel='stylesheet' href='disenio/modoOscuro.css'>
+    <?php } }else{?>
+        <link rel='stylesheet' href='disenio/modoClaro.css'>
+    <?php } ?>
 </head>
 
 
 
 <body>
-
+<header>
+        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
+    <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
+        <input type="hidden" name="nombre" value="EquipoFicha.php?id_Equipo=<?= $id ?>">
+        <select name="modo" onChange="formulario.submit();">
+            <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
+            <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
+         </select>
+         </form>  
+      <a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
+    </header>
+    <h1>ADRY-GOL</h1>
 <?php if ($nuevaEntrada == true) { ?>
-	<h1>Nueva ficha de Equipo</h1>
+	<h2>Equipos > Nueva ficha de Equipo</h2>
 <?php } else { ?>
-	<h1>Ficha de Equipo</h1>
+	<h2>Equipos > Ficha de Equipo</h2>
 <?php } ?>
+
+<?php if($equipo[10] != "") {
+        echo "<img src='disenio/".$equipo[10]."' width='100' heigth='100'>";
+    } else {
+        echo "<img src='disenio/fotoEscudo.JPEG' width='100' heigth='100'>";
+    }
+?>
 
 <form method='post' action='EquipoGuardar.php' enctype="multipart/form-data">
 
