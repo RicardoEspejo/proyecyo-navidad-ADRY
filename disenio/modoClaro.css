@@ -1,6 +1,6 @@
 body{
-    background:#161616;
-    color: white;
+    background:white;
+    color: black;
 }
 a{
     color:orange;
@@ -17,7 +17,7 @@ td{
 }
 table a{
     font-size: 1.2em;
-    color:white;
+    color: black;
 }
 th{
     color: #060;

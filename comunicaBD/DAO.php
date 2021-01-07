@@ -2,6 +2,7 @@
 
 require_once "varios.php";
 require_once "clases.php";
+session_start();
 class DAO
 {
     private static $pdo = null;
@@ -244,6 +245,19 @@ class DAO
         }
         
     }
+    public static function arbitrosEliminarPorID(int $id)
+    {
+        $rs=self::ejecutarActualizacion(
+        "DELETE FROM Arbitro WHERE id_Arbitro=?", 
+        [$id]
+        );
+        if($rs){
+            redireccionar("arbitroListado.php?eliminacionCorrecta");
+        }else{
+            redireccionar("arbitroListado.php?eliminacionIncorrecta");
+        }
+    }
+    
     /////////////////PARTIDO///////////////////////
     public static function sorteo()
     {
@@ -745,12 +759,11 @@ class DAO
 
     ///Modo Claro o Oscuro
     public static function modoClaroOscuro(string $modo)
-    {
-        $_SESSION["tema"] = $modo;
-        if ($_SESSION["tema"] == "oscuro") {
-            echo "<link rel='stylesheet' href='disenio/modoOscuro.css'>";
-        } else {
-            echo "<link rel='stylesheet' href='disenio/ADRY.css'>";
-        }
+   {
+         if($modo == "oscuro"){
+            $_SESSION["tema"]="oscuro";
+        }else{
+            $_SESSION["tema"]="claro";
+        }  
     }
 }
