@@ -2,8 +2,6 @@
 require_once "../comunicaBD/DAO.php";
 require_once "../comunicaBD/varios.php";
 
-session_start();
-
 if (isset($_SESSION["id_Usuario"])) {
     $id = $_SESSION["id_Usuario"];
     $resultado = DAO::ObtenerSesionIniciada($id);

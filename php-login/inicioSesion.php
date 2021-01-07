@@ -2,17 +2,10 @@
 require_once "../comunicaBD/DAO.php";
 require_once "../comunicaBD/varios.php";
 
-session_start();
 
 if (isset($_SESSION["id_Usuario"])) {
     redireccionar("inicio.php");
 }
-
-//cookies   
-
-
-
-
 
 $mnsj = "";
 
@@ -22,19 +15,18 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
     $resultado = DAO::iniciarSesionUsuario($identificador);
 
     if (count($resultado) > 0 && password_verify($password, $resultado[2])) {
-        $_SESSION['id_Usuario'] = $resultado[0];
-        if ($_POST["recuerdame"] == "1") {
-            $numero_aleatorio = generarCadenaAleatoria(50);
-            $year = time() + 31536000;
-
-            DAO::usuarioActualizarPorIdLasCookies($resultado[0], $numero_aleatorio);
-            if ($_POST["recuerdame"]) {
-                setcookie("recuerdame", $identificador, $year);
-            } elseif (!$_POST["recuerdame"]) {
-                if (isset($_COOKIE["recuerdame"])) {
-                    $past = time() - 100;
-                    setcookie("recuerdame", $identificador, $past);
-                }
+        if (!empty($_POST["recuerdame"])) {
+            setcookie("identificador", $identificador, time() + (10 * 365 * 24 * 60 * 60));
+            setcookie("contrasenna", $password, time() + (10 * 365 * 24 * 60 * 60));
+            $_SESSION['id_Usuario'] = $resultado[0];
+        } else {
+            if (isset($_COOKIE["identificador"])) {
+                setcookie("identificador", "");
+                $_SESSION['id_Usuario'] = $resultado[0];
+            }
+            if (isset($_COOKIE["contrasenna"])) {
+                setcookie("contrasenna", "");
+                $_SESSION['id_Usuario'] = $resultado[0];
             }
         }
         header('Location: inicio.php');
@@ -61,13 +53,18 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
     <p></p>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
         <label for="usuario">Nombre de Usuario: </label>
-        <input type="text" name="identificador" placeholder="Usuario" >
+        <input type="text" name="identificador" placeholder="Usuario" value="<?php if (isset($_COOKIE["identificador"])) {
+                                                                                    echo $_COOKIE["identificador"];
+                                                                                } ?>">
         <p></p>
         <label for="contrasenna">Contraseña: </label>
-        <input type="password" name="contrasenna" placeholder="Contraseña">
+        <input type="password" name="contrasenna" placeholder="Contraseña" value="<?php if (isset($_COOKIE["contrasenna"])) {
+                                                                                        echo $_COOKIE["contrasenna"];
+                                                                                    } ?>">
         <p></p>
         <label><b>Recuérdame</b></label>
-        <input type="checkbox" name="recuerdame" <?php $condicion = isset($_COOKIE["recuerdame"]) ? "checked='checked'" :  ""; ?>><br />
+        <input type="checkbox" name="recuerdame" 
+        <?php if(isset($_COOKIE["identificador"])){ ?>checked<?php } ?>><br />
         <input type="submit" value="Iniciar Sesión">
     </form>
 
