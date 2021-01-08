@@ -712,6 +712,11 @@ class DAO
             [$identificador]
         );
         $datos = array($rs["id_Usuario"], $rs["identificador"], $rs["contrasenna"], $rs["tipo"]);
+        if($datos[3] == 1) {
+            $_SESSION["tipo"] = 1;
+        }else {
+            $_SESSION["tipo"] = 0;
+        }
         return $datos;
     }
 

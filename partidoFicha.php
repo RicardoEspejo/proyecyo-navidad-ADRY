@@ -42,7 +42,7 @@
             <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
          </select>
          </form>  
-      <a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
+      <a href="php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
 	</header>
 		<h1>ADRY-GOL</h1>
         <h2>Partidos > Ficha</h2>

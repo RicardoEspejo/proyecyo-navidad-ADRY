@@ -40,7 +40,7 @@ if (isset($_REQUEST["buscar"])) {
             <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
          </select>
          </form>  
-      <a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
+      <a href="php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
     </header>
     <div class="contenedor">
     <h1>ADRY-GOL</h1>
@@ -105,7 +105,11 @@ if (isset($_REQUEST["buscar"])) {
                 </tr>
                 <?php foreach ($partidos as $partido) { ?>
                     <tr>
-                        <td><a href='PartidoFicha.php?id_Partido=<?= $partido->getId() ?>'><?= $partido->getId() ?></a></td>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='PartidoFicha.php?id_Partido=<?= $partido->getId() ?>'><?= $partido->getId() ?></a></td>
+                        <?php } else {?>
+                            <td><?= $partido->getId() ?></td>
+                        <?php } ?>
                         <td><?= $nombreLocal = DAO::equipoObtenerNombre($partido->getEquipoLocal()); ?></td>
                         <td><?= $nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante()); ?></td>
                         <td><?= $partido->getFecha() ?></td>
@@ -113,7 +117,9 @@ if (isset($_REQUEST["buscar"])) {
                         <td><?= $partido->getGolLocal() ?> </td>
                         <td><?= $partido->getGolVisitante() ?> </td>
                         <td><?= $partido->getGanador() ?> </td>
-                        <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                        <?php } ?>
                     </tr>
                 <?php } ?>
             <?php } ?>

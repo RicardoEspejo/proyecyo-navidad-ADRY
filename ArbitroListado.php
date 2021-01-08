@@ -56,7 +56,7 @@ if (isset($_REQUEST["buscar"])) {
             <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
          </select>
          </form>  
-      <a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
+      <a href="php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
     </header>
    <div class="contenedor">   
         <h1>ADRY-GOL</h1>
@@ -103,13 +103,20 @@ if (isset($_REQUEST["buscar"])) {
                 <tr>
                     <th>Nombre</th>
                     <th>Apellidos</th>
-                    <th>Eliminar</th>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                        <th>Eliminar</th>
+                    <?php } ?>
                 </tr>
                 <?php foreach ($arbitros as $arbitro) { ?>
                     <tr>
-                        <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getNombre() ?> </a></td>
-                        <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getApellidos() ?> </td>
-                        <td><a href='arbitroEliminar.php?id_arbitro=<?= $arbitro->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getNombre() ?> </a></td>
+                            <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getApellidos() ?> </td>
+                            <td><a href='arbitroEliminar.php?id_arbitro=<?= $arbitro->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                        <?php } else {?>
+                            <td> <?= $arbitro->getNombre() ?> </td>
+                            <td> <?= $arbitro->getApellidos() ?> </td>
+                        <?php } ?>
                     </tr>
                 <?php } ?>
             <?php } ?>

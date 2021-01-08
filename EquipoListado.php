@@ -50,7 +50,7 @@ if (isset($_REQUEST["buscar"])) {
             <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
          </select>
          </form>  
-      <a href="../proyecyo-navidad-ADRY/php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
+      <a href="php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
     </header>
     <div class="contenedor">   
         <h1>ADRY-GOL</h1>
@@ -121,7 +121,11 @@ if (isset($_REQUEST["buscar"])) {
                 </tr>
                 <?php foreach ($equipos as $equipo) { ?>
                     <tr>
-                        <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                        <?php } else {?>
+                            <td> <?= $equipo->getNombre() ?> </td>
+                        <?php } ?>
                         <td> <?= $equipo->getPuntos() ?> </td>
                         <td> <?= $equipo->getPartidosJugados() ?> </td>
                         <td> <?= $equipo->getVictorias() ?> </td>
@@ -130,7 +134,9 @@ if (isset($_REQUEST["buscar"])) {
                         <td> <?= $equipo->getGolesFavor() ?> </td>
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
-                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
+                        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
+                        <?php } ?>
                     </tr>
                 <?php } ?>
             <?php } ?>
