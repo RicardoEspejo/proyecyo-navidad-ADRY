@@ -42,7 +42,7 @@ if (isset($_REQUEST["buscar"])) {
 
 <body>
 <header>
-        <a href='/proyectoClase/proyecyo-navidad-ADRY/php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
+<a href='php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
     <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
         <input type="hidden" name="nombre" value="EquipoListado.php">
         <select name="modo" onChange="formulario.submit();">
