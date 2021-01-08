@@ -743,19 +743,6 @@ class DAO
         );
     }
 
-    // function borrarCookieRecuerdame($identificador)
-    // {
-    //     // Eliminamos el código cookie de nuestra BD.
-    //     DAO::usuarioActualizarPorIdLasCookies($identificador, null);
-
-    //     setcookie("identificador", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.
-    //     setcookie("codigoCookie", "", time() - 3600); // Tiempo en el pasado, para (pedir) borrar la cookie.
-    // }
-    // function establecerCookieRecuerdame($usuario, $codigoCookie)
-    // {
-    //     setcookie("usuario", $usuario, time() + 24 * 60 * 60);
-    //     setcookie("codigoCookie", $codigoCookie, time() + 24 * 60 * 60);
-    // }
 
     ///Modo Claro o Oscuro
     public static function modoClaroOscuro(string $modo)
