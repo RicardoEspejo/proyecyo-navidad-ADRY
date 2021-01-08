@@ -14,6 +14,7 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
     if ($_POST['contrasenna'] == $confirmar_contrasenna) {
         $contrasenna = password_hash($_POST['contrasenna'], PASSWORD_BCRYPT);
         DAO::usuarioCrear($identificador, $contrasenna, $tipo);
+        redireccionar("inicioSesion.php");
     } else {
         $mnsj = "La contraseña ha fallado";
     }

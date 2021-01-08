@@ -243,21 +243,20 @@ class DAO
             }
             return $rs;
         }
-        
     }
     public static function arbitrosEliminarPorID(int $id)
     {
-        $rs=self::ejecutarActualizacion(
-        "DELETE FROM Arbitro WHERE id_Arbitro=?", 
-        [$id]
+        $rs = self::ejecutarActualizacion(
+            "DELETE FROM Arbitro WHERE id_Arbitro=?",
+            [$id]
         );
-        if($rs){
+        if ($rs) {
             redireccionar("arbitroListado.php?eliminacionCorrecta");
-        }else{
+        } else {
             redireccionar("arbitroListado.php?eliminacionIncorrecta");
         }
     }
-    
+
     /////////////////PARTIDO///////////////////////
     public static function sorteo()
     {
@@ -686,7 +685,6 @@ class DAO
         $select = self::$pdo->prepare($sql);
         $select->execute($parametros);
         $rs = $select->fetch(PDO::FETCH_ASSOC); //Aqui esta la diferencia a las demás
-
         return $rs;
     }
 
@@ -720,7 +718,7 @@ class DAO
         return $datos;
     }
 
-    public static function ObtenerSesionIniciada($id)
+    public static function ObtenerSesionIniciada($id): array
     {
         $datos = [];
         $rs = self::ejecutarConsultaUsuario(
@@ -748,14 +746,17 @@ class DAO
         );
     }
 
+    public static function identificarEstadoUsuario()
+    {
+    }
 
     ///Modo Claro o Oscuro
     public static function modoClaroOscuro(string $modo)
-   {
-         if($modo == "oscuro"){
-            $_SESSION["tema"]="oscuro";
-        }else{
-            $_SESSION["tema"]="claro";
-        }  
+    {
+        if ($modo == "oscuro") {
+            $_SESSION["tema"] = "oscuro";
+        } else {
+            $_SESSION["tema"] = "claro";
+        }
     }
 }

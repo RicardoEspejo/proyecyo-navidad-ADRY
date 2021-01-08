@@ -63,8 +63,7 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
                                                                                     } ?>">
         <p></p>
         <label><b>Recuérdame</b></label>
-        <input type="checkbox" name="recuerdame" 
-        <?php if(isset($_COOKIE["identificador"])){ ?>checked<?php } ?>><br />
+        <input type="checkbox" name="recuerdame" <?php if (isset($_COOKIE["identificador"])) { ?>checked<?php } ?>><br />
         <input type="submit" value="Iniciar Sesión">
     </form>
 
