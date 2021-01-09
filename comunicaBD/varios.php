@@ -1,15 +1,13 @@
 <?php
 
+//Metodo para redireccionar los archivos
 function redireccionar(string $url)
 {
     header("Location: $url");
     exit;
 }
 
-function haySesionRamIniciada(): bool
-{
-    return isset($_SESSION["id"]);
-}
+//genera una cadena aleatoria para las cookies
 
 function generarCadenaAleatoria(int $longitud): string
 {

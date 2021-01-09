@@ -677,7 +677,7 @@ class DAO
 
     /////////////USUARIO///////////////////////////////////////////
 
-    //Esta consulta es especialmente para el inicio de sesion
+    //Esta consulta es especialmente para el inicio de sesion de usuarios
     private static function ejecutarConsultaUsuario(string $sql, array $parametros): array
     {
         if (!isset(self::$pdo)) self::$pdo = self::obtenerPdoConexionBd();
@@ -688,66 +688,66 @@ class DAO
         return $rs;
     }
 
-
+    //Creamos el objeto Usuario
     public static function usuarioCrearDesdeRs(array $rs): Usuario
     {
         return new Usuario($rs["id_Usuario"], $rs["identificador"], $rs["contrasenna"], $rs["tipo"]);
     }
 
+    //Creamos el usuario y lo almacenamos en la base de datos
     public static function usuarioCrear(String $identificador, String $contrasenna, bool $tipo): bool
     {
         return self::ejecutarActualizacion(
             "INSERT INTO usuario (identificador, contrasenna, tipo) VALUES(?,?,?)",
             [$identificador, $contrasenna, $tipo]
         );
+
+        // los parametros que obtenemos son los qeu almacenamos en la base de datos
     }
 
     public static function iniciarSesionUsuario(String $identificador): array
     {
         $datos = [];
+
+        //obtenemos al usaurio desde identificador
         $rs = self::ejecutarConsultaUsuario(
             "SELECT * FROM usuario WHERE identificador=?",
             [$identificador]
         );
+
+        // almacenamos al usaurio en el array datos
         $datos = array($rs["id_Usuario"], $rs["identificador"], $rs["contrasenna"], $rs["tipo"]);
-        if($datos[3] == 1) {
+        //comprobamos el tipo de usuario 
+        if ($datos[3] == 1) {
+            // si es 1 va a ser administrador
             $_SESSION["tipo"] = 1;
-        }else {
+        } else {
+            // si es 0 va a ser usuario
             $_SESSION["tipo"] = 0;
         }
+        // devolvemos el usuario en array
         return $datos;
     }
 
     public static function ObtenerSesionIniciada($id): array
     {
+        // Aqui obtenemos la sesion y comprobamos que esta iniciada desde el id_usuario que reciboimos
         $datos = [];
         $rs = self::ejecutarConsultaUsuario(
             "SELECT * FROM usuario WHERE id_Usuario=?",
             [$id]
         );
         $datos = array($rs["id_Usuario"], $rs["identificador"], $rs["contrasenna"], $rs["tipo"]);
+        // devolvemos el usuario en array
         return $datos;
     }
 
     public static function CerrarSesion()
     {
+        // funcion que elimina sesion iniciada
         session_start();
         session_unset();
         session_destroy();
-    }
-
-    public static function usuarioActualizarPorIdLasCookies($id, $codigoCookie): bool
-    {
-        return self::ejecutarActualizacion(
-            "UPDATE usuario SET codigoCookie=? WHERE id_Usuario=?",
-            [
-                $codigoCookie, $id
-            ]
-        );
-    }
-
-    public static function identificarEstadoUsuario()
-    {
     }
 
     ///Modo Claro o Oscuro
