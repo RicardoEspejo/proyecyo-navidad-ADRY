@@ -134,8 +134,10 @@ else if (isset($_REQUEST["eliminacionErronea"]))
             <?php } ?>
 
             </table><br>
-                </div>
+        </div>
+        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
             <a href='PartidoFicha.php?id_Partido=-1'>Crear entrada</a>
+        <?php } ?>            
            
 </body>
 
