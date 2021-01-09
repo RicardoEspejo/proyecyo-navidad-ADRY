@@ -88,7 +88,11 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                     </tr>
                     <?php foreach ($buscarPartidos as $partido) { ?>
                         <tr>
-                            <td><a href='PartidoFicha.php?id_Partido=<?= $partido->getId() ?>'><?= $partido->getId() ?></a></td>
+                        <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                                <td><a href='PartidoFicha.php?id_Partido=<?= $partido->getId() ?>'><?= $partido->getId() ?></a></td>
+                            <?php } else { ?>
+                                <td><?= $partido->getId() ?></td>
+                            <?php } ?>
                             <td><?= $nombreLocal = DAO::equipoObtenerNombre($partido->getEquipoLocal()); ?></td>
                             <td><?= $nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante()); ?></td>
                             <td><?= $partido->getFecha() ?></td>
@@ -96,7 +100,9 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                             <td><?= $partido->getGolLocal() ?> </td>
                             <td><?= $partido->getGolVisitante() ?> </td>
                             <td><?= $partido->getGanador() ?> </td>
-                            <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> (<img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                            <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                                <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                            <?php } ?>
                         </tr>
                     <?php } ?>
                 <?php } else { ?>

@@ -18,7 +18,11 @@ else if (isset($_REQUEST["eliminacionErronea"]))
 if (isset($_REQUEST["buscar"])) {
     $buscar = strtolower($_REQUEST["buscar"]);
     $buscador = true;
-    $buscarEquipo = DAO::buscarEquipos($buscar);
+    if(!empty($buscar)){
+        $buscarEquipo = DAO::buscarEquipos($buscar);
+    }else{
+        redireccionar("EquipoListado.php");
+    }
 } else {
     $buscador = false;
 }
@@ -89,7 +93,11 @@ if (isset($_REQUEST["buscar"])) {
                 </tr>
                 <?php foreach ($buscarEquipo as $equipo) { ?>
                     <tr>
-                        <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { //Aqui comprobamos si tiene permisos de administrador ?>
+                            <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                        <?php } else {?>
+                            <td> <?= $equipo->getNombre() ?> </td>
+                        <?php } ?>
                         <td> <?= $equipo->getPuntos() ?> </td>
                         <td> <?= $equipo->getPartidosJugados() ?> </td>
                         <td> <?= $equipo->getVictorias() ?> </td>
@@ -98,7 +106,9 @@ if (isset($_REQUEST["buscar"])) {
                         <td> <?= $equipo->getGolesFavor() ?> </td>
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
-                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
+                        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
+                        <?php } ?>
                     </tr>
                 <?php } ?>
 

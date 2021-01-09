@@ -7,7 +7,11 @@ $equipos = DAO::ClasificacionObtener();
 if (isset($_REQUEST["buscar"])) {
     $buscar = strtolower($_REQUEST["buscar"]);
     $buscador = true;
-    $buscarEquipo = DAO::buscarEquipos($buscar);
+        if(!empty($buscar)){
+            $buscarEquipo = DAO::buscarEquipos($buscar);
+        }else{
+            redireccionar("clasificacion.php");
+        }
 } else {
     $buscador = false;
 }
@@ -87,7 +91,11 @@ $numero=1;
                         }?>
                     <tr>
                         <td><?php echo $numeros ?></td>
-                        <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                        <?php } else {?>
+                            <td> <?= $equipo->getNombre() ?> </td>
+                        <?php } ?>
                         <td> <?= $equipo->getPuntos() ?> </td>
                         <td> <?= $equipo->getPartidosJugados() ?> </td>
                         <td> <?= $equipo->getVictorias() ?> </td>
@@ -96,7 +104,9 @@ $numero=1;
                         <td> <?= $equipo->getGolesFavor() ?> </td>
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
-                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
+                        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
+                        <?php } ?>
                     </tr>
                 <?php } ?>
 

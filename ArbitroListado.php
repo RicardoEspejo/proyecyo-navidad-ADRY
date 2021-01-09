@@ -84,14 +84,19 @@ if (isset($_REQUEST["buscar"])) {
                 <tr>
                     <th>Nombre</th>
                     <th>Apellidos</th>
-                    <th>Eliminar</th>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                        <th>Eliminar</th>
+                    <?php } ?>
                 </tr>
                 <?php foreach ($buscarArbitro as $arbitro) { ?>
-                    <tr>
-                        <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getNombre() ?> </a></td>
-                        <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getApellidos() ?> </td>
-                        <td><a href='arbitroEliminar.php?id_arbitro=<?= $arbitro->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
-                    </tr>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getNombre() ?> </a></td>
+                            <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getApellidos() ?> </td>
+                            <td><a href='arbitroEliminar.php?id_arbitro=<?= $arbitro->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                        <?php } else {?>
+                            <td> <?= $arbitro->getNombre() ?> </td>
+                            <td> <?= $arbitro->getApellidos() ?> </td>
+                        <?php } ?>
                 <?php } ?>
             <?php } else { ?>
                 <p>
