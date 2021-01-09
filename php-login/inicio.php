@@ -19,17 +19,33 @@ if (isset($_SESSION["id_Usuario"])) {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ADRY-GOL inicio</title>
+    <?php if(isset($_SESSION["tema"])){?>
+    <?php if($_SESSION["tema"] == "claro"){ ?>
+        <link rel='stylesheet' href='../disenio/modoClaro.css'>
+    <?php }else{ ?>
+        <link rel='stylesheet' href='../disenio/modoOscuro.css'>
+    <?php } }else{?>
+        <link rel='stylesheet' href='../disenio/modoClaro.css'>
+    <?php } ?>
 </head>
 
 <body>
     <header>
-        <a href="../php-login">ADRYGOL</a>
+        <form action='../modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
+        <input type="hidden" name="nombre" value="php-login/inicio.php">
+        <select name="modo" onChange="formulario.submit();">
+            <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
+            <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
+         </select>
+         </form>
+         <a href="cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>  
     </header>
 
-    <h1>Liga ADRYGOL</h1>
+    <h1>ADRY-GOL</h1>
+    <h2>MENÚ PRINCIPAL</h2>
     <h3>Bienvenido: <strong><?= $usuario[1] ?></strong></h3>
     <div id="menu">
         <ul>
@@ -38,11 +54,10 @@ if (isset($_SESSION["id_Usuario"])) {
             <li><a href="../ArbitroListado.php">Árbitros</a></li>
             <li><a href="../partidoListado.php">Partidos</a></li>
             <li><a href="../Clasificacion.php">Clasificación</a></li>
-            <li><a href="cerrarSesion.php">Cerrar Sesión</a></li>
         </ul>
     </div>
 
-    <img src="../documentos/brazil.jfif">
+    <img src="../disenio/brazil.jfif" width="380" height="200">
 </body>
 
 </html>

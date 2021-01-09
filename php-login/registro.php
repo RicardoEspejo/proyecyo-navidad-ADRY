@@ -25,17 +25,31 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Registrarse</title>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ADRY-GOL registro</title>
+    <?php if(isset($_SESSION["tema"])){?>
+    <?php if($_SESSION["tema"] == "claro"){ ?>
+        <link rel='stylesheet' href='../disenio/modoClaro.css'>
+    <?php }else{ ?>
+        <link rel='stylesheet' href='../disenio/modoOscuro.css'>
+    <?php } }else{?>
+        <link rel='stylesheet' href='../disenio/modoClaro.css'>
+    <?php } ?>
 </head>
 
 <body>
     <header>
-        <a href="../php-login">ADRYGOL</a>
+    <form action='../modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
+        <input type="hidden" name="nombre" value="php-login/registro.php">
+        <select name="modo" onChange="formulario.submit();">
+            <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
+            <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
+         </select>
+         </form>
     </header>
-    <h1>Liga ADRYGOL</h1>
-    <h3>Registrarse</h3>
+    <h1>ADRY-GOL</h1>
+    <h2>REGISTRO</h2>
     <span>o<a href="inicioSesion.php"> Iniciar Sesión</a></span>
     <p></p>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">

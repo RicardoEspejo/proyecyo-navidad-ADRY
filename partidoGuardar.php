@@ -17,8 +17,8 @@ $partido = DAO::partidoFicha($id_Partido);
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ADRY-GOL</title>
-    <meta name="description" content="-">
+    <title>ADRY-GOL partido guardar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="disenio/ADRY.css">
 </head>

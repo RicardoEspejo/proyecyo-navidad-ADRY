@@ -9,8 +9,10 @@
 <html>
 
 <head>
-        <meta charset="utf-8">
-        <title>ADRY-GOL</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ADRY-GOL árbitro ficha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php if(isset($_SESSION["tema"])){?>
     <?php if($_SESSION["tema"] == "claro"){ ?>
         <link rel='stylesheet' href='disenio/modoClaro.css'>
