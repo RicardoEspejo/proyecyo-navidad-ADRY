@@ -15,6 +15,11 @@
 		$visitanteNombre = DAO::equipoObtenerNombre((int) $partido[2]);
 	}
 	
+	if(isset($_REQUEST["modificacionCorrecta"]))
+        echo "<p>Partido actualizado correctamente</p>";
+    else if(isset($_REQUEST["modificacionErronea"]))
+		echo "<p>Error al actualizar</p>";
+		
 ?>
 <html>
 	<head>

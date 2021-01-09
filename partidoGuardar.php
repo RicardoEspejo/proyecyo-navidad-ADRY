@@ -57,10 +57,10 @@ $partido = DAO::partidoFicha($id_Partido);
                 DAO::establecerVictoriaVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
                 DAO::establecerDerrotaLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
                 DAO::partidoActualizarGanador($ganador, $id_Partido);
-            } ?>
-            <h3>Se ha modificado correctamente el partido.</h3>
-        <?php } else { ?>
-            <h3>Error en la modificación.</h3>
+            } 
+            redireccionar("partidoFicha.php?modificacionCorrecta&id_Partido=".$id_Partido); ?>
+        <?php } else { 
+            redireccionar("partidoFicha.php?modificacionErronea&id_Partido=".$id_Partido); ?>
         <?php }
     } else {
         $creacionCorrecta = DAO::partidoCrear(
@@ -72,12 +72,11 @@ $partido = DAO::partidoFicha($id_Partido);
             $gol_Visitante,
             $ganador
         );
-        if ($creacionCorrecta) { ?>
-            <h3>Se ha creado correctamente el partido.</h3>
-        <?php } else ?>
-        <h3>Error en la creación.</h3>
+        if ($creacionCorrecta) { 
+            redireccionar("partidoListado.php?modificacionCorrecta"); ?>
+        <?php } else
+            redireccionar("partidoListado.php?modificacionErronea"); ?>
     <?php } ?>
-    <a href='partidoListado.php'>Ir al listado de partidos</a></br>
 </body>
 
 </html>

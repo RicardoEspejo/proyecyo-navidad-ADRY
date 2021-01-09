@@ -11,7 +11,16 @@ if (isset($_REQUEST["buscar"])) {
 } else {
     $buscador = false;
 }
-?>
+
+if (isset($_REQUEST["creacionCorrecta"]))
+    echo "<p>Partido creado correctamente</p>";
+else if (isset($_REQUEST["creacionErronea"]))
+    echo "<p>Error al crear</p>";
+
+if (isset($_REQUEST["eliminacionCorrecta"]))
+    echo "<p>Partido eliminado correctamente</p>";
+else if (isset($_REQUEST["eliminacionErronea"]))
+    echo "<p>Error al eliminar</p>"; ?>
 <html>
 
 <head>
