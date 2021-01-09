@@ -2,6 +2,9 @@
 require_once "../comunicaBD/DAO.php";
 require_once "../comunicaBD/varios.php";
 
+// UNA VEZ INICIES SESION TE REDIRGIRÁ A ESTE PHP
+
+// LA MISMA FUNCION COMENTADA EN EL INDEX
 if (isset($_SESSION["id_Usuario"])) {
     $id = $_SESSION["id_Usuario"];
     $resultado = DAO::ObtenerSesionIniciada($id);
@@ -11,6 +14,8 @@ if (isset($_SESSION["id_Usuario"])) {
         $usuario = $resultado;
     }
 }
+
+//SI NO TIENES LOS PERMISOS DE ADMINISTRADOR , NO TE DEJA HACER EL SORTEO
 if(isset($_REQUEST["noPermisos"])) {
     echo "No tienes permisos para realizar un sorteo.<br>";
 }
@@ -46,9 +51,10 @@ if(isset($_REQUEST["noPermisos"])) {
          </form>
          <a href="cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>  
     </header>
-
+    <!-- ESTE PHP TE CONECTA CON EL RETSO DE PHP´S DESDE EL MENU PRINCIPAL -->
     <h1>ADRY-GOL</h1>
     <h2>MENÚ PRINCIPAL</h2>
+    <!-- SALUDAMOS AL USUARIO  -->
     <h3>Bienvenido: <strong><?= $usuario[1] ?></strong></h3>
     <div id="menu">
         <ul>
