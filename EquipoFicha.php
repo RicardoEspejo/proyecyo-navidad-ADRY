@@ -6,9 +6,9 @@
     $equipo= DAO::equipoFicha($id);
     $nuevaEntrada= $equipo[0];
 
-    if(isset($_REQUEST["modificacionCorrecta"]))
+    if(isset($_REQUEST["modificacionCorrecta"])) //Si hay modificación del equipo correcta lo indicamos
         echo "<p>Equipo actualizado correctamente</p>";
-    else if(isset($_REQUEST["modificacionErronea"]))
+    else if(isset($_REQUEST["modificacionErronea"])) //Y si hay modificación erronea lo indicamos también
         echo "<p>Error al actualizar</p>";
 
 ?>
@@ -51,7 +51,7 @@
 	<h2>Equipos > Ficha de Equipo</h2>
 <?php } ?>
 
-<?php if($equipo[10] != "") {
+<?php if($equipo[10] != "") { //Aqui mostramos el escudo del equipo, si no tiene mostramos uno por defecto
         echo "<img src='disenio/".$equipo[10]."' width='100' heigth='100'>";
     } else {
         echo "<img src='disenio/fotoEscudo.JPEG' width='100' heigth='100'>";
@@ -94,7 +94,7 @@
 
     <br/>
 
-<?php if ($nuevaEntrada) { ?>
+<?php if ($nuevaEntrada) { //si es nueva entrada ponemos boton de crear sino de guardar ?> 
 	<input type='submit' name='crear' value='Crear equipo' />
 <?php } else { ?>
 	<input type='submit' name='guardar' value='Guardar cambios' />

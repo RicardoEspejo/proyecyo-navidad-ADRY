@@ -5,12 +5,12 @@ require_once "comunicaBD/dao.php";
 
 $equipos = DAO::equipoObtenerTodos();
 
-if (isset($_REQUEST["creacionCorrecta"]))
+if (isset($_REQUEST["creacionCorrecta"])) //Aqui indicamos si la creacion del equipo es correcta o no
     echo "<p>Equipo creado correctamente</p>";
 else if (isset($_REQUEST["creacionErronea"]))
     echo "<p>Error al crear</p>";
 
-if (isset($_REQUEST["eliminacionCorrecta"]))
+if (isset($_REQUEST["eliminacionCorrecta"])) //Aqui indicamos si la eliminacion del equipo es correcta o no
     echo "<p>Equipo eliminado correctamente</p>";
 else if (isset($_REQUEST["eliminacionErronea"]))
     echo "<p>Error al eliminar</p>";
@@ -124,7 +124,7 @@ if (isset($_REQUEST["buscar"])) {
                 </tr>
                 <?php foreach ($equipos as $equipo) { ?>
                     <tr>
-                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { //Aqui comprobamos si tiene permisos de administrador ?>
                             <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
                         <?php } else {?>
                             <td> <?= $equipo->getNombre() ?> </td>
