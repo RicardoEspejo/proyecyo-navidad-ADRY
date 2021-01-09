@@ -667,7 +667,7 @@ class DAO
                 array_push($datos, $partidos);
             }
         } else {
-            redireccionar("ArbitroListado.php");
+            redireccionar("partidoListado.php");
         }
         return $datos;
     }
