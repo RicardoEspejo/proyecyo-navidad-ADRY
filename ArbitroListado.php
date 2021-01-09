@@ -116,7 +116,7 @@ if (isset($_REQUEST["buscar"])) {
                 </tr>
                 <?php foreach ($arbitros as $arbitro) { ?>
                     <tr>
-                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { //Aqui comprobamos si tiene permisos de administrador ?>
                             <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getNombre() ?> </a></td>
                             <td><a href='arbitroFicha.php?id_Arbitro=<?= $arbitro->getId() ?>'> <?= $arbitro->getApellidos() ?> </td>
                             <td><a href='arbitroEliminar.php?id_arbitro=<?= $arbitro->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
