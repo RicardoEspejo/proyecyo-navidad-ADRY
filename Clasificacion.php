@@ -124,7 +124,11 @@ $numero=1;
                 <?php foreach ($equipos as $equipo) { ?>
                     <tr>
                         <td><?php echo $numero ?></td>
-                        <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                        <?php } else {?>
+                            <td> <?= $equipo->getNombre() ?> </td>
+                        <?php } ?>
                         <td> <?= $equipo->getPuntos() ?> </td>
                         <td> <?= $equipo->getPartidosJugados() ?> </td>
                         <td> <?= $equipo->getVictorias() ?> </td>
@@ -133,14 +137,15 @@ $numero=1;
                         <td> <?= $equipo->getGolesFavor() ?> </td>
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
-                        <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
+                        <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
+                        <?php } ?>
                     </tr>
                     <?php $numero++; ?>
                 <?php } ?>
             <?php } ?>
             </table><br>
                 </div>
-            <a href='EquipoFicha.php?id_Equipo=-1'>Crear Equipo</a>
 </body>
 
 </html>

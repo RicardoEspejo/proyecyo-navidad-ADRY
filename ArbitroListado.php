@@ -124,7 +124,10 @@ if (isset($_REQUEST["buscar"])) {
             <?php } ?>
             </table><br>
             </div>
-            <a href='arbitroFicha.php?id_Arbitro=-1'>Crear entrada</a>
+            <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                <a href='arbitroFicha.php?id_Arbitro=-1'>Crear entrada</a>
+            <?php } ?>
+            
                 
 </body>
 

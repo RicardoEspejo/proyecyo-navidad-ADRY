@@ -144,8 +144,11 @@ if (isset($_REQUEST["buscar"])) {
                 <?php } ?>
             <?php } ?>
             </table><br>
-                </div>
-            <a href='EquipoFicha.php?id_Equipo=-1'>Crear entrada</a>
+        </div>
+            <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                <a href='EquipoFicha.php?id_Equipo=-1'>Crear entrada</a>
+            <?php } ?>
+            
 </body>
 
 </html>

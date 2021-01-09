@@ -54,6 +54,7 @@ if (isset($_SESSION["id_Usuario"])) {
             <li><a href="../ArbitroListado.php">Árbitros</a></li>
             <li><a href="../partidoListado.php">Partidos</a></li>
             <li><a href="../Clasificacion.php">Clasificación</a></li>
+            <li><a href="../sorteo.php">Sorteo</a></li>
         </ul>
     </div>
 
