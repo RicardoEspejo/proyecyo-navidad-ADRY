@@ -11,6 +11,9 @@ if (isset($_SESSION["id_Usuario"])) {
         $usuario = $resultado;
     }
 }
+if(isset($_REQUEST["noPermisos"])) {
+    echo "No tienes permisos para realizar un sorteo.<br>";
+}
 
 ?>
 
