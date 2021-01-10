@@ -4,6 +4,7 @@ require_once "comunicaBD/dao.php";
 
 $partidos = DAO::partidoObtenerTodos();
 
+//Conexión con el buscador
 if (isset($_REQUEST["buscar"])) {
     $buscar = strtolower($_REQUEST["buscar"]);
     $buscador = true;
@@ -12,6 +13,7 @@ if (isset($_REQUEST["buscar"])) {
     $buscador = false;
 }
 
+//Notificaciones de creación y eliminación
 if (isset($_REQUEST["creacionCorrecta"]))
     echo "<p>Partido creado correctamente</p>";
 else if (isset($_REQUEST["creacionErronea"]))
@@ -29,7 +31,8 @@ else if (isset($_REQUEST["eliminacionErronea"]))
     <title>ADRY-GOL partido listado</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php if (isset($_SESSION["tema"])) { ?>
+    <?php //Determina el tema seleccionado
+        if (isset($_SESSION["tema"])) { ?>
         <?php if ($_SESSION["tema"] == "claro") { ?>
             <link rel='stylesheet' href='disenio/modoClaro.css'>
         <?php } else { ?>
@@ -41,17 +44,17 @@ else if (isset($_REQUEST["eliminacionErronea"]))
 </head>
 
 <body>
-    <header>
+    <header> <!-- Link menú principal, selección de tema y link cerrar sesión -->
         <a href='php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
         <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
             <input type="hidden" name="nombre" value="partidoListado.php">
             <select name="modo" onChange="formulario.submit();">
                 <option value="claro" <?php if (isset($_SESSION["tema"])) {
-                                            if ($_SESSION["tema"] == "claro") { ?> selected <?php }
-                                                                                    } ?>>Tema Claro</option>
+                    if ($_SESSION["tema"] == "claro") { ?> selected <?php }
+                } ?>>Tema Claro</option>
                 <option value="oscuro" <?php if (isset($_SESSION["tema"])) {
-                                            if ($_SESSION["tema"] == "oscuro") { ?> selected <?php }
-                                                                                        } ?>>Tema Oscuro</option>
+                    if ($_SESSION["tema"] == "oscuro") { ?> selected <?php }
+                } ?>>Tema Oscuro</option>
             </select>
         </form>
         <a href="php-login/cerrarSesion.php" class="cerrarSesion">Cerrar Sesión</a>
@@ -69,7 +72,8 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                 <?php } ?>
                 <input type="submit" value="Buscar">
             </form>
-        </div>
+        </div> 
+        <!-- BUSCADOR -->
         <?php if ($buscador == true) { ?>
             <?php if (count($buscarPartidos) >= 1) { ?>
                 <p>
@@ -112,6 +116,7 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                     </p>
                 <?php } ?>
             <?php } else { ?>
+            <!-- TABLA LISTADO -->
                 <table border='1'>
                     <tr>
                         <th>Número Partido</th>
@@ -125,11 +130,13 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                     </tr>
                     <?php foreach ($partidos as $partido) { ?>
                         <tr>
+                            <!-- SI ES USUARIO ÁRBITRO PERMITE EL ACCESO A LA FICHA -->
                             <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
                                 <td><a href='PartidoFicha.php?id_Partido=<?= $partido->getId() ?>'><?= $partido->getId() ?></a></td>
                             <?php } else { ?>
                                 <td><?= $partido->getId() ?></td>
                             <?php } ?>
+                            <!-- MUESTRA EL NOMBRE DEL EQUIPO EN LUGAR DEL ID -->
                             <td><?= $nombreLocal = DAO::equipoObtenerNombre($partido->getEquipoLocal()); ?></td>
                             <td><?= $nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante()); ?></td>
                             <td><?= $partido->getFecha() ?></td>
@@ -137,7 +144,8 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                             <td><?= $partido->getGolLocal() ?> </td>
                             <td><?= $partido->getGolVisitante() ?> </td>
                             <td><?= $partido->getGanador() ?> </td>
-                            <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                            <?php //SI ES USUARIO ÁRBITRO PERMITE LA ELIMINACIÓN
+                                if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
                                 <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
                             <?php } ?>
                         </tr>
@@ -146,7 +154,8 @@ else if (isset($_REQUEST["eliminacionErronea"]))
 
                 </table><br>
     </div>
-    <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+    <?php //SI ES USUARIO ÁRBITRO PERMITE CREAR NUEVO PARTIDO
+        if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
         <a href='PartidoFicha.php?id_Partido=-1'>Crear entrada</a>
     <?php } ?>
 </body>

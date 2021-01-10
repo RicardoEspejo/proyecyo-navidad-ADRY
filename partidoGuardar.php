@@ -11,72 +11,56 @@ $gol_Visitante = $_REQUEST["gol_Visitante"];
 $ganador = 0;
 
 $partido = DAO::partidoFicha($id_Partido);
-?>
-<html>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ADRY-GOL partido guardar</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="disenio/ADRY.css">
-</head>
-
-<body>
-    <h1>ADRY-GOL</h1>
-    <h2>Partidos > Guardar</h2>
-    <?php
-    if ($id_Partido != -1) {
-        $modificacionCorrecta = DAO::partidoActualizarPorID(
-            $id_Partido,
-            $id_Equipo_Local,
-            $id_Equipo_Visitante,
-            $fecha,
-            $id_Arbitro,
-            $gol_Local,
-            $gol_Visitante,
-            $ganador
-        );
-        if ($modificacionCorrecta) {
-
-            if ($gol_Local > $gol_Visitante) {
-                $ganador = 1;
-                DAO::establecerVictoriaLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
-                DAO::establecerDerrotaVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
-                DAO::partidoActualizarGanador($ganador, $id_Partido);
-            }
-            if ($gol_Local == $gol_Visitante) {
-                $ganador = 0;
-                DAO::establecerEmpateLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
-                DAO::establecerEmpateVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
-                DAO::partidoActualizarGanador($ganador, $id_Partido);
-            }
-            if ($gol_Local < $gol_Visitante) {
-                $ganador = 2;
-                DAO::establecerVictoriaVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
-                DAO::establecerDerrotaLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
-                DAO::partidoActualizarGanador($ganador, $id_Partido);
-            } 
-            redireccionar("partidoFicha.php?modificacionCorrecta&id_Partido=".$id_Partido); ?>
-        <?php } else { 
-            redireccionar("partidoFicha.php?modificacionErronea&id_Partido=".$id_Partido); ?>
-        <?php }
-    } else {
-        $creacionCorrecta = DAO::partidoCrear(
-            $id_Equipo_Local,
-            $id_Equipo_Visitante,
-            $fecha,
-            $id_Arbitro,
-            $gol_Local,
-            $gol_Visitante,
-            $ganador
-        );
-        if ($creacionCorrecta) { 
-            redireccionar("partidoListado.php?modificacionCorrecta"); ?>
-        <?php } else
-            redireccionar("partidoListado.php?modificacionErronea"); ?>
-    <?php } ?>
-</body>
-
-</html>
+if ($id_Partido != -1) {
+    $modificacionCorrecta = DAO::partidoActualizarPorID(
+        $id_Partido,
+        $id_Equipo_Local,
+        $id_Equipo_Visitante,
+        $fecha,
+        $id_Arbitro,
+        $gol_Local,
+        $gol_Visitante,
+        $ganador
+    );
+    if ($modificacionCorrecta) {
+        //MODIFICA LAS ESTADÍSTICAS DE LOS EQUIPOS PARA UNA VICTORIA LOCAL
+        if ($gol_Local > $gol_Visitante) {
+            $ganador = 1;
+            DAO::establecerVictoriaLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
+            DAO::establecerDerrotaVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
+            DAO::partidoActualizarGanador($ganador, $id_Partido);
+        }
+        //MODIFICA LAS ESTADÍSTICAS DE LOS EQUIPOS PARA UN EMPATE
+        if ($gol_Local == $gol_Visitante) {
+            $ganador = 0;
+            DAO::establecerEmpateLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
+            DAO::establecerEmpateVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
+            DAO::partidoActualizarGanador($ganador, $id_Partido);
+        }
+        //MODIFICA LAS ESTADÍSTICAS DE LOS EQUIPOS PARA UNA VICTORIA VISITANTE
+        if ($gol_Local < $gol_Visitante) {
+            $ganador = 2;
+            DAO::establecerVictoriaVisitante($id_Equipo_Visitante, $gol_Local, $gol_Visitante);
+            DAO::establecerDerrotaLocal($id_Equipo_Local, $gol_Local, $gol_Visitante);
+            DAO::partidoActualizarGanador($ganador, $id_Partido);
+        } 
+        redireccionar("partidoFicha.php?modificacionCorrecta&id_Partido=".$id_Partido); ?>
+    <?php } else { 
+        redireccionar("partidoFicha.php?modificacionErronea&id_Partido=".$id_Partido); ?>
+    <?php }
+} else {
+    $creacionCorrecta = DAO::partidoCrear(
+        $id_Equipo_Local,
+        $id_Equipo_Visitante,
+        $fecha,
+        $id_Arbitro,
+        $gol_Local,
+        $gol_Visitante,
+        $ganador
+    );
+    if ($creacionCorrecta) { 
+        redireccionar("partidoListado.php?modificacionCorrecta"); ?>
+    <?php } else
+        redireccionar("partidoListado.php?modificacionErronea"); ?>
+<?php } ?>

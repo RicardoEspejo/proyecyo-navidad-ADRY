@@ -14,7 +14,8 @@
 		$localNombre = DAO::equipoObtenerNombre((int) $partido[1]);
 		$visitanteNombre = DAO::equipoObtenerNombre((int) $partido[2]);
 	}
-	
+
+	//NOTIFICACIONES DE MODIFICACIÓN
 	if(isset($_REQUEST["modificacionCorrecta"]))
         echo "<p>Partido actualizado correctamente</p>";
     else if(isset($_REQUEST["modificacionErronea"]))
@@ -28,7 +29,8 @@
     <title>ADRY-GOL partido ficha</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <?php if(isset($_SESSION["tema"])){?>
+		<?php //DETERMINA TEMA SELECCIONADO
+		if(isset($_SESSION["tema"])){?>
     <?php if($_SESSION["tema"] == "claro"){ ?>
         <link rel='stylesheet' href='disenio/modoClaro.css'>
     <?php }else{ ?>
@@ -38,7 +40,7 @@
     <?php } ?>
     </head>
     <body>
-	<header>
+	<header> <!-- LINK MENU PRINCIPAL, SELECCIÓN DE TEMA Y LINK CERRAR SESIÓN -->
 	<a href='php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
     <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
         <input type="hidden" name="nombre" value="partidoFicha.php?id_Partido=<?= $id ?>">
@@ -55,7 +57,8 @@
 			<input type='hidden' name='id_Partido' value='<?=$id?>'>
 			<label>Equipo local: </label>
 			<select name='equipoLocalId'>
-				<?php foreach ($rsEquipos as $filaEquipo) {
+				<?php //SELECT DEL EQUIPO LOCAL
+					foreach ($rsEquipos as $filaEquipo) {
 					$id_Equipo = (int) $filaEquipo["id_Equipo"];
 					$nombre = $filaEquipo["nombre"];
 					if ($id_Equipo == $localId) $seleccion = "selected='true'";
@@ -65,7 +68,8 @@
 			</select><br/>
 			<label>Equipo visitante: </label>
 			<select name='equipoVisitanteId'>
-				<?php foreach ($rsEquipos as $filaEquipo) {
+				<?php //SELECT DEL EQUIPO VISITANTE
+					foreach ($rsEquipos as $filaEquipo) {
 					$id_Equipo = (int) $filaEquipo["id_Equipo"];
 					$nombre = $filaEquipo["nombre"];
 					if ($id_Equipo == $VisitanteId) $seleccion = "selected='true'";
@@ -77,7 +81,8 @@
 			<input type='text' name='fecha' value='<?=$partido[3]?>'><br/>
 			<label>Árbitro:</label>
 			<select name='arbitroId'>
-				<?php foreach ($rsArbitros as $filaArbitro) {
+				<?php //SELECT DE ÁRBITRO
+					foreach ($rsArbitros as $filaArbitro) {
 					$id_Arbitro = (int) $filaArbitro["id_Arbitro"];
 					$nombre = $filaArbitro["nombre"]." ". $filaArbitro["apellidos"];
 					if ($id_Arbitro == $arbitroId) $seleccion = "selected='true'";
@@ -92,7 +97,8 @@
 			<?php if($id == -1) { ?>
 				<input type='hidden' name='ganador' value='0'>
 			<?php } else { 
-				
+			/*SI SE HA COMPLETADO TODOS LOS DATOS DEL PARTIDO (FECHA DISTINTA A PREDETERMINADA),
+			MUESTRA EL NOMBRE DEL EQUIPO GANADOR*/
 			if($partido[3] != "2000-01-01 00:00:00"){
 				echo "<label>Ganador: </label>";
 				if($partido[7] == 1){
