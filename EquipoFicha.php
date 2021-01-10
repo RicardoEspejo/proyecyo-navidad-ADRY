@@ -63,7 +63,11 @@
 <input type='hidden' name='id_Equipo' value='<?=$id?>' />
 
     <label for='nombre'>Nombre</label>
-	<input type='text' name='nombre' value='<?=$equipo[1]?>' />
+    <?php if($nuevaEntrada) { ?>
+        <input type='text' name='nombre' placeholder='<?=$equipo[1]?>' />
+    <?php } else { ?>
+	    <input type='text' name='nombre' value='<?=$equipo[1]?>' />
+    <?php } ?>
     <br/>
     <label for='nombre'>Puntos</label>
 	<input type='number' name='puntos' value='<?=$equipo[2]?>' readonly/>
