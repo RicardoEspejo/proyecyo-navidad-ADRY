@@ -432,7 +432,6 @@ class DAO
 
     public static function establecerVictoriaLocal(int $id, int $gol_Local, int $gol_Visitante)
     {
-        if($gol_Local == -1){
         $equipo = self::equipoObtenerPorID($id);
 
         $id = $equipo->getId();
@@ -460,7 +459,6 @@ class DAO
             $goles_Contra,
             $diferencia_Goles
         );
-        }else{
         $equipos = self::equipoObtenerPorID($id);
 
         $nombre = $equipos->getNombre();
@@ -488,7 +486,7 @@ class DAO
             $nombre,
             $escudo,
             $puntosTotales,
-            $partidos_Totales,
+            $partidosTotales,
             $victoriasTotales,
             $empates,
             $derrotas,
@@ -498,7 +496,7 @@ class DAO
         );
         }
         
-    }
+    //}
 
 
     public static function establecerVictoriaVisitante(int $id, int $gol_Local, int $gol_Visitante)
