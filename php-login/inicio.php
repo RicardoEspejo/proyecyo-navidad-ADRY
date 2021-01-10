@@ -19,7 +19,10 @@ if (isset($_SESSION["id_Usuario"])) {
 if(isset($_REQUEST["noPermisos"])) {
     echo "No tienes permisos para realizar un sorteo.<br>";
 }
-
+//SI NO EXITEN ÁRBITROS Y/O EQUIPOS NO SE PUEDE REALIZAR EL SORTEO
+if(isset($_REQUEST["noDatos"])) {
+    echo "No se puede realizar el sorteo si no hay árbitros y equipos registrados.<br>";
+}
 ?>
 
 

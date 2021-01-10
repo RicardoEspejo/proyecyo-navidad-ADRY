@@ -6,8 +6,16 @@
     if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 0) {
         redireccionar("php-login/inicio.php?noPermisos");
     }
-    
-    //LLAMA AL MÉTODO DE GENERAR EL SORTEO DEL DAO Y REDIRECCIONA AL LISTADO DE PARTIDOS
+    //SI NO HAY ÁRBITRO Y/O EQUIPO CREADOS NO SE PUEDE EJECUTAR EL SORTEO
+    $arbitros = DAO:: arbitroObtenerTodos();
+    $equipos = DAO:: equipoObtenerTodos();
+
+    if(count($arbitros) == 0 || count($arbitros) == 0) {
+        redireccionar("php-login/inicio.php?noDatos");
+    }
+
+    else{ //LLAMA AL MÉTODO DE GENERAR EL SORTEO DEL DAO Y REDIRECCIONA AL LISTADO DE PARTIDOS
     DAO::sorteo();
     redireccionar("partidoListado.php");
+    }
 ?>
