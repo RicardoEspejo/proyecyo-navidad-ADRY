@@ -99,7 +99,7 @@
 			<?php } else { 
 			/*SI SE HA COMPLETADO TODOS LOS DATOS DEL PARTIDO (FECHA DISTINTA A PREDETERMINADA),
 			MUESTRA EL NOMBRE DEL EQUIPO GANADOR*/
-			if($partido[3] != "2000-01-01 00:00:00"){
+			if($partido[3] != "2000-01-01"){
 				echo "<label>Ganador: </label>";
 				if($partido[7] == 1){
 					echo $localNombre;

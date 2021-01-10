@@ -106,13 +106,16 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                             <td><?= $nombreArbitro = DAO::arbitroObtenerNombre($partido->getArbitro()); ?></td>
                             <td><?= $partido->getGolLocal() ?> </td>
                             <td><?= $partido->getGolVisitante() ?> </td>
-                            <?php //MUESTRA EL NOMBRE DEL GANADOR
+                            <?php
+                            /*SI SE HA COMPLETADO TODOS LOS DATOS DEL PARTIDO (FECHA DISTINTA A PREDETERMINADA),MUESTRA EL NOMBRE DEL EQUIPO GANADOR*/
+			                if($partido->getFecha() != "2000-01-01"){
                                 $tipoGanador = $partido->getGanador();
                                 if($tipoGanador == 1)?>
                                     <td><?= $nombreLocal = DAO::equipoObtenerNombre($partido->getEquipoLocal());?></td>?><?php
                                 if($tipoGanador == 0) ?><td>EMPATE</td><?php
                                 if($tipoGanador == 2)?>
-                                    <td><?= $nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante()); ?></td>
+                                    <td><?= $nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante()); 
+                            }?></td>
                             <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
                                 <><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></>
                             <?php } ?>
@@ -152,7 +155,9 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                             <td><?= $nombreArbitro = DAO::arbitroObtenerNombre($partido->getArbitro()); ?></td>
                             <td><?= $partido->getGolLocal() ?> </td>
                             <td><?= $partido->getGolVisitante() ?> </td>
-                            <?php //MUESTRA EL NOMBRE DEL GANADOR
+                            <?php
+                            /*SI SE HA COMPLETADO TODOS LOS DATOS DEL PARTIDO (FECHA DISTINTA A PREDETERMINADA),MUESTRA EL NOMBRE DEL EQUIPO GANADOR*/
+			                if($partido->getFecha() != "2000-01-01"){
                                 $tipoGanador = $partido->getGanador();
                                 if($tipoGanador == 1) {?>
                                     <td><?= $nombreLocal?></td>
@@ -160,7 +165,12 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                                 else if($tipoGanador == 0) {?><td>EMPATE</td><?php }
                                 else if($tipoGanador == 2) {?>
                                     <td><?= $nombreVisitante?></td>
-                            <?php } //SI ES USUARIO ÁRBITRO PERMITE LA ELIMINACIÓN
+                            <?php } 
+                            }
+                            else if($partido->getFecha() == "2000-01-01"){
+                                   ?> <td>NO JUGADO</td> <?php
+                                }
+                            } //SI ES USUARIO ÁRBITRO PERMITE LA ELIMINACIÓN
                                 if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
                                 <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
                             <?php } ?>

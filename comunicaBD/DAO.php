@@ -12,7 +12,7 @@ class DAO
         $servidor = "localhost";
         $identificador = "root";
         $contrasenna = "";
-        $bd = "futbol"; // Schema
+        $bd = "ADRYGOL"; // Schema
         $opciones = [
             PDO::ATTR_EMULATE_PREPARES => false, // Modo emulación desactivado para prepared statements "reales"
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Que los errores salgan como excepciones.
@@ -273,7 +273,7 @@ class DAO
                 if ($idEquipo != $i) {
                     DAO::ejecutarActualizacion(
                         "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro, gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
-                        [$idEquipo, $i, "2000-01-01 00:00:00", rand($numero, $arbitroElegido), 0, 0, 0]
+                        [$idEquipo, $i, "2000-01-01", rand($numero, $arbitroElegido), 0, 0, 0]
                     );
                 }
             }
@@ -316,7 +316,7 @@ class DAO
         if ($nuevaEntrada) {
             $id_Equipo_Local = "Introduce el equipo local";
             $id_Equipo_Visitante = "Introduce el equipo visitante";
-            $fecha = "2000-01-01 00:00:00";
+            $fecha = "2000-01-01";
             $id_Arbitro = "Introduce el árbitro";
             $gol_Local = 0;
             $gol_Visitante = 0;
