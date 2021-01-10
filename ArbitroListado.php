@@ -3,10 +3,10 @@ require_once "comunicaBD/DAO.php";
 
 $arbitros = DAO::arbitroObtenerTodos();
 
-if (isset($_REQUEST["buscar"])) { //Si existe buscar es por que le han dado al boton de buscar
-    $buscar = strtolower($_REQUEST["buscar"]);
+if (isset($_REQUEST["buscar"])) { //Buscador
+    $buscar = strtolower($_REQUEST["buscar"]);//Lo combierto a minusculas
     $buscador = true;
-    $buscarArbitro = DAO::buscarArbitros($buscar, str_word_count($buscar, 0));
+    $buscarArbitro = DAO::buscarArbitros($buscar, str_word_count($buscar, 0)); //Paso como parametro la palabra a buscar y el numero de palabras introducidas.
 } else {
     $buscador = false;
 }
@@ -18,7 +18,7 @@ if (isset($_REQUEST["buscar"])) { //Si existe buscar es por que le han dado al b
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ADRY-GOL árbitro listado</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php if(isset($_SESSION["tema"])){?>
+    <?php if(isset($_SESSION["tema"])){?> <!-- Sirve para cambiar el tema elegido -->
     <?php if($_SESSION["tema"] == "claro"){ ?>
         <link rel='stylesheet' href='disenio/modoClaro.css'>
     <?php }else{ ?>
@@ -51,9 +51,9 @@ if (isset($_REQUEST["buscar"])) { //Si existe buscar es por que le han dado al b
 
     <header>
     <a href='php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
-    <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
-        <input type="hidden" name="nombre" value="arbitroListado.php">
-        <select name="modo" onChange="formulario.submit();">
+    <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario"> <!--Formulario de cambiar el tema -->
+        <input type="hidden" name="nombre" value="arbitroListado.php"> <!-- Aqui mando el nombre del archivo actual, por el cual se va a redirigir -->
+        <select name="modo" onChange="formulario.submit();"> <!--Select del tema -->
             <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
             <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
          </select>
@@ -65,7 +65,7 @@ if (isset($_REQUEST["buscar"])) { //Si existe buscar es por que le han dado al b
 
         <div class="contenedor2">
         <h2>Arbitros > Listado</h2>
-    <form action='' method='post' class="buscador2">
+    <form action='' method='post' class="buscador2"> <!-- Formulario de busqueda -->
         <?php if ($buscador == true) {  ?>
             <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>" class="buscador">
             <a href="ArbitroListado.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
@@ -75,16 +75,16 @@ if (isset($_REQUEST["buscar"])) { //Si existe buscar es por que le han dado al b
         <input type="submit" value="Buscar">
     </form>
     </div>
-    <?php if ($buscador == true) { ?>
-        <?php if (count($buscarArbitro) >= 1) { ?>
+    <?php if ($buscador == true) { ?> <!-- Si existe busqueda -->
+        <?php if (count($buscarArbitro) >= 1) { ?> <!--Si existe algun arbitro con esa busqueda -->
             <p>
-            <h4>Resultados de la busqueda: <?= count($buscarArbitro) ?></h4>
+            <h4>Resultados de la busqueda: <?= count($buscarArbitro) ?></h4> <!-- Numero de resultados -->
             </p>
             <table border='1'>
                 <tr>
                     <th>Nombre</th>
                     <th>Apellidos</th>
-                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { //Aqui comprobamos si tiene permisos de administrador ?>
                         <th>Eliminar</th>
                     <?php } ?>
                 </tr>
@@ -103,16 +103,16 @@ if (isset($_REQUEST["buscar"])) { //Si existe buscar es por que le han dado al b
             <?php } else { ?>
                 <p>
                 <h3>No se ha encontrado resultados de la busqueda <?= $buscar ?> </h3>
-                <?php header("refresh:5;url=arbitroListado.php") ?>
+                <?php header("refresh:5;url=arbitroListado.php") ?> <!--Si no existe te redirige al listado esperando 5 segundos -->
                 </p>
             <?php } ?>
             </table><br>
-        <?php } else { ?>
+        <?php } else { ?> <!--Listado de arbitros -->
             <table border='1'>
                 <tr>
                     <th>Nombre</th>
                     <th>Apellidos</th>
-                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+                    <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { //Aqui comprobamos si tiene permisos de administrador ?>
                         <th>Eliminar</th>
                     <?php } ?>
                 </tr>
@@ -131,7 +131,7 @@ if (isset($_REQUEST["buscar"])) { //Si existe buscar es por que le han dado al b
             <?php } ?>
             </table><br>
             </div>
-            <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
+            <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { //Aqui comprobamos si tiene permisos de administrador ?>
                 <a href='arbitroFicha.php?id_Arbitro=-1'>Crear entrada</a>
             <?php } ?>
             

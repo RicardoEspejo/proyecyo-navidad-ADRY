@@ -104,8 +104,13 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                             <td><?= $nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante()); ?></td>
                             <td><?= $partido->getFecha() ?></td>
                             <td><?= $nombreArbitro = DAO::arbitroObtenerNombre($partido->getArbitro()); ?></td>
-                            <td><?= $partido->getGolLocal() ?> </td>
-                            <td><?= $partido->getGolVisitante() ?> </td>
+                            <?php if($partido->getGolLocal() == -1){ ?>
+                                <td>0</td>
+                                <td>0</td>
+                            <?php }else{ ?>
+                                <td><?= $partido->getGolLocal() ?> </td>
+                                <td><?= $partido->getGolVisitante() ?> </td>
+                            <?php } ?>
                             <?php
                             /*SI SE HA COMPLETADO TODOS LOS DATOS DEL PARTIDO (FECHA DISTINTA A PREDETERMINADA),MUESTRA EL NOMBRE DEL EQUIPO GANADOR*/
 			                if($partido->getFecha() != "2000-01-01"){
@@ -158,8 +163,13 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                             <td><?= $nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante()); ?></td>
                             <td><?= $partido->getFecha() ?></td>
                             <td><?= $nombreArbitro = DAO::arbitroObtenerNombre($partido->getArbitro()); ?></td>
-                            <td><?= $partido->getGolLocal() ?> </td>
-                            <td><?= $partido->getGolVisitante() ?> </td>
+                            <?php if($partido->getGolLocal() == -1){ ?>
+                                <td>0</td>
+                                <td>0</td>
+                            <?php }else{ ?>
+                                <td><?= $partido->getGolLocal() ?> </td>
+                                <td><?= $partido->getGolVisitante() ?> </td>
+                            <?php } ?>
                             <?php
                             /*SI SE HA COMPLETADO TODOS LOS DATOS DEL PARTIDO (FECHA DISTINTA A PREDETERMINADA),MUESTRA EL NOMBRE DEL EQUIPO GANADOR*/
 			                if($partido->getFecha() != "2000-01-01"){

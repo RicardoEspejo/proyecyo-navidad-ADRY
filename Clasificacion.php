@@ -80,7 +80,7 @@ $numero=1;
                     <th>Goles En Contra</th>
                     <th>Diferencia De Goles</th>
                 </tr>
-                <?php foreach ($buscarEquipo as $equipo) { ?>
+                <?php foreach ($buscarEquipo as $equipo) { //Para obtener en que posicion se encuentra ?>
                     <?php 
                         foreach($equipos as $equipo2){
                             $idEquipo=$equipo2->getId();

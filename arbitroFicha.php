@@ -41,7 +41,7 @@
 <?php } else { ?>
 	<h2>Arbitros > Ficha de arbitros</h2>
 <?php } ?>
-
+<!-- Redirecciones -->
 <?php if(isset($_REQUEST["modificacionCorrecta"])){ ?>
     <p>
         <h6>Se ha modificado correctamente el arbitro.</h6>

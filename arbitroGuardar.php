@@ -5,5 +5,5 @@
     $nombre=$_REQUEST["nombre"];
     $apellidos=$_REQUEST["apellidos"];
 
-    $arbitros=DAO::arbitrosGuardar($id,$nombre,$apellidos);
+    $arbitros=DAO::arbitrosGuardar($id,$nombre,$apellidos); //Metodo de guardar los arbitros
 ?>
