@@ -1,9 +1,9 @@
 <?php
 	require_once "comunicaBD/DAO.php";
 	
-    $id = (int)$_REQUEST["id_Arbitro"];
+    $id = (int)$_REQUEST["id_Arbitro"];//Recojo el id del arbitro
     
-	$nuevaEntrada=DAO::arbitroNuevaEntrada($id);
+	$nuevaEntrada=DAO::arbitroNuevaEntrada($id);//este metodo sirve para comprobar si el id que recojo por parametro es un -1.Si es un -1 es una nueva entrada.
     $arbitros=DAO::arbitroFicha($id);
 ?>
 <html>
@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ADRY-GOL árbitro ficha</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-        <?php if(isset($_SESSION["tema"])){?>
+        <?php if(isset($_SESSION["tema"])){?><!-- Sirve para cambiar el tema elegido -->
     <?php if($_SESSION["tema"] == "claro"){ ?>
         <link rel='stylesheet' href='disenio/modoClaro.css'>
     <?php }else{ ?>
@@ -26,9 +26,9 @@
 <body>
 <header>
     <a href='php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
-    <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
-        <input type="hidden" name="nombre" value="arbitroFicha.php?id_Arbitro=<?= $id ?>">
-        <select name="modo" onChange="formulario.submit();">
+    <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario"><!--Formulario de cambiar el tema -->
+        <input type="hidden" name="nombre" value="arbitroFicha.php?id_Arbitro=<?= $id ?>"> <!-- Aqui mando el nombre del archivo actual, por el cual se va a redirigir -->
+        <select name="modo" onChange="formulario.submit();"> <!--Select del tema -->
             <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
             <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
          </select>
@@ -56,7 +56,7 @@
 <form method='post' action='arbitroGuardar.php'>
 
 <input type='hidden' name='id' value='<?=$id?>' />
-<?php if ($nuevaEntrada) { ?>
+<?php if ($nuevaEntrada) { ?> 
     <label for='nombre'>Nombre</label>
 	<input type='text' name='nombre' placeholder='<?= $arbitros->getNombre() ?>' />
     <br/>

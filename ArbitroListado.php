@@ -3,7 +3,7 @@ require_once "comunicaBD/DAO.php";
 
 $arbitros = DAO::arbitroObtenerTodos();
 
-if (isset($_REQUEST["buscar"])) {
+if (isset($_REQUEST["buscar"])) { //Si existe buscar es por que le han dado al boton de buscar
     $buscar = strtolower($_REQUEST["buscar"]);
     $buscador = true;
     $buscarArbitro = DAO::buscarArbitros($buscar, str_word_count($buscar, 0));
