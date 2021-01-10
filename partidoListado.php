@@ -154,12 +154,13 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                             <td><?= $partido->getGolVisitante() ?> </td>
                             <?php //MUESTRA EL NOMBRE DEL GANADOR
                                 $tipoGanador = $partido->getGanador();
-                                if($tipoGanador == 1)?>
-                                    <td><?= $nombreLocal = DAO::equipoObtenerNombre($partido->getEquipoLocal());?></td>?><?php
-                                if($tipoGanador == 0) ?><td>EMPATE</td><?php
-                                if($tipoGanador == 2)?>
-                                    <td><?= $nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante()); ?></td>
-                            <?php //SI ES USUARIO ÁRBITRO PERMITE LA ELIMINACIÓN
+                                if($tipoGanador == 1) {?>
+                                    <td><?= $nombreLocal?></td>
+                                <?php }
+                                else if($tipoGanador == 0) {?><td>EMPATE</td><?php }
+                                else if($tipoGanador == 2) {?>
+                                    <td><?= $nombreVisitante?></td>
+                            <?php } //SI ES USUARIO ÁRBITRO PERMITE LA ELIMINACIÓN
                                 if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
                                 <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
                             <?php } ?>
