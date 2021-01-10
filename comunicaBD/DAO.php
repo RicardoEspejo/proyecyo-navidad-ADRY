@@ -273,7 +273,7 @@ class DAO
                 if ($idEquipo != $i) {
                     DAO::ejecutarActualizacion(
                         "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro, gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
-                        [$idEquipo, $i, "2000-01-01", rand($numero, $arbitroElegido), -1, -1, -1]
+                        [$idEquipo, $i, "2000-01-01", rand($numero, $arbitroElegido), 0, 0, 0]
                     );
                 }
             }
@@ -459,46 +459,9 @@ class DAO
             $goles_Contra,
             $diferencia_Goles
         );
-        $equipos = self::equipoObtenerPorID($id);
-
-        $nombre = $equipos->getNombre();
-        $escudo = $equipos->getEscudo();
-
-        $puntos2 = (int) $equipos->getPuntos() + 3;
-        $puntosTotales=$puntos2 - $puntos;
-
-        $partidos_Jugados2 = (int) $equipos->getPartidosJugados() + 1;
-        $partidosTotales= $partidos_Jugados2 - $partidos_Jugados;
-
-        $victorias2 = (int) $equipos->getVictorias() + 1;
-        $victoriasTotales= $victorias2 - $victorias;
-
-        $goles_Favor2 = (int) $equipos->getGolesFavor() + $gol_Local;
-        $golesTotales= $goles_Favor2 - $goles_Favor ;
-
-        $goles_Contra2 = (int) $equipos->getGolesContra() + $gol_Visitante;
-        $golesTotalesContra=$goles_Contra2 - $goles_Contra;
-
-        $diferencia_Goles = $equipos->getDiferenciaGoles();
-
-        self::equipoActualizarPorId(
-            $id,
-            $nombre,
-            $escudo,
-            $puntosTotales,
-            $partidosTotales,
-            $victoriasTotales,
-            $empates,
-            $derrotas,
-            $golesTotales,
-            $golesTotalesContra,
-            $diferencia_Goles
-        );
-        }
         
-    //}
-
-
+    }
+        
     public static function establecerVictoriaVisitante(int $id, int $gol_Local, int $gol_Visitante)
     {
         $equipo = self::equipoObtenerPorId($id);
