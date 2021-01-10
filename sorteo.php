@@ -10,7 +10,7 @@
     $arbitros = DAO:: arbitroObtenerTodos();
     $equipos = DAO:: equipoObtenerTodos();
 
-    if(count($arbitros) == 0 || count($arbitros) == 0) {
+    if(count($arbitros) == 0 || count($equipos) == 0) {
         redireccionar("php-login/inicio.php?noDatos");
     }
 
