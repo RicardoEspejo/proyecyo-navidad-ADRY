@@ -21,7 +21,10 @@ RICARDO
 DAVID (PERMISOS ACCESO)
   - En la Clasificación, podrás ver en orden los equipos con más puntos y tmabién podrás ver las estadísticas de cada equipo, también puedes buscar tu equipo desde la barra de búsqueda y así encontrar tu equipo de una forma más rápida.
 
+RICARDO
+  - En el sorteo, se establecen los encuentros entre los equipos inscritos y también se asigna un árbitro a cada partido.
+  
 AMANDA
 En la aplicación, también podemos decidir en que tema nos gustaría ver las páginas, tenemos dos temas que son el "CLARO" y el "OSCURO". 
 
-AMANDA-RICARDO ( DISEÑO )
+AMANDA & RICARDO ( DISEÑO )
