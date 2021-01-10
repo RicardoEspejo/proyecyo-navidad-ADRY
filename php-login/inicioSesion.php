@@ -40,9 +40,11 @@ if (!empty($_POST['identificador']) && !empty($_POST['contrasenna'])) {
         }
         // UNA VEZ COMPROBADO LO REDIRIGIMOS AL INICIO
         header('Location: inicio.php');
+    } else if (!$resultado) { //COMPROBAR SI EL USUAIRO EXISTE
+        $mnsj = "Error en el inicio de Sesion, el usuario no existe";
     } else {
         // EN CASO CONTRARIO LAS CREDENCIALES NO COINCIDEN
-        $mnsj = "Error en el inicio de Sesion, estás credenciales no coinciden";
+        $mnsj = "Error en el inicio de Sesion, estas credenciales no coinciden";
     }
 }
 ?>

@@ -683,7 +683,12 @@ class DAO
         $select = self::$pdo->prepare($sql);
         $select->execute($parametros);
         $rs = $select->fetch(PDO::FETCH_ASSOC); //Aqui esta la diferencia a las demás
-        return $rs;
+        if(!$rs) {
+            $resultado= [];
+        } else {
+            $resultado= $rs;
+        }
+        return $resultado;
     }
 
     //Creamos el objeto Usuario
@@ -713,16 +718,21 @@ class DAO
             [$identificador]
         );
 
-        // almacenamos al usaurio en el array datos
-        $datos = array($rs["id_Usuario"], $rs["identificador"], $rs["contrasenna"], $rs["tipo"]);
-        //comprobamos el tipo de usuario 
-        if ($datos[3] == 1) {
-            // si es 1 va a ser administrador
-            $_SESSION["tipo"] = 1;
-        } else {
-            // si es 0 va a ser usuario
-            $_SESSION["tipo"] = 0;
-        }
+        //comprobamos que existe el usuario
+        if($rs) {
+            //almacenamos al usaurio en el array datos
+            $datos = array($rs["id_Usuario"], $rs["identificador"], $rs["contrasenna"], $rs["tipo"]);
+            //comprobamos el tipo de usuario 
+            if ($datos[3] == 1) {
+                // si es 1 va a ser administrador
+                $_SESSION["tipo"] = 1;
+            } else {
+                // si es 0 va a ser usuario
+                $_SESSION["tipo"] = 0;
+            }
+        } else
+            $datos= [];
+        
         // devolvemos el usuario en array
         return $datos;
     }
