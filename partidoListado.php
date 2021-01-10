@@ -22,7 +22,10 @@ else if (isset($_REQUEST["creacionErronea"]))
 if (isset($_REQUEST["eliminacionCorrecta"]))
     echo "<p>Partido eliminado correctamente</p>";
 else if (isset($_REQUEST["eliminacionErronea"]))
-    echo "<p>Error al eliminar</p>"; ?>
+    echo "<p>Error al eliminar</p>"; 
+
+?>
+
 <html>
 
 <head>
@@ -103,9 +106,15 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                             <td><?= $nombreArbitro = DAO::arbitroObtenerNombre($partido->getArbitro()); ?></td>
                             <td><?= $partido->getGolLocal() ?> </td>
                             <td><?= $partido->getGolVisitante() ?> </td>
-                            <td><?= $partido->getGanador() ?> </td>
+                            <?php //MUESTRA EL NOMBRE DEL GANADOR
+                                $tipoGanador = $partido->getGanador();
+                                if($tipoGanador == 1)?>
+                                    <td><?= $nombreLocal = DAO::equipoObtenerNombre($partido->getEquipoLocal());?></td>?><?php
+                                if($tipoGanador == 0) ?><td>EMPATE</td><?php
+                                if($tipoGanador == 2)?>
+                                    <td><?= $nombreVisitante = DAO::equipoObtenerNombre($partido->getEquipoVisitante()); ?></td>
                             <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                                <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                                <><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></>
                             <?php } ?>
                         </tr>
                     <?php } ?>
