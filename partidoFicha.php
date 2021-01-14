@@ -54,6 +54,7 @@
 		<h1>ADRY-GOL</h1>
         <h2>Partidos > Ficha</h2>
 		<form method='post' action='PartidoGuardar.php' enctype="multipart/form-data">
+			<input type='hidden' name='ganador' value='-1'>
 			<input type='hidden' name='id_Partido' value='<?=$id?>'>
 			<label>Equipo local: </label>
 			<select name='equipoLocalId'>
@@ -95,7 +96,7 @@
 			<label>Goles Visitante</label>
 			<input type='number' name='gol_Visitante' value='<?=$partido[6]?>'><br/>
 			<?php if($id == -1) { ?>
-				<input type='hidden' name='ganador' value='0'>
+				<input type='hidden' name='ganador' value='-1'>
 			<?php } else { 
 			/*SI SE HA COMPLETADO TODOS LOS DATOS DEL PARTIDO (FECHA DISTINTA A PREDETERMINADA),
 			MUESTRA EL NOMBRE DEL EQUIPO GANADOR*/
@@ -114,6 +115,7 @@
 					echo "</br>";
 				}
 			}}
+			
 			 if ($nuevaEntrada) { ?>
 				<input type='submit' name='crear' value='Crear partido' />
 			<?php } else { ?>

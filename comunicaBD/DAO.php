@@ -273,7 +273,7 @@ class DAO
                 if ($idEquipo != $i) {
                     DAO::ejecutarActualizacion(
                         "INSERT INTO Partido (id_Equipo_Local, id_Equipo_Visitante, fecha, id_Arbitro, gol_Local, gol_Visitante, ganador) VALUES(?,?,?,?,?,?,?)",
-                        [$idEquipo, $i, "2000-01-01", rand($numero, $arbitroElegido), 0, 0, 0]
+                        [$idEquipo, $i, "2000-01-01", rand($numero, $arbitroElegido), 0, 0, -1]
                     );
                 }
             }
@@ -377,15 +377,14 @@ class DAO
         string $fecha,
         int $id_Arbitro,
         int $gol_Local,
-        int $gol_Visitante,
-        int $ganador
+        int $gol_Visitante
     ): bool {
         return self::ejecutarActualizacion(
             "UPDATE Partido SET id_Equipo_Local=?, id_Equipo_Visitante=?, fecha=?,
-             id_Arbitro=?, gol_Local=?, gol_Visitante=?, ganador=? WHERE id_Partido=?",
+             id_Arbitro=?, gol_Local=?, gol_Visitante=? WHERE id_Partido=?",
             [
                 $id_Equipo_Local, $id_Equipo_Visitante, $fecha, $id_Arbitro, $gol_Local,
-                $gol_Visitante, $ganador, $id_Partido
+                $gol_Visitante, $id_Partido
             ]
         );
     }
@@ -430,21 +429,55 @@ class DAO
         return $rs;
     }
 
-    public static function establecerVictoriaLocal(int $id, int $gol_Local, int $gol_Visitante)
+    public static function establecerVictoriaLocal(int $id, int $gol_Local, int $gol_Visitante, int $id_Partido)
     {
         $equipo = self::equipoObtenerPorID($id);
+        $partido = self::partidoFicha($id_Partido);
+        $ganador = $partido[7];
 
         $id = $equipo->getId();
         $nombre = $equipo->getNombre();
         $escudo = $equipo->getEscudo();
-        $puntos = (int) $equipo->getPuntos() + 3;
-        $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
-        $victorias = (int) $equipo->getVictorias() + 1;
-        $empates = $equipo->getEmpates();
-        $derrotas = $equipo->getDerrotas();
-        $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
-        $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
-        $diferencia_Goles = $equipo->getDiferenciaGoles();
+        
+        //Como el partido no se habia jugado se suman 3 puntos, 1 partido jugado y los goles
+        if($ganador == -1) {
+            $puntos = (int) $equipo->getPuntos() + 3;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
+            $victorias = (int) $equipo->getVictorias() + 1;
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }
+        if($ganador == 0) { //Se habia jugado, era un empate por lo que hay que sumar solo 2 puntos, se suma 1 victoria y se resta un empate
+            $puntos = (int) $equipo->getPuntos() + 2;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias() + 1;
+            $empates = $equipo->getEmpates() - 1;
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 1) { //Habia ganado el local, entonces solo se suman los goles
+            $puntos = (int) $equipo->getPuntos();
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 2) { //Habia ganado el visitante, entonces se le suman 3 puntos, se le suma una victoria y se le resta un empate
+            $puntos = (int) $equipo->getPuntos() + 3;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias() + 1;
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas() - 1;
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }
 
         self::equipoActualizarPorId(
             $id,
@@ -462,22 +495,53 @@ class DAO
         
     }
         
-    public static function establecerVictoriaVisitante(int $id, int $gol_Local, int $gol_Visitante)
+    public static function establecerVictoriaVisitante(int $id, int $gol_Local, int $gol_Visitante, int $id_Partido)
     {
         $equipo = self::equipoObtenerPorId($id);
+        $partido = self::partidoFicha($id_Partido);
+        $ganador = $ganador = $partido[7];
 
         $id = $equipo->getId();
         $nombre = $equipo->getNombre();
         $escudo = $equipo->getEscudo();
-        $puntos = (int) $equipo->getPuntos() + 3;
-        $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
-        $victorias = (int) $equipo->getVictorias() + 1;
-        $empates = $equipo->getEmpates();
-        $derrotas = $equipo->getDerrotas();
-        $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
-        $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
-        $diferencia_Goles = $equipo->getDiferenciaGoles();
-
+        if($ganador == -1) { //No se habia jugado asique se suman 3 puntos, el partido jugado y la vistoria
+            $puntos = (int) $equipo->getPuntos() + 3;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
+            $victorias = (int) $equipo->getVictorias() + 1;
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 0) { //era empate, asique se suman los 2 puntos que faltan, se suma una victoria y se resta un empate
+            $puntos = (int) $equipo->getPuntos() + 2;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias() + 1;
+            $empates = $equipo->getEmpates() - 1;
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 1) { //habia ganado el visitante, por lo que hay que sumar 3 puntos y una victoria, y quitar una derrota
+            $puntos = (int) $equipo->getPuntos() + 3;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias() + 1;
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas() - 1;
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 2) { //Habia ganado el visitante por lo que solo hay que sumar los goles
+            $puntos = (int) $equipo->getPuntos();
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }
+        
         self::equipoActualizarPorId(
             $id,
             $nombre,
@@ -493,21 +557,114 @@ class DAO
         );
     }
 
-    public static function establecerEmpateLocal(int $id, int $gol_Local, int $gol_Visitante)
+    public static function establecerEmpateLocal(int $id, int $gol_Local, int $gol_Visitante, int $id_Partido)
     {
         $equipo = self::equipoObtenerPorID($id);
+        $partido = self::partidoFicha($id_Partido);
+        $ganador = $ganador = $partido[7];
 
         $id = $equipo->getId();
         $nombre = $equipo->getNombre();
         $escudo = $equipo->getEscudo();
-        $puntos = (int) $equipo->getPuntos() + 1;
-        $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
-        $victorias = (int) $equipo->getVictorias();
-        $empates = $equipo->getEmpates() + 1;
-        $derrotas = $equipo->getDerrotas();
-        $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
-        $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
-        $diferencia_Goles = $equipo->getDiferenciaGoles();
+        if($ganador == 0) {
+            $puntos = (int) $equipo->getPuntos();
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 1) {
+            $puntos = (int) $equipo->getPuntos() - 2;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias() - 1;
+            $empates = $equipo->getEmpates() + 1;
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 2) {
+            $puntos = (int) $equipo->getPuntos() + 1;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates() + 1;
+            $derrotas = $equipo->getDerrotas() - 1;
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == -1) {
+            $puntos = (int) $equipo->getPuntos() + 1;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates() + 1;
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }
+        self::equipoActualizarPorId(
+            $id,
+            $nombre,
+            $escudo,
+            $puntos,
+            $partidos_Jugados,
+            $victorias,
+            $empates,
+            $derrotas,
+            $goles_Favor,
+            $goles_Contra,
+            $diferencia_Goles
+        );
+        
+    }
+
+    public static function establecerEmpateVisitante(int $id, int $gol_Local, int $gol_Visitante, int $id_Partido)
+    {
+        $equipo = self::equipoObtenerPorID($id);
+        $partido = self::partidoFicha($id_Partido);
+        $ganador = $ganador = $partido[7];
+
+        $id = $equipo->getId();
+        $nombre = $equipo->getNombre();
+        $escudo = $equipo->getEscudo();
+        if($ganador == 0) {
+            $puntos = (int) $equipo->getPuntos();
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 1) {
+            $puntos = (int) $equipo->getPuntos() + 1;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates() + 1;
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 2) {
+            $puntos = (int) $equipo->getPuntos() - 2;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias() - 1;
+            $empates = $equipo->getEmpates() + 1;
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == -1) {
+            $puntos = (int) $equipo->getPuntos();
+            $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates() + 1;
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }
 
         self::equipoActualizarPorId(
             $id,
@@ -522,24 +679,55 @@ class DAO
             $goles_Contra,
             $diferencia_Goles
         );
+        
     }
 
-    public static function establecerEmpateVisitante(int $id, int $gol_Local, int $gol_Visitante)
+    public static function establecerDerrotaLocal(int $id, int $gol_Local, int $gol_Visitante, int $id_Partido)
     {
         $equipo = self::equipoObtenerPorID($id);
+        $partido = self::partidoFicha($id_Partido);
+        $ganador = $ganador = $partido[7];
 
         $id = $equipo->getId();
         $nombre = $equipo->getNombre();
         $escudo = $equipo->getEscudo();
-        $puntos = (int) $equipo->getPuntos() + 1;
-        $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
-        $victorias = (int) $equipo->getVictorias();
-        $empates = $equipo->getEmpates() + 1;
-        $derrotas = $equipo->getDerrotas();
-        $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
-        $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
-        $diferencia_Goles = $equipo->getDiferenciaGoles();
-
+        if($ganador == 0) {
+            $puntos = (int) $equipo->getPuntos() - 1;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates() - 1;
+            $derrotas = $equipo->getDerrotas() + 1;
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 1) {
+            $puntos = (int) $equipo->getPuntos() - 3;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias() - 1;
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas() + 1;
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 2) {
+            $puntos = (int) $equipo->getPuntos();
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == -1) {
+            $puntos = (int) $equipo->getPuntos();
+            $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas() + 1;
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }
         self::equipoActualizarPorId(
             $id,
             $nombre,
@@ -553,55 +741,55 @@ class DAO
             $goles_Contra,
             $diferencia_Goles
         );
+        
     }
 
-    public static function establecerDerrotaLocal(int $id, int $gol_Local, int $gol_Visitante)
+    public static function establecerDerrotaVisitante(int $id, int $gol_Local, int $gol_Visitante, int $id_Partido)
     {
         $equipo = self::equipoObtenerPorID($id);
+        $partido = self::partidoFicha($id_Partido);
+        $ganador = $ganador = $partido[7];
 
         $id = $equipo->getId();
         $nombre = $equipo->getNombre();
         $escudo = $equipo->getEscudo();
-        $puntos = (int) $equipo->getPuntos();
-        $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
-        $victorias = (int) $equipo->getVictorias();
-        $empates = $equipo->getEmpates();
-        $derrotas = $equipo->getDerrotas();
-        $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
-        $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
-        $diferencia_Goles = $equipo->getDiferenciaGoles();
-
-        self::equipoActualizarPorId(
-            $id,
-            $nombre,
-            $escudo,
-            $puntos,
-            $partidos_Jugados,
-            $victorias,
-            $empates,
-            $derrotas,
-            $goles_Favor,
-            $goles_Contra,
-            $diferencia_Goles
-        );
-    }
-
-    public static function establecerDerrotaVisitante(int $id, int $gol_Local, int $gol_Visitante)
-    {
-        $equipo = self::equipoObtenerPorID($id);
-
-        $id = $equipo->getId();
-        $nombre = $equipo->getNombre();
-        $escudo = $equipo->getEscudo();
-        $puntos = (int) $equipo->getPuntos();
-        $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
-        $victorias = (int) $equipo->getVictorias();
-        $empates = $equipo->getEmpates();
-        $derrotas = $equipo->getDerrotas() + 1;
-        $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
-        $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
-        $diferencia_Goles = $equipo->getDiferenciaGoles();
-
+        if($ganador == 0) {
+            $puntos = (int) $equipo->getPuntos() - 1;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates() - 1;
+            $derrotas = $equipo->getDerrotas() + 1;
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 1) {
+            $puntos = (int) $equipo->getPuntos();
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas();
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == 2) {
+            $puntos = (int) $equipo->getPuntos() - 3;
+            $partidos_Jugados = (int) $equipo->getPartidosJugados();
+            $victorias = (int) $equipo->getVictorias() - 1;
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas() + 1;
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }elseif($ganador == -1) {
+            $puntos = (int) $equipo->getPuntos();
+            $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
+            $victorias = (int) $equipo->getVictorias();
+            $empates = $equipo->getEmpates();
+            $derrotas = $equipo->getDerrotas() + 1;
+            $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
+            $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
+            $diferencia_Goles = $equipo->getDiferenciaGoles();
+        }
         self::equipoActualizarPorId(
             $id,
             $nombre,
