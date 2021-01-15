@@ -62,10 +62,10 @@ if(isset($_REQUEST["noDatos"])) {
     <div id="menu">
         <ul>
             <li><a href="../php-login">Inicio</a></li>
-            <li><a href="../EquipoListado.php">Equipos</a></li>
-            <li><a href="../ArbitroListado.php">Árbitros</a></li>
+            <li><a href="../equipoListado.php">Equipos</a></li>
+            <li><a href="../arbitroListado.php">Árbitros</a></li>
             <li><a href="../partidoListado.php">Partidos</a></li>
-            <li><a href="../Clasificacion.php">Clasificación</a></li>
+            <li><a href="../clasificacion.php">Clasificación</a></li>
             <li><a href="../sorteo.php">Sorteo</a></li>
         </ul>
     </div>

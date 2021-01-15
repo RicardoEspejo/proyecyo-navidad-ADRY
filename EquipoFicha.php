@@ -36,7 +36,7 @@
 <header>
     <a href='php-login/inicio.php' class="menuPrincipal">Menu Principal</a>     
     <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
-        <input type="hidden" name="nombre" value="EquipoFicha.php?id_Equipo=<?= $id ?>">
+        <input type="hidden" name="nombre" value="equipoFicha.php?id_Equipo=<?= $id ?>">
         <select name="modo" onChange="formulario.submit();">
             <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
             <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
@@ -58,7 +58,7 @@
     }
 ?>
 
-<form method='post' action='EquipoGuardar.php' enctype="multipart/form-data">
+<form method='post' action='equipoGuardar.php' enctype="multipart/form-data">
 
 <input type='hidden' name='id_Equipo' value='<?=$id?>' />
 
@@ -107,13 +107,13 @@
 </form>
 
 <?php if (!$nuevaEntrada) { ?>
-    <a href='EquipoEliminar.php?id_Equipo=<?=$id?>'>Eliminar equipo</a>
+    <a href='equipoELiminar.php?id_Equipo=<?=$id?>'>Eliminar equipo</a>
 <?php } ?>
 
 <br />
 <br />
 
-<a href='EquipoListado.php'>Volver al listado de equipos.</a>
+<a href='equipoListado.php'>Volver al listado de equipos.</a>
 
 </body>
 

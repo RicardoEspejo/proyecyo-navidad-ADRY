@@ -96,7 +96,7 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                     <?php foreach ($buscarPartidos as $partido) { ?>
                         <tr>
                         <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                                <td><a href='PartidoFicha.php?id_Partido=<?= $partido->getId() ?>'><?= $partido->getId() ?></a></td>
+                                <td><a href='partidoFicha.php?id_Partido=<?= $partido->getId() ?>'><?= $partido->getId() ?></a></td>
                             <?php } else { ?>
                                 <td><?= $partido->getId() ?></td>
                             <?php } ?>
@@ -127,7 +127,7 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                                    ?> <td>NO JUGADO</td> <?php
                             }
                             if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                                <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                                <td><a href='partidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
                             <?php } ?>
                         </tr>
                     <?php } ?>
@@ -154,7 +154,7 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                         <tr>
                             <!-- SI ES USUARIO ÁRBITRO PERMITE EL ACCESO A LA FICHA -->
                             <?php if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                                <td><a href='PartidoFicha.php?id_Partido=<?= $partido->getId() ?>'><?= $partido->getId() ?></a></td>
+                                <td><a href='partidoFicha.php?id_Partido=<?= $partido->getId() ?>'><?= $partido->getId() ?></a></td>
                             <?php } else { ?>
                                 <td><?= $partido->getId() ?></td>
                             <?php } ?>
@@ -182,7 +182,7 @@ else if (isset($_REQUEST["eliminacionErronea"]))
                             }
                             //SI ES USUARIO ÁRBITRO PERMITE LA ELIMINACIÓN
                                 if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                                <td><a href='PartidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
+                                <td><a href='partidoEliminar.php?id_Partido=<?= $partido->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"> </a></td>
                             <?php } ?>
                         </tr>
                     <?php } ?>
@@ -191,7 +191,7 @@ else if (isset($_REQUEST["eliminacionErronea"]))
     </div>
     <?php //SI ES USUARIO ÁRBITRO PERMITE CREAR NUEVO PARTIDO
         if (isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-        <a href='PartidoFicha.php?id_Partido=-1'>Crear entrada</a>
+        <a href='partidoFicha.php?id_Partido=-1'>Crear entrada</a>
     <?php } ?>
 </body>
 
