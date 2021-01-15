@@ -10,7 +10,7 @@ if (isset($_REQUEST["buscar"])) {
         if(!empty($buscar)){
             $buscarEquipo = DAO::buscarEquipos($buscar);
         }else{
-            redireccionar("clasificacion.php");
+            redireccionar("Clasificacion.php");
         }
 } else {
     $buscador = false;
@@ -39,7 +39,7 @@ $numero=1;
     <header>
         <a href='php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
     <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
-        <input type="hidden" name="nombre" value="clasificacion.php">
+        <input type="hidden" name="nombre" value="Clasificacion.php">
         <select name="modo" onChange="formulario.submit();">
             <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
             <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
@@ -55,7 +55,7 @@ $numero=1;
     <form action='' method='post' class="buscador2">
         <?php if ($buscador == true) {  ?>
             <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>" class="buscador">
-            <a href="clasificacion.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
+            <a href="Clasificacion.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
         <?php } else { ?>
             <input type="search" placeholder="Buscar" name="buscar" class="buscador">
         <?php } ?>
@@ -92,7 +92,7 @@ $numero=1;
                     <tr>
                         <td><?php echo $numeros ?></td>
                         <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                            <td><a href='equipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                            <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
                         <?php } else {?>
                             <td> <?= $equipo->getNombre() ?> </td>
                         <?php } ?>
@@ -105,7 +105,7 @@ $numero=1;
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
                         <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                            <td><a href='equipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
+                            <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
                         <?php } ?>
                     </tr>
                 <?php } ?>
@@ -114,7 +114,7 @@ $numero=1;
             <?php } else { ?>
                 <p>
                 <h3>No se ha encontrado resultados de la busqueda <?= $buscar ?> </h3>
-                <?php header("refresh:5;url=clasificacion.php") ?>
+                <?php header("refresh:5;url=Clasificacion.php") ?>
                 </p>
             <?php } ?>
         <?php } else { ?>
@@ -135,7 +135,7 @@ $numero=1;
                     <tr>
                         <td><?php echo $numero ?></td>
                         <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                            <td><a href='equipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                            <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
                         <?php } else {?>
                             <td> <?= $equipo->getNombre() ?> </td>
                         <?php } ?>
@@ -148,7 +148,7 @@ $numero=1;
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
                         <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                            <td><a href='equipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
+                            <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar"></a></td>
                         <?php } ?>
                     </tr>
                     <?php $numero++; ?>

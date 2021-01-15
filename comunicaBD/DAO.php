@@ -566,7 +566,7 @@ class DAO
         $id = $equipo->getId();
         $nombre = $equipo->getNombre();
         $escudo = $equipo->getEscudo();
-        if($ganador == 0) {
+        if($ganador == 0) { //Como ya era empate solo se cambian los goles
             $puntos = (int) $equipo->getPuntos();
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias();
@@ -575,7 +575,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == 1) {
+        }elseif($ganador == 1) { //Como habia ganado el local y tenia 3 puntos hay que quitarle dos para que solo sume 1, y los goles
             $puntos = (int) $equipo->getPuntos() - 2;
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias() - 1;
@@ -584,7 +584,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == 2) {
+        }elseif($ganador == 2) { //como habia ganado el visitante solo hay que sumarle 1 punto, 1 empate y quitarle una derrota, y la diferencia de goles
             $puntos = (int) $equipo->getPuntos() + 1;
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias();
@@ -593,7 +593,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == -1) {
+        }elseif($ganador == -1) { //Como el partido no se habia jugado se le suma 1 punto y 1 empate y los goles
             $puntos = (int) $equipo->getPuntos() + 1;
             $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
             $victorias = (int) $equipo->getVictorias();
@@ -628,7 +628,7 @@ class DAO
         $id = $equipo->getId();
         $nombre = $equipo->getNombre();
         $escudo = $equipo->getEscudo();
-        if($ganador == 0) {
+        if($ganador == 0) { //como ya habia un empate solo se suman los goles
             $puntos = (int) $equipo->getPuntos();
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias();
@@ -637,16 +637,16 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == 1) {
+        }elseif($ganador == 1) { //como habia ganado el local se le tiene que sumar un punto y un empate y quitarle una derrota
             $puntos = (int) $equipo->getPuntos() + 1;
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias();
             $empates = $equipo->getEmpates() + 1;
-            $derrotas = $equipo->getDerrotas();
+            $derrotas = $equipo->getDerrotas() - 1;
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == 2) {
+        }elseif($ganador == 2) { //como habia ganado el local y teni +3 puntos hay que quitarle 2 y 1 victoria
             $puntos = (int) $equipo->getPuntos() - 2;
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias() - 1;
@@ -655,7 +655,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == -1) {
+        }elseif($ganador == -1) { //Como no se habia jugado se le suma 1 partido jugado y 1 empate y los goles
             $puntos = (int) $equipo->getPuntos();
             $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
             $victorias = (int) $equipo->getVictorias();
@@ -691,7 +691,7 @@ class DAO
         $id = $equipo->getId();
         $nombre = $equipo->getNombre();
         $escudo = $equipo->getEscudo();
-        if($ganador == 0) {
+        if($ganador == 0) { //Como habia un empate hay que quitarle 1 punto y 1 empate y sumar 1 derrota
             $puntos = (int) $equipo->getPuntos() - 1;
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias();
@@ -700,7 +700,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == 1) {
+        }elseif($ganador == 1) { //Como habia gando el local hay que quitarle los 3 puntos y 1 victoria y sumar 1 derrota
             $puntos = (int) $equipo->getPuntos() - 3;
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias() - 1;
@@ -709,7 +709,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == 2) {
+        }elseif($ganador == 2) { //Como ya habia perdido solo hay que sumar los goles
             $puntos = (int) $equipo->getPuntos();
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias();
@@ -718,7 +718,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Local;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Visitante;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == -1) {
+        }elseif($ganador == -1) { //Como no se habia jugado se suma 1 partido jugado y 1 derrota y los goles
             $puntos = (int) $equipo->getPuntos();
             $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
             $victorias = (int) $equipo->getVictorias();
@@ -753,7 +753,7 @@ class DAO
         $id = $equipo->getId();
         $nombre = $equipo->getNombre();
         $escudo = $equipo->getEscudo();
-        if($ganador == 0) {
+        if($ganador == 0) { //Como habia 1 empate hay que restarle 1 punto y 1 empate y sumar 1 derrota y los goles
             $puntos = (int) $equipo->getPuntos() - 1;
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias();
@@ -762,7 +762,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == 1) {
+        }elseif($ganador == 1) { //Como ya habia perdido hay que cambiar solo los goles
             $puntos = (int) $equipo->getPuntos();
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias();
@@ -771,7 +771,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == 2) {
+        }elseif($ganador == 2) { //Como habia gnado hay que quiarle los 3 puntos y 1 victoria y sumar 1 derrota
             $puntos = (int) $equipo->getPuntos() - 3;
             $partidos_Jugados = (int) $equipo->getPartidosJugados();
             $victorias = (int) $equipo->getVictorias() - 1;
@@ -780,7 +780,7 @@ class DAO
             $goles_Favor = (int) $equipo->getGolesFavor() + $gol_Visitante;
             $goles_Contra = (int) $equipo->getGolesContra() + $gol_Local;
             $diferencia_Goles = $equipo->getDiferenciaGoles();
-        }elseif($ganador == -1) {
+        }elseif($ganador == -1) { //Como no se habia jugado se le suma 1 partido jugado y 1 derrota y los goles
             $puntos = (int) $equipo->getPuntos();
             $partidos_Jugados = (int) $equipo->getPartidosJugados() + 1;
             $victorias = (int) $equipo->getVictorias();

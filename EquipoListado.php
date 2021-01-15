@@ -21,7 +21,7 @@ if (isset($_REQUEST["buscar"])) {
     if(!empty($buscar)){
         $buscarEquipo = DAO::buscarEquipos($buscar);
     }else{
-        redireccionar("equipoListado.php");
+        redireccionar("EquipoListado.php");
     }
 } else {
     $buscador = false;
@@ -51,7 +51,7 @@ if (isset($_REQUEST["buscar"])) {
 <header>
 <a href='php-login/inicio.php' class="menuPrincipal">Menu Principal</a>
     <form action='modoOscuroOclaro.php' method="get" name="formulario" class="formulario">
-        <input type="hidden" name="nombre" value="equipoListado.php">
+        <input type="hidden" name="nombre" value="EquipoListado.php">
         <select name="modo" onChange="formulario.submit();">
             <option value="claro" <?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "claro"){?> selected <?php } } ?>>Tema Claro</option>
             <option value="oscuro"<?php if(isset($_SESSION["tema"])){if($_SESSION["tema"]== "oscuro"){?> selected <?php } } ?>>Tema Oscuro</option>
@@ -67,7 +67,7 @@ if (isset($_REQUEST["buscar"])) {
     <form action='' method='post' class="buscador2">
         <?php if ($buscador == true) {  ?>
             <input type="search" placeholder="Buscar" name="buscar" value="<?= $buscar  ?>" class="buscador">
-            <a href="equipoListado.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
+            <a href="EquipoListado.php"><img src="disenio/delete.png" alt="volver al listado" height="22px" class="deleteArbitro "></a>
         <?php } else { ?>
             <input type="search" placeholder="Buscar" name="buscar" class="buscador">
         <?php } ?>
@@ -94,7 +94,7 @@ if (isset($_REQUEST["buscar"])) {
                 <?php foreach ($buscarEquipo as $equipo) { ?>
                     <tr>
                     <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { //Aqui comprobamos si tiene permisos de administrador ?>
-                            <td><a href='equipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                            <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
                         <?php } else {?>
                             <td> <?= $equipo->getNombre() ?> </td>
                         <?php } ?>
@@ -107,7 +107,7 @@ if (isset($_REQUEST["buscar"])) {
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
                         <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                            <td><a href='equipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
+                            <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
                         <?php } ?>
                     </tr>
                 <?php } ?>
@@ -116,7 +116,7 @@ if (isset($_REQUEST["buscar"])) {
             <?php } else { ?>
                 <p>
                 <h3>No se ha encontrado resultados de la busqueda <?= $buscar ?> </h3>
-                <?php header("refresh:5;url=equipoListado.php") ?>
+                <?php header("refresh:5;url=EquipoListado.php") ?>
                 </p>
             <?php } ?>
         <?php } else { ?>
@@ -135,7 +135,7 @@ if (isset($_REQUEST["buscar"])) {
                 <?php foreach ($equipos as $equipo) { ?>
                     <tr>
                     <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { //Aqui comprobamos si tiene permisos de administrador ?>
-                            <td><a href='equipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
+                            <td><a href='EquipoFicha.php?id_Equipo=<?= $equipo->getId() ?>'> <?= $equipo->getNombre() ?> </a></td>
                         <?php } else {?>
                             <td> <?= $equipo->getNombre() ?> </td>
                         <?php } ?>
@@ -148,7 +148,7 @@ if (isset($_REQUEST["buscar"])) {
                         <td> <?= $equipo->getGolesContra() ?> </td>
                         <td> <?= $equipo->getDiferenciaGoles() ?> </td>
                         <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                            <td><a href='equipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
+                            <td><a href='EquipoEliminar.php?id_Equipo=<?= $equipo->getId() ?>'> <img src="disenio/delete.png" width="25" height="25" alt="eliminar">  </a></td>
                         <?php } ?>
                     </tr>
                 <?php } ?>
@@ -156,7 +156,7 @@ if (isset($_REQUEST["buscar"])) {
             </table><br>
         </div>
             <?php if(isset($_SESSION["tipo"]) && $_SESSION["tipo"] == 1) { ?>
-                <a href='equipoFicha.php?id_Equipo=-1'>Crear entrada</a>
+                <a href='EquipoFicha.php?id_Equipo=-1'>Crear entrada</a>
             <?php } ?>
             
 </body>

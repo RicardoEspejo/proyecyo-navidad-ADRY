@@ -28,14 +28,14 @@
         $modificacionCorrecta= DAO::equipoActualizarPorId($id, $nombre, $escudo, $puntos, $partidosJugados, $victorias, 
         $empates, $derrotas, $golesFavor, $golesContra, $diferenciaGoles);
         if($modificacionCorrecta)
-            redireccionar("equipoFicha.php?modificacionCorrecta&id_Equipo=".$id);
+            redireccionar("EquipoFicha.php?modificacionCorrecta&id_Equipo=".$id);
         else
-            redireccionar("equipoFicha.php?modificacionErronea&id_Equipo=".$id);
+            redireccionar("EquipoFicha.php?modificacionErronea&id_Equipo=".$id);
     }else {
         $creacionCorrecta= DAO::equipoCrear($nombre, $escudo);
         if($creacionCorrecta)
-            redireccionar("equipoListado.php?creacionCorrecta");
+            redireccionar("EquipoFicha.php?creacionCorrecta");
         else
-            redireccionar("equipoListado.php?creacionErronea");
+            redireccionar("EquipoFicha.php?creacionErronea");
     }
     

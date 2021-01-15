@@ -6,6 +6,6 @@
     $eliminacionCorrecta = DAO::equipoEliminarPorID($id); //Eliminamos el equipo que tenga este Id
 
     if($eliminacionCorrecta)
-        redireccionar("equipoListado.php?eliminacionCorrecta"); //Si la eliminiacion es correcta lo indicamos
+        redireccionar("EquipoListado.php?eliminacionCorrecta"); //Si la eliminiacion es correcta lo indicamos
     else
-        redireccionar("equipoListado.php?eliminacionErronea"); //Y si falla lo indicamos también
+        redireccionar("EquipoListado.php?eliminacionErronea"); //Y si falla lo indicamos también
