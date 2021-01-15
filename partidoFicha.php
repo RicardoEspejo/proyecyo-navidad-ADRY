@@ -53,7 +53,7 @@
 	</header>
 		<h1>ADRY-GOL</h1>
         <h2>Partidos > Ficha</h2>
-		<form method='post' action='PartidoGuardar.php' enctype="multipart/form-data">
+		<form method='post' action='partidoGuardar.php' enctype="multipart/form-data">
 			<input type='hidden' name='ganador' value='-1'>
 			<input type='hidden' name='id_Partido' value='<?=$id?>'>
 			<label>Equipo local: </label>
