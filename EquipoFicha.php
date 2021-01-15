@@ -3,7 +3,7 @@
 	require_once "comunicaBD/dao.php";
 
 	$id = (int)$_REQUEST["id_Equipo"];
-    $equipo= DAO::EquipoFicha($id);
+    $equipo= DAO::equipoFicha($id);
     $nuevaEntrada= $equipo[0];
 
     if(isset($_REQUEST["modificacionCorrecta"])) //Si hay modificación del equipo correcta lo indicamos

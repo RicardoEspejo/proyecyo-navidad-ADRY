@@ -34,8 +34,8 @@
     }else {
         $creacionCorrecta= DAO::equipoCrear($nombre, $escudo);
         if($creacionCorrecta)
-            redireccionar("EquipoFicha.php?creacionCorrecta");
+            redireccionar("EquipoListado.php?creacionCorrecta");
         else
-            redireccionar("EquipoFicha.php?creacionErronea");
+            redireccionar("EquipoListado.php?creacionErronea");
     }
     
